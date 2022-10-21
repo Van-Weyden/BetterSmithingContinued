@@ -7,11 +7,11 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 {
 	public class BetterRefiningVM : ConnectedViewModel
 	{
-		public BetterRefiningVM(IPublicContainer _publicContainer, CraftingGauntletScreen _parentScreen) : base(_publicContainer)
+		public BetterRefiningVM(IPublicContainer _publicContainer, GauntletCraftingScreen _parentScreen) : base(_publicContainer)
 		{
 			this.m_ParentScreen = _parentScreen;
 		}
 
-		private readonly CraftingGauntletScreen m_ParentScreen;
+		private readonly GauntletCraftingScreen m_ParentScreen;
 	}
 }

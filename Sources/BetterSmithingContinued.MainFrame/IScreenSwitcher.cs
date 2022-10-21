@@ -6,10 +6,10 @@ namespace BetterSmithingContinued.MainFrame
 {
 	public interface IScreenSwitcher
 	{
-		CraftingGauntletScreen CraftingGauntletScreen { get; set; }
+		GauntletCraftingScreen GauntletCraftingScreen { get; set; }
 
 		void UpdateCurrentCraftingSubVM(CraftingScreen _currentCraftingScreen);
 
-		event EventHandler<CraftingGauntletScreen> CraftingGauntletScreenUpdated;
+		event EventHandler<GauntletCraftingScreen> GauntletCraftingScreenUpdated;
 	}
 }

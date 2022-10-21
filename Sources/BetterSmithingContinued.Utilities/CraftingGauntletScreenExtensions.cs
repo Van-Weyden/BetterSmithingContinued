@@ -6,24 +6,24 @@ using TaleWorlds.Engine.GauntletUI;
 
 namespace BetterSmithingContinued.Utilities
 {
-	public static class CraftingGauntletScreenExtensions
+	public static class GauntletCraftingScreenExtensions
 	{
-		public static GauntletLayer GetGauntletLayer(this CraftingGauntletScreen _instance)
+		public static GauntletLayer GetGauntletLayer(this GauntletCraftingScreen _instance)
 		{
 			if (_instance != null)
 			{
-				return CraftingGauntletScreenExtensions.m_LazyGauntletLayerAccessor.Value(_instance);
+				return GauntletCraftingScreenExtensions.m_LazyGauntletLayerAccessor.Value(_instance);
 			}
 			return null;
 		}
 
-		private static readonly Lazy<Func<CraftingGauntletScreen, GauntletLayer>> m_LazyGauntletLayerAccessor = new Lazy<Func<CraftingGauntletScreen, GauntletLayer>>(delegate()
+		private static readonly Lazy<Func<GauntletCraftingScreen, GauntletLayer>> m_LazyGauntletLayerAccessor = new Lazy<Func<GauntletCraftingScreen, GauntletLayer>>(delegate()
 		{
-			FieldInfo fieldInfo = typeof(CraftingGauntletScreen).GetField("_gauntletLayer", MemberExtractor.PrivateMemberFlags);
-			return delegate(CraftingGauntletScreen _craftingGauntletScreen)
+			FieldInfo fieldInfo = typeof(GauntletCraftingScreen).GetField("_gauntletLayer", MemberExtractor.PrivateMemberFlags);
+			return delegate(GauntletCraftingScreen _GauntletCraftingScreen)
 			{
 				FieldInfo fieldInfo_ = fieldInfo;
-				return ((fieldInfo_ != null) ? fieldInfo_.GetValue(_craftingGauntletScreen) : null) as GauntletLayer;
+				return ((fieldInfo_ != null) ? fieldInfo_.GetValue(_GauntletCraftingScreen) : null) as GauntletLayer;
 			};
 		});
 	}
