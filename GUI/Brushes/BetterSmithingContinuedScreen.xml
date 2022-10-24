@@ -1,0 +1,167 @@
+﻿<Brushes>
+  <Brush Name="BetterSmithingContinued.Settings">
+    <Layers>
+      <BrushLayer Name="Default"
+                  Sprite="SPGeneral\TownManagement\production_icon" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default"
+                    ColorFactor="1.0" />
+      </Style>
+      <Style Name="Hovered">
+        <BrushLayer Name="Default"
+                    ColorFactor="1.2" />
+      </Style>
+      <Style Name="Pressed">
+        <BrushLayer Name="Default"
+                    ColorFactor="0.8" />
+      </Style>
+      <Style Name="Disabled">
+        <BrushLayer Name="Default"
+                    ColorFactor="0.6" />
+      </Style>
+    </Styles>
+  </Brush>
+  <Brush Name="BetterSmithingContinued.ResetAll">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="bettersmithingcontinued_reset" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default"
+                    Sprite="bettersmithingcontinued_reset"
+                    ColorFactor="1.0" />
+      </Style>
+      <Style Name="Hovered">
+        <BrushLayer Name="Default"
+                    Sprite="bettersmithingcontinued_reset"
+                    ColorFactor="1.2" />
+      </Style>
+      <Style Name="Pressed">
+        <BrushLayer Name="Default"
+                    Sprite="bettersmithingcontinued_reset"
+                    ColorFactor="0.8" />
+      </Style>
+      <Style Name="Disabled">
+        <BrushLayer Name="Default"
+                    Sprite="bettersmithingcontinued_reset"
+                    ColorFactor="0.6" />
+      </Style>
+    </Styles>
+  </Brush>
+  <Brush Name="BetterSmithingContinued.Enabled.Toggle.Brush">
+    <Layers>
+      <BrushLayer Name="Default"
+                  AlphaFactor="1.0" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default"
+                    ColorFactor="1.0" />
+      </Style>
+      <Style Name="Hovered">
+        <BrushLayer Name="Default"
+                    ColorFactor="1.2" />
+      </Style>
+      <Style Name="Pressed">
+        <BrushLayer Name="Default"
+                    ColorFactor="1.4" />
+      </Style>
+      <Style Name="Disabled">
+        <BrushLayer Name="Default"
+                    ColorFactor="0.45" />
+      </Style>
+    </Styles>
+  </Brush>
+  <Brush Name="BetterSmithingContinued.Disabled.Toggle.Brush">
+    <Layers>
+      <BrushLayer Name="Default"
+                  AlphaFactor="0.75" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default"
+                    ColorFactor="0.45" />
+      </Style>
+      <Style Name="Hovered">
+        <BrushLayer Name="Default"
+                    ColorFactor="0.55" />
+      </Style>
+      <Style Name="Pressed">
+        <BrushLayer Name="Default"
+                    ColorFactor="0.35" />
+      </Style>
+      <Style Name="Disabled">
+        <BrushLayer Name="Default"
+                    ColorFactor="0.45" />
+      </Style>
+    </Styles>
+  </Brush>
+  <Brush Name="BetterSmithingContinued.Popup.Title.Text"
+         Font="Galahad"
+         TextHorizontalAlignment="Center">
+    <Styles>
+      <Style Name="Default"
+             FontColor="#C6AC8DFF"
+             TextGlowColor="#000000FF"
+             TextOutlineColor="#FFFFFF00"
+             TextOutlineAmount="0"
+             TextGlowRadius="0"
+             TextBlur="0"
+             FontSize="24" />
+    </Styles>
+  </Brush>
+  <Brush Name="BetterSmithingContinued.Popup.Done.Text"
+         Font="Galahad"
+         TextHorizontalAlignment="Center">
+    <Styles>
+      <Style Name="Default"
+             FontColor="#E1E1E1FF"
+             TextGlowColor="#000000FF"
+             TextOutlineColor="#FFFFFF00"
+             TextOutlineAmount="0"
+             TextGlowRadius="0"
+             TextBlur="0"
+             FontSize="24" />
+    </Styles>
+  </Brush>
+  <Brush Name="BetterSmithingContinued.Lower.TextButton">
+    <Layers>
+      <BrushLayer Name="Default"
+                  Sprite="Crafting\bottom_crafting_button_canvas" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default"
+                    Sprite="Crafting\bottom_crafting_button_canvas" />
+      </Style>
+      <Style Name="Hovered">
+        <BrushLayer Name="Default"
+                    Sprite="Crafting\bottom_crafting_button_canvas_hover" />
+      </Style>
+      <Style Name="Pressed">
+        <BrushLayer Name="Default"
+                    Sprite="Crafting\bottom_crafting_button_canvas"
+                    ColorFactor="0.75" />
+      </Style>
+      <Style Name="Selected">
+        <BrushLayer Name="Default"
+                    Sprite="Crafting\bottom_crafting_button_canvas_hover"
+                    ColorFactor="1.25" />
+      </Style>
+      <Style Name="Disabled">
+        <BrushLayer Name="Default"
+                    Sprite="Crafting\bottom_crafting_button_canvas"
+                    ColorFactor="0.7"
+                    SaturationFactor="-80" />
+      </Style>
+    </Styles>
+    <SoundProperties>
+      <EventSounds>
+        <EventSound EventName="Click"
+                    Audio="crafting/smelt_tab" />
+      </EventSounds>
+    </SoundProperties>
+  </Brush>
+</Brushes>

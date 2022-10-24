@@ -1,0 +1,159 @@
+﻿<ListPanel WidthSizePolicy="StretchToParent"
+           HeightSizePolicy="Fixed"
+           SuggestedHeight="400"
+           LayoutImp.LayoutMethod="VerticalBottomToTop"
+           IsVisible="@IsSavedWeaponsListVisible">
+  <Children>
+    <!-- Saved Weapons List -->
+    <ListPanel WidthSizePolicy="StretchToParent"
+               HeightSizePolicy="Fixed"
+               SuggestedHeight="400"
+               LayoutImp.LayoutMethod="HorizontalLeftToRight">
+      <Children>
+        <ScrollablePanel WidthSizePolicy="StretchToParent"
+                         HeightSizePolicy="StretchToParent"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Top"
+                         AutoHideScrollBars="false"
+                         ClipRect="ClipRect"
+                         InnerPanel="ClipRect\SavedItemList"
+                         VerticalScrollbar="..\SavedWeaponsVerticalScrollbar">
+          <Children>
+            <Widget Id="ClipRect"
+                    WidthSizePolicy="StretchToParent"
+                    HeightSizePolicy="StretchToParent"
+                    ClipContents="true">
+              <Children>
+                <ListPanel Id="SavedItemList"
+                           DataSource="{SavedItemList}"
+                           WidthSizePolicy="StretchToParent"
+                           HeightSizePolicy="CoverChildren"
+                           LayoutImp.LayoutMethod="VerticalBottomToTop">
+                  <ItemTemplate>
+                    <ButtonWidget DoNotPassEventsToChildren="true"
+                                  WidthSizePolicy="StretchToParent"
+                                  HeightSizePolicy="Fixed"
+                                  SuggestedHeight="80"
+                                  Brush="Smelting.Tuple"
+                                  Command.Click="ExecuteSelection"
+                                  IsSelected="@IsSelected"
+                                  UpdateChildrenStates="true">
+                      <Children>
+                        <!--Item Visual-->
+                        <Widget WidthSizePolicy="Fixed"
+                                HeightSizePolicy="Fixed"
+                                SuggestedWidth="122"
+                                SuggestedHeight="66"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                MarginLeft="23"
+                                Sprite="Crafting\crafting_popup_portrait">
+                          <Children>
+                            <ImageIdentifierWidget DataSource="{Visual}"
+                                                   DoNotAcceptEvents="true"
+                                                   WidthSizePolicy="Fixed"
+                                                   HeightSizePolicy="Fixed"
+                                                   SuggestedWidth="112"
+                                                   SuggestedHeight="51"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Top"
+                                                   MarginTop="3"
+                                                   AdditionalArgs="@AdditionalArgs"
+                                                   ImageId="@Id"
+                                                   ImageTypeCode="@ImageTypeCode"
+                                                   LoadingIconWidget="LoadingIconWidget">
+                              <Children>
+                                <Standard.CircleLoadingWidget HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"
+                                                              Id="LoadingIconWidget" />
+                              </Children>
+                            </ImageIdentifierWidget>
+                          </Children>
+                        </Widget>
+
+                        <!--Item Name-->
+                        <RichTextWidget DoNotAcceptEvents="true"
+                                        WidthSizePolicy="Fixed"
+                                        HeightSizePolicy="StretchToParent"
+                                        SuggestedWidth="150"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        MarginLeft="180"
+                                        Brush="Smelting.Tuple.Text"
+                                        Text="@Name"
+                                        Brush.TextHorizontalAlignment="Left" />
+                      </Children>
+                    </ButtonWidget>
+                  </ItemTemplate>
+                </ListPanel>
+
+                <!--Scroll Gradient-->
+                <Widget DoNotAcceptEvents="true"
+                        WidthSizePolicy="Fixed"
+                        HeightSizePolicy="Fixed"
+                        SuggestedWidth="576"
+                        SuggestedHeight="57"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Sprite="CharacterCreation\character_creation_scroll_gradient"
+                        VerticalFlip="true" />
+
+                <!--Scroll Gradient-->
+                <Widget DoNotAcceptEvents="true"
+                        WidthSizePolicy="Fixed"
+                        HeightSizePolicy="Fixed"
+                        SuggestedWidth="576"
+                        SuggestedHeight="57"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Sprite="CharacterCreation\character_creation_scroll_gradient" />
+              </Children>
+            </Widget>
+          </Children>
+        </ScrollablePanel>
+
+        <ScrollbarWidget Id="SavedWeaponsVerticalScrollbar"
+                         WidthSizePolicy="Fixed"
+                         HeightSizePolicy="StretchToParent"
+                         SuggestedWidth="8"
+                         SuggestedHeight="775"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Center"
+                         MarginTop="0"
+                         MarginBottom="0"
+                         AlignmentAxis="Vertical"
+                         Handle="VerticalScrollbarHandle"
+                         MaxValue="100"
+                         MinValue="0">
+          <Children>
+            <Widget WidthSizePolicy="Fixed"
+                    HeightSizePolicy="StretchToParent"
+                    SuggestedWidth="4"
+                    HorizontalAlignment="Center"
+                    Sprite="BlankWhiteSquare_9"
+                    AlphaFactor="0.2"
+                    Color="#5a4033FF" />
+            <ImageWidget Id="VerticalScrollbarHandle"
+                         WidthSizePolicy="Fixed"
+                         HeightSizePolicy="Fixed"
+                         SuggestedWidth="8"
+                         SuggestedHeight="10"
+                         HorizontalAlignment="Center"
+                         Brush="FaceGen.Scrollbar.Handle" />
+          </Children>
+        </ScrollbarWidget>
+
+      </Children>
+    </ListPanel>
+
+    <!--Divider-->
+    <Widget WidthSizePolicy="StretchToParent"
+            HeightSizePolicy="Fixed"
+            SuggestedHeight="8"
+            Sprite="CharacterCreation\stone_divider_thin"
+            ExtendBottom="22"
+            ExtendLeft="2"
+            ExtendRight="3"
+            ExtendTop="22" />
+  </Children>
+</ListPanel>

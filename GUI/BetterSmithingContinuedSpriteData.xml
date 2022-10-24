@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SpriteData>
+  <SpriteCategories>
+    <SpriteCategory>
+      <Name>ui_bettersmithingcontinued_icons</Name>
+      <AlwaysLoad />
+      <SpriteSheetCount>1</SpriteSheetCount>
+      <SpriteSheetSize ID="1"
+                       Width="128"
+                       Height="128" />
+    </SpriteCategory>
+  </SpriteCategories>
+  <SpriteParts>
+    <SpritePart>
+      <SheetID>1</SheetID>
+      <Name>bettersmithingcontinued_lock</Name>
+      <Width>64</Width>
+      <Height>64</Height>
+      <SheetX>0</SheetX>
+      <SheetY>0</SheetY>
+      <CategoryName>ui_bettersmithingcontinued_icons</CategoryName>
+    </SpritePart>
+    <SpritePart>
+      <SheetID>1</SheetID>
+      <Name>bettersmithingcontinued_reset</Name>
+      <Width>64</Width>
+      <Height>64</Height>
+      <SheetX>63</SheetX>
+      <SheetY>0</SheetY>
+      <CategoryName>ui_bettersmithingcontinued_icons</CategoryName>
+    </SpritePart>
+    <SpritePart>
+      <SheetID>1</SheetID>
+      <Name>bettersmithingcontinued_popup</Name>
+      <Width>64</Width>
+      <Height>64</Height>
+      <SheetX>0</SheetX>
+      <SheetY>63</SheetY>
+      <CategoryName>ui_bettersmithingcontinued_icons</CategoryName>
+    </SpritePart>
+  </SpriteParts>
+  <Sprites>
+    <GenericSprite>
+      <Name>bettersmithingcontinued_lock</Name>
+      <SpritePartName>bettersmithingcontinued_lock</SpritePartName>
+    </GenericSprite>
+    <GenericSprite>
+      <Name>bettersmithingcontinued_reset</Name>
+      <SpritePartName>bettersmithingcontinued_reset</SpritePartName>
+    </GenericSprite>
+    <GenericSprite>
+      <Name>bettersmithingcontinued_popup</Name>
+      <SpritePartName>bettersmithingcontinued_popup</SpritePartName>
+    </GenericSprite>
+  </Sprites>
+</SpriteData>

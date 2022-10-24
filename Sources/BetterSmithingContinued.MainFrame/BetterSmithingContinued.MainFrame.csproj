@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6CC575CD-5A91-4B94-8AA7-9F05FFB0B368}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BetterSmithingContinued.MainFrame</RootNamespace>
+    <AssemblyName>BetterSmithingContinued.MainFrame</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Win64_Shipping_Client\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Win64_Shipping_Client\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\DLLs\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Bannerlord.UIExtenderEx">
+      <HintPath>..\..\DLLs\Bannerlord.UIExtenderEx.dll</HintPath>
+    </Reference>
+    <Reference Include="MCMv4">
+      <HintPath>..\..\DLLs\MCMv4.dll</HintPath>
+    </Reference>
+    <Reference Include="SandBox.GauntletUI">
+      <HintPath>..\..\DLLs\TaleWorlds\SandBox.GauntletUI.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TaleWorlds.CampaignSystem">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.CampaignSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.CampaignSystem.ViewModelCollection">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.CampaignSystem.ViewModelCollection.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.Core">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.Core.ViewModelCollection">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.Core.ViewModelCollection.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.Engine">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.Engine.GauntletUI">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.Engine.GauntletUI.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.GauntletUI">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.GauntletUI.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.GauntletUI.Data">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.GauntletUI.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.InputSystem">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.InputSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.Library">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.Library.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.Localization">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.Localization.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.MountAndBlade">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.MountAndBlade.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.ObjectSystem">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.ObjectSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.PlayerServices">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.PlayerServices.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.ScreenSystem">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.ScreenSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.TwoDimension">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.TwoDimension.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CraftingRepeater.cs" />
+    <Compile Include="CycleHeroInSmithingScreenLogic.cs" />
+    <Compile Include="HotKeys\CycleHeroBackwardKey.cs" />
+    <Compile Include="HotKeys\CycleHeroForwardKey.cs" />
+    <Compile Include="ICraftingRepeater.cs" />
+    <Compile Include="ICycleHeroInSmithingScreenLogic.cs" />
+    <Compile Include="IRefiningRepeater.cs" />
+    <Compile Include="IScreenSwitcher.cs" />
+    <Compile Include="ISmeltingRepeater.cs" />
+    <Compile Include="ISmithingManager.cs" />
+    <Compile Include="MainActionTextModifier.cs" />
+    <Compile Include="MainFrameSubModule.cs" />
+    <Compile Include="Patches\CraftingCampaignBehaviorPatches.cs" />
+    <Compile Include="Patches\CraftingPatches.cs" />
+    <Compile Include="Patches\CustomPatchManager.cs" />
+    <Compile Include="Patches\DefaultSmithingModelPatches.cs" />
+    <Compile Include="Patches\HarmonyCustomPatches.cs" />
+    <Compile Include="Patches\Instances.cs" />
+    <Compile Include="Patches\InventoryLogicPatches.cs" />
+    <Compile Include="Patches\ViewModelPatches\CraftingGauntletScreenPatches.cs" />
+    <Compile Include="Patches\ViewModelPatches\CraftingVMPatches.cs" />
+    <Compile Include="Patches\ViewModelPatches\RefinementVMPatches.cs" />
+    <Compile Include="Patches\ViewModelPatches\SmeltingSortControllerVMPatches.cs" />
+    <Compile Include="Patches\ViewModelPatches\SmeltingVMPatches.cs" />
+    <Compile Include="Patches\ViewModelPatches\WeaponDesignVMPatches.cs" />
+    <Compile Include="Persistence\CraftingSettings.cs" />
+    <Compile Include="Persistence\PieceData.cs" />
+    <Compile Include="Persistence\RefiningSettings.cs" />
+    <Compile Include="Persistence\SmeltingSettings.cs" />
+    <Compile Include="Persistence\SmithingSettings.cs" />
+    <Compile Include="Persistence\WeaponData.cs" />
+    <Compile Include="Persistence\WeaponSaveData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RefiningRepeater.cs" />
+    <Compile Include="ScreenSwitcher.cs" />
+    <Compile Include="SmeltingItemRosterWrapper.cs" />
+    <Compile Include="SmeltingRepeater.cs" />
+    <Compile Include="SmithingManager.cs" />
+    <Compile Include="UI\BetterSmithingUIContext.cs" />
+    <Compile Include="UI\CraftingAvailableHeroItemVMMixin.cs" />
+    <Compile Include="UI\IBetterSmithingUIContext.cs" />
+    <Compile Include="UI\Patches\CraftingCategoryAddSaveWeaponsListPatch.cs" />
+    <Compile Include="UI\Patches\CraftingCategoryDropdownReplacementPatch.cs" />
+    <Compile Include="UI\Patches\CraftingCategoryPartListIsVisibleAttributePatch.cs" />
+    <Compile Include="UI\Patches\CraftingCategoryTierFilterAttributesPatch.cs" />
+    <Compile Include="UI\Patches\CurrentHeroSmithSkillLevelIconColorPatch.cs" />
+    <Compile Include="UI\Patches\HeroSmithSkillLevelIconColorPatch.cs" />
+    <Compile Include="UI\ViewModels\BetterCraftingVM.cs" />
+    <Compile Include="UI\ViewModels\BetterRefiningVM.cs" />
+    <Compile Include="UI\ViewModels\BetterSmeltingVM.cs" />
+    <Compile Include="UI\ViewModels\BetterSmithingSettingsVM.cs" />
+    <Compile Include="UI\ViewModels\BetterSmithingVM.cs" />
+    <Compile Include="UI\ViewModels\CraftingItemTemplateVM.cs" />
+    <Compile Include="UI\ViewModels\CraftingResourceToggleVM.cs" />
+    <Compile Include="UI\ViewModels\SavedWeaponsListVM.cs" />
+    <Compile Include="UI\ViewModels\Templates\ButtonToggleVM.cs" />
+    <Compile Include="UI\ViewModels\Templates\PerkPanelItemVM.cs" />
+    <Compile Include="UI\ViewModels\Templates\TextButtonVM.cs" />
+    <Compile Include="UI\WeaponDesignVMMixin.cs" />
+    <Compile Include="UI\Widgets\BetterSmithingContinuedEditableTextWidget.cs" />
+    <Compile Include="UI\Widgets\DynamicSpriteBrushWidget.cs" />
+    <Compile Include="Utilities\CraftingScreen.cs" />
+    <Compile Include="Utilities\SettingsButtonMessages.cs" />
+    <Compile Include="Utilities\WeaponTier.cs" />
+    <Compile Include="Utilities\WeaponTierUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BetterSmithingContinued.Core\BetterSmithingContinued.Core.csproj">
+      <Project>{6CC575CD-5A91-4B94-8AA7-9F05FFB0B365}</Project>
+      <Name>BetterSmithingContinued.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterSmithingContinued.Inputs\BetterSmithingContinued.Inputs.csproj">
+      <Project>{6CC575CD-5A91-4B94-8AA7-9F05FFB0B366}</Project>
+      <Name>BetterSmithingContinued.Inputs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterSmithingContinued.Settings\BetterSmithingContinued.Settings.csproj">
+      <Project>{6CC575CD-5A91-4B94-8AA7-9F05FFB0B369}</Project>
+      <Name>BetterSmithingContinued.Settings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterSmithingContinued.Utilities\BetterSmithingContinued.Utilities.csproj">
+      <Project>{6CC575CD-5A91-4B94-8AA7-9F05FFB0B36A}</Project>
+      <Name>BetterSmithingContinued.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
