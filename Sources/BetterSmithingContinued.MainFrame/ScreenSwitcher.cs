@@ -22,36 +22,36 @@ namespace BetterSmithingContinued.MainFrame
 {
 	public sealed class ScreenSwitcher : BetterSmithingContinued.Core.Modules.Module, IScreenSwitcher
 	{
-		public event EventHandler<CraftingGauntletScreen> CraftingGauntletScreenUpdated;
+		public event EventHandler<GauntletCraftingScreen> GauntletCraftingScreenUpdated;
 
-		public CraftingGauntletScreen CraftingGauntletScreen
+		public GauntletCraftingScreen GauntletCraftingScreen
 		{
 			get
 			{
-				return this.m_CraftingGauntletScreen;
+				return this.m_GauntletCraftingScreen;
 			}
 			set
 			{
-				if (this.m_CraftingGauntletScreen != value)
+				if (this.m_GauntletCraftingScreen != value)
 				{
 					if (value == null)
 					{
 						this.ExitSmithingScreen();
-						this.m_CraftingGauntletScreen = null;
+						this.m_GauntletCraftingScreen = null;
 					}
 					else
 					{
-						this.m_CraftingGauntletScreen = value;
+						this.m_GauntletCraftingScreen = value;
 						this.EnterSmithingScreen();
 					}
-					this.OnCraftingGauntletScreenUpdated(this.m_CraftingGauntletScreen);
+					this.OnGauntletCraftingScreenUpdated(this.m_GauntletCraftingScreen);
 				}
 			}
 		}
 
 		public void UpdateCurrentCraftingSubVM(CraftingScreen _currentCraftingScreen)
 		{
-			if (this.CraftingGauntletScreen == null)
+			if (this.GauntletCraftingScreen == null)
 			{
 				this.m_CurrentCraftingScreen = _currentCraftingScreen;
 				return;
@@ -67,17 +67,17 @@ namespace BetterSmithingContinued.MainFrame
 				{
 					this.m_CurrentScreenLayer.ReleaseMovie(this.m_CurrentMovie);
 				}
-				CraftingGauntletScreen craftingGauntletScreen = this.CraftingGauntletScreen;
-				if (craftingGauntletScreen != null)
+				GauntletCraftingScreen GauntletCraftingScreen = this.GauntletCraftingScreen;
+				if (GauntletCraftingScreen != null)
 				{
-					craftingGauntletScreen.RemoveLayer(this.m_CurrentScreenLayer);
+					GauntletCraftingScreen.RemoveLayer(this.m_CurrentScreenLayer);
 				}
 			}
 			this.m_CurrentScreenLayer = this.UpdateScreen(_currentCraftingScreen);
-			CraftingGauntletScreen craftingGauntletScreen2 = this.CraftingGauntletScreen;
-			if (craftingGauntletScreen2 != null)
+			GauntletCraftingScreen GauntletCraftingScreen2 = this.GauntletCraftingScreen;
+			if (GauntletCraftingScreen2 != null)
 			{
-				craftingGauntletScreen2.AddLayer(this.m_CurrentScreenLayer);
+				GauntletCraftingScreen2.AddLayer(this.m_CurrentScreenLayer);
 			}
 			CraftingVM craftingVM = this.m_SmithingManager.CraftingVM;
 			if (craftingVM != null)
@@ -120,14 +120,14 @@ namespace BetterSmithingContinued.MainFrame
 			this.m_CharacterDeveloperSpriteCategory = UIResourceManager.SpriteData.SpriteCategories["ui_characterdeveloper"];
 			this.m_CharacterDeveloperSpriteCategory.Load(UIResourceManager.ResourceContext, UIResourceManager.UIResourceDepot);
 			this.UpdateCurrentCraftingSubVM(this.m_CurrentCraftingScreen);
-			this.m_BetterSmithingViewModel = new BetterSmithingVM(base.PublicContainer, this.CraftingGauntletScreen);
+			this.m_BetterSmithingViewModel = new BetterSmithingVM(base.PublicContainer, this.GauntletCraftingScreen);
 			this.m_BetterSmithingViewModel.Load();
 			this.m_BetterSmithingScreenLayer = new GauntletLayer(50, "GauntletLayer", false);
 			this.m_BetterSmithingMovie = this.m_BetterSmithingScreenLayer.LoadMovie("BetterSmithingScreen", this.m_BetterSmithingViewModel);
 			this.m_BetterSmithingScreenLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
-			this.CraftingGauntletScreen.AddLayer(this.m_BetterSmithingScreenLayer);
+			this.GauntletCraftingScreen.AddLayer(this.m_BetterSmithingScreenLayer);
 			FieldInfo value = ScreenSwitcher.m_LazySceneLayerFieldInfo.Value;
-			this.m_WeaponPreviewSceneLayer = (SceneLayer)((value != null) ? value.GetValue(this.CraftingGauntletScreen) : null);
+			this.m_WeaponPreviewSceneLayer = (SceneLayer)((value != null) ? value.GetValue(this.GauntletCraftingScreen) : null);
 			this.m_SubModuleEventNotifier.GameTick += this.OnGameTick;
 			ISmithingManager smithingManager = this.m_BetterSmithingViewModel.SmithingManager();
 			WeaponDesignVM weaponDesignVM;
@@ -175,7 +175,7 @@ namespace BetterSmithingContinued.MainFrame
 				{
 					this.m_CurrentScreenLayer.ReleaseMovie(this.m_CurrentMovie);
 				}
-				this.CraftingGauntletScreen.RemoveLayer(this.m_CurrentScreenLayer);
+				this.GauntletCraftingScreen.RemoveLayer(this.m_CurrentScreenLayer);
 			}
 			this.m_BetterSmithingScreenLayer.ReleaseMovie(this.m_BetterSmithingMovie);
 			BetterSmithingVM betterSmithingViewModel = this.m_BetterSmithingViewModel;
@@ -183,7 +183,7 @@ namespace BetterSmithingContinued.MainFrame
 			{
 				betterSmithingViewModel.OnFinalize();
 			}
-			this.CraftingGauntletScreen.RemoveLayer(this.m_BetterSmithingScreenLayer);
+			this.GauntletCraftingScreen.RemoveLayer(this.m_BetterSmithingScreenLayer);
 			this.m_BetterSmithingScreenLayer = null;
 			this.m_BetterSmithingViewModel = null;
 			this.m_BetterSmithingMovie = null;
@@ -206,13 +206,13 @@ namespace BetterSmithingContinued.MainFrame
 				switch (_currentCraftingScreen)
 				{
 				case CraftingScreen.Smelting:
-					connectedViewModel2 = new BetterSmeltingVM(base.PublicContainer, this.CraftingGauntletScreen);
+					connectedViewModel2 = new BetterSmeltingVM(base.PublicContainer, this.GauntletCraftingScreen);
 					break;
 				case CraftingScreen.Crafting:
-					connectedViewModel2 = new BetterCraftingVM(base.PublicContainer, this.CraftingGauntletScreen);
+					connectedViewModel2 = new BetterCraftingVM(base.PublicContainer, this.GauntletCraftingScreen);
 					break;
 				case CraftingScreen.Refining:
-					connectedViewModel2 = new BetterRefiningVM(base.PublicContainer, this.CraftingGauntletScreen);
+					connectedViewModel2 = new BetterRefiningVM(base.PublicContainer, this.GauntletCraftingScreen);
 					break;
 				default:
 					connectedViewModel2 = null;
@@ -231,23 +231,23 @@ namespace BetterSmithingContinued.MainFrame
 			return gauntletLayer;
 		}
 
-		private void OnCraftingGauntletScreenUpdated(CraftingGauntletScreen _e)
+		private void OnGauntletCraftingScreenUpdated(GauntletCraftingScreen _e)
 		{
-			EventHandler<CraftingGauntletScreen> craftingGauntletScreenUpdated = this.CraftingGauntletScreenUpdated;
-			if (craftingGauntletScreenUpdated == null)
+			EventHandler<GauntletCraftingScreen> GauntletCraftingScreenUpdated = this.GauntletCraftingScreenUpdated;
+			if (GauntletCraftingScreenUpdated == null)
 			{
 				return;
 			}
-			craftingGauntletScreenUpdated(this, _e);
+			GauntletCraftingScreenUpdated(this, _e);
 		}
 
-		private static readonly Lazy<FieldInfo> m_LazySceneLayerFieldInfo = new Lazy<FieldInfo>(() => typeof(CraftingGauntletScreen).GetField("_sceneLayer", MemberExtractor.PrivateMemberFlags));
+		private static readonly Lazy<FieldInfo> m_LazySceneLayerFieldInfo = new Lazy<FieldInfo>(() => typeof(GauntletCraftingScreen).GetField("_sceneLayer", MemberExtractor.PrivateMemberFlags));
 
 		private readonly Dictionary<CraftingScreen, ConnectedViewModel> m_ViewModels = new Dictionary<CraftingScreen, ConnectedViewModel>();
 
 		private GauntletLayer m_CurrentScreenLayer;
 
-		private CraftingGauntletScreen m_CraftingGauntletScreen;
+		private GauntletCraftingScreen m_GauntletCraftingScreen;
 
 		private IGauntletMovie m_CurrentMovie;
 

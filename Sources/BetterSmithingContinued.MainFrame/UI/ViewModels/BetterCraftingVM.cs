@@ -198,7 +198,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			}
 		}
 
-		public BetterCraftingVM(IPublicContainer _publicContainer, CraftingGauntletScreen _parentScreen) : base(_publicContainer)
+		public BetterCraftingVM(IPublicContainer _publicContainer, GauntletCraftingScreen _parentScreen) : base(_publicContainer)
 		{
 			this.m_ParentScreen = _parentScreen;
 		}
@@ -452,7 +452,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			}
 		}
 
-		private readonly CraftingGauntletScreen m_ParentScreen;
+		private readonly GauntletCraftingScreen m_ParentScreen;
 
 		private CraftingSettings m_CraftingSettings;
 
