@@ -4,7 +4,7 @@ using BetterSmithingContinued.Core;
 using BetterSmithingContinued.Core.Modules;
 using BetterSmithingContinued.MainFrame.Utilities;
 using BetterSmithingContinued.Settings;
-using MCM.Abstractions.Settings.Base.Global;
+using MCM.Abstractions.Base.Global;
 using TaleWorlds.Core;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Localization;

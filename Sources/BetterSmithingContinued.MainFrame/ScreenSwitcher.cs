@@ -1,15 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using BetterSmithingContinued.Core;
-using BetterSmithingContinued.Core.Modules;
-using BetterSmithingContinued.MainFrame.Patches;
-using BetterSmithingContinued.MainFrame.UI.ViewModels;
-using BetterSmithingContinued.MainFrame.Utilities;
-using BetterSmithingContinued.Settings;
-using BetterSmithingContinued.Utilities;
-using MCM.Abstractions.Settings.Base.Global;
-using SandBox.GauntletUI;
+
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
 using TaleWorlds.Engine.GauntletUI;
@@ -17,6 +9,17 @@ using TaleWorlds.Engine.Screens;
 using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.Library;
 using TaleWorlds.TwoDimension;
+using SandBox.GauntletUI;
+
+using MCM.Abstractions.Base.Global;
+
+using BetterSmithingContinued.Core;
+using BetterSmithingContinued.Core.Modules;
+using BetterSmithingContinued.MainFrame.Patches;
+using BetterSmithingContinued.MainFrame.UI.ViewModels;
+using BetterSmithingContinued.MainFrame.Utilities;
+using BetterSmithingContinued.Settings;
+using BetterSmithingContinued.Utilities;
 
 namespace BetterSmithingContinued.MainFrame
 {
