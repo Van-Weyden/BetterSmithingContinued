@@ -37,8 +37,8 @@
     <Reference Include="Bannerlord.UIExtenderEx">
       <HintPath>..\..\DLLs\Bannerlord.UIExtenderEx.dll</HintPath>
     </Reference>
-    <Reference Include="MCMv4">
-      <HintPath>..\..\DLLs\MCMv4.dll</HintPath>
+    <Reference Include="MCMv5">
+      <HintPath>..\..\DLLs\MCMv5.dll</HintPath>
     </Reference>
     <Reference Include="SandBox.GauntletUI">
       <HintPath>..\..\DLLs\TaleWorlds\SandBox.GauntletUI.dll</HintPath>

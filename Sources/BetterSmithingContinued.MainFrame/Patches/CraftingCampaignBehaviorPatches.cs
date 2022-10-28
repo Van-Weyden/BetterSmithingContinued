@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using BetterSmithingContinued.Settings;
-using BetterSmithingContinued.Utilities;
-using HarmonyLib;
-using MCM.Abstractions.Settings.Base.Global;
+
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.CampaignBehaviors;
 using TaleWorlds.CampaignSystem.CharacterDevelopment;
@@ -13,6 +10,13 @@ using TaleWorlds.CampaignSystem.Roster;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+
+using HarmonyLib;
+
+using MCM.Abstractions.Base.Global;
+
+using BetterSmithingContinued.Settings;
+using BetterSmithingContinued.Utilities;
 
 namespace BetterSmithingContinued.MainFrame.Patches
 {
