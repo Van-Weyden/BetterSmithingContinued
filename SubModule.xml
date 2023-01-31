@@ -1,9 +1,11 @@
 <Module>
 	<Name value="Better Smithing Continued" />
 	<Id value="BetterSmithingContinued" />
-	<Version value="v1.0.0.7" />
+	<Version value="v1.0.3.8" />
+    <Official value="false" />
 	<SingleplayerModule value="true" />
 	<MultiplayerModule value="false" />
+    <Url value="https://www.nexusmods.com/mountandblade2bannerlord/mods/4318" />
 	<DependedModules>
 		<DependedModule Id="Bannerlord.Harmony" />
 		<DependedModule Id="Bannerlord.ButterLib" />
