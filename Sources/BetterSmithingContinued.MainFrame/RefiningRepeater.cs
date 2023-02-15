@@ -71,36 +71,36 @@ namespace BetterSmithingContinued.MainFrame
 
 		private int GetDesiredOperationCount()
 		{
-            int num = -1;
-            if (Input.IsKeyDown(InputKey.LeftControl) || Input.IsKeyDown(InputKey.LeftShift))
-            {
-                MCMBetterSmithingSettings instance = GlobalSettings<MCMBetterSmithingSettings>.Instance;
-                if (instance != null)
-                {
-                    if (Input.IsKeyDown(InputKey.LeftControl) && Input.IsKeyDown(InputKey.LeftShift))
-                    {
-                        num = instance.ControlShiftRefineOperationCount;
-                    }
-                    else if (Input.IsKeyDown(InputKey.LeftShift))
-                    {
-                        num = instance.ShiftRefineOperationCount;
-                    }
-                    else if (Input.IsKeyDown(InputKey.LeftControl))
-                    {
-                        num = instance.ControlRefineOperationCount;
-                    }
+			int num = -1;
+			if (Input.IsKeyDown(InputKey.LeftControl) || Input.IsKeyDown(InputKey.LeftShift))
+			{
+				MCMBetterSmithingSettings instance = GlobalSettings<MCMBetterSmithingSettings>.Instance;
+				if (instance != null)
+				{
+					if (Input.IsKeyDown(InputKey.LeftControl) && Input.IsKeyDown(InputKey.LeftShift))
+					{
+						num = instance.ControlShiftRefineOperationCount;
+					}
+					else if (Input.IsKeyDown(InputKey.LeftShift))
+					{
+						num = instance.ShiftRefineOperationCount;
+					}
+					else if (Input.IsKeyDown(InputKey.LeftControl))
+					{
+						num = instance.ControlRefineOperationCount;
+					}
 
-                    if (num == 0)
-                    {
-                        num = int.MaxValue;
-                    }
-                }
-                else
-                {
-                    num = 1;
-                }
-            }
-            return num;
+					if (num == 0)
+					{
+						num = int.MaxValue;
+					}
+				}
+				else
+				{
+					num = 1;
+				}
+			}
+			return num;
 		}
 
 		private int GetRefinementCost(Hero hero, Crafting.RefiningFormula refineFormula)

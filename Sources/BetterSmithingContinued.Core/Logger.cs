@@ -17,18 +17,13 @@ namespace BetterSmithingContinued.Core
 				return;
 			}
 			DateTime now = DateTime.Now;
-			string text = string.Concat(new string[]
-			{
+			string text = string.Concat(new string[] {
 				"[",
-				now.Hour.ToString(),
-				":",
-				now.Minute.ToString(),
-				":",
-				now.Second.ToString(),
-				".",
-				now.Millisecond.ToString(),
-				"] BetterSmithingContinued: ",
-				message
+					now.Hour.ToString(), ":",
+					now.Minute.ToString(), ":",
+					now.Second.ToString(), ".",
+					now.Millisecond.ToString(),
+				"] BetterSmithingContinued: ", message
 			});
 			if (logType == Logger.LogType.Chat)
 			{

@@ -130,13 +130,13 @@ namespace BetterSmithingContinued.MainFrame
 					else if (Input.IsKeyDown(InputKey.LeftControl))
 					{
 						num = instance.ControlCraftOperationCount;
-                    }
+					}
 
-                    if (num == 0)
-                    {
-                        num = int.MaxValue;
-                    }
-                }
+					if (num == 0)
+					{
+						num = int.MaxValue;
+					}
+				}
 				else
 				{
 					num = 1;
