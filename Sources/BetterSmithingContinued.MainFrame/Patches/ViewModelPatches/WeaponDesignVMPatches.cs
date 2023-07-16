@@ -34,7 +34,7 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 		{
 			Crafting crafting;
 			MemberExtractor.GetPrivateFieldValue<WeaponDesignVM, Crafting>(__instance, "_crafting", out crafting);
-			ItemObject currentCraftedItemObject = crafting.GetCurrentCraftedItemObject(false, null);
+			ItemObject currentCraftedItemObject = crafting.GetCurrentCraftedItemObject(false);
 			EquipmentElement itemRosterElement = new EquipmentElement(currentCraftedItemObject, null, null, false);
 			int price = Campaign.Current.Models.TradeItemPriceFactorModel.GetPrice(itemRosterElement, Campaign.Current.MainParty, null, true, 0f, 0f, 0f);
 			CraftingListPropertyItem craftingListPropertyItem = new CraftingListPropertyItem(new TextObject("Value: ", null), 50000f, (float)price, 0f, CraftingTemplate.CraftingStatTypes.NumStatTypes, false);

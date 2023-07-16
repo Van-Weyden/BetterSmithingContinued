@@ -2,13 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BetterSmithingContinued.Core;
-using BetterSmithingContinued.Core.Modules;
-using BetterSmithingContinued.MainFrame.Patches;
-using BetterSmithingContinued.MainFrame.Utilities;
-using BetterSmithingContinued.Settings;
-using BetterSmithingContinued.Utilities;
-using MCM.Abstractions.Base.Global;
+
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.CampaignBehaviors;
 using TaleWorlds.CampaignSystem.GameState;
@@ -20,22 +14,27 @@ using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using TaleWorlds.ScreenSystem;
 
+using MCM.Abstractions.Base.Global;
+
+using BetterSmithingContinued.Core;
+using BetterSmithingContinued.Core.Modules;
+using BetterSmithingContinued.MainFrame.Patches;
+using BetterSmithingContinued.MainFrame.Utilities;
+using BetterSmithingContinued.Settings;
+using BetterSmithingContinued.Utilities;
+
 namespace BetterSmithingContinued.MainFrame
 {
 	public sealed class CraftingRepeater : Module, ICraftingRepeater
 	{
 		public void AddWeaponTierType()
 		{
-			WeaponTier weaponTier = WeaponTierUtils.GetWeaponTier(this.m_SmithingManager.LastSmithedWeaponTier);
-			if (!this.m_WeaponTierCounts.ContainsKey(weaponTier))
+			ItemQuality weaponQuality = this.m_SmithingManager.LastSmithedWeaponQuality;
+			if (!this.m_WeaponQualityCounts.ContainsKey(weaponQuality))
 			{
-				this.m_WeaponTierCounts.Add(weaponTier, 0);
+				this.m_WeaponQualityCounts.Add(weaponQuality, 0);
 			}
-			Dictionary<WeaponTier, int> weaponTierCounts = this.m_WeaponTierCounts;
-			WeaponTier weaponTier2 = weaponTier;
-			WeaponTier key = weaponTier2;
-			int num = weaponTierCounts[key];
-			weaponTierCounts[key] = num + 1;
+			this.m_WeaponQualityCounts[weaponQuality]++;
 		}
 
 		public void DoMultiCrafting(ref CraftingCampaignBehavior __instance, Hero hero, WeaponDesign weaponDesign)
@@ -46,7 +45,7 @@ namespace BetterSmithingContinued.MainFrame
 				CraftingState craftingState;
 				if (desiredOperationCount != -1 && (craftingState = (GameStateManager.Current.ActiveState as CraftingState)) != null)
 				{
-					ItemObject currentCraftedItemObject = craftingState.CraftingLogic.GetCurrentCraftedItemObject(false, null);
+					ItemObject currentCraftedItemObject = craftingState.CraftingLogic.GetCurrentCraftedItemObject(false);
 					int num = Math.Min(desiredOperationCount, this.GetMaxCraftingCount(weaponDesign) + 1);
 					if (num != 0)
 					{
@@ -56,9 +55,8 @@ namespace BetterSmithingContinued.MainFrame
 						{
 							while (num3 < num2 && (this.m_SmithingManager.CraftingVM.SmartHaveEnergy() || this.GetCraftingStaminaCost(hero, currentCraftedItemObject) <= __instance.GetHeroCraftingStamina(hero)))
 							{
-								int modifierTierForSmithedWeapon = Campaign.Current.Models.SmithingModel.GetModifierTierForSmithedWeapon(weaponDesign, hero);
-								Crafting.OverrideData modifierChanges = Campaign.Current.Models.SmithingModel.GetModifierChanges(modifierTierForSmithedWeapon, hero, currentCraftedItemObject.GetWeaponWithUsageIndex(0));
-								__instance.CreateCraftedWeaponInFreeBuildMode(hero, weaponDesign, modifierTierForSmithedWeapon, modifierChanges);
+								ItemModifier weaponModifier = Campaign.Current.Models.SmithingModel.GetCraftedWeaponModifier(weaponDesign, hero);
+								__instance.CreateCraftedWeaponInFreeBuildMode(hero, weaponDesign, weaponModifier);
 								num3++;
 							}
 						}
@@ -78,7 +76,7 @@ namespace BetterSmithingContinued.MainFrame
 		public override void Create(IPublicContainer _publicContainer)
 		{
 			base.Create(_publicContainer);
-			this.m_WeaponTierCounts = new Dictionary<WeaponTier, int>();
+			this.m_WeaponQualityCounts = new Dictionary<ItemQuality, int>();
 			this.RegisterModule<ICraftingRepeater>("");
 		}
 
@@ -95,12 +93,12 @@ namespace BetterSmithingContinued.MainFrame
 
 		private void DisplayCraftingMessage()
 		{
-			int num = this.m_WeaponTierCounts.Sum((KeyValuePair<WeaponTier, int> x) => x.Value);
+			int num = this.m_WeaponQualityCounts.Sum((KeyValuePair<ItemQuality, int> x) => x.Value);
 			StringBuilder stringBuilder = new StringBuilder(new TextObject("{=BSC_Msg_CW}Crafted {COUNT} weapons", null).SetTextVariable("COUNT", num).ToString());
 			bool flag = true;
-			foreach (WeaponTier weaponTier in WeaponTierUtils.GetWeaponTierOrderedList())
+			foreach (ItemQuality weaponTier in WeaponTierUtils.GetWeaponTierOrderedList())
 			{
-				if (this.m_WeaponTierCounts.TryGetValue(weaponTier, out num) && num > 0)
+				if (this.m_WeaponQualityCounts.TryGetValue(weaponTier, out num) && num > 0)
 				{
 					stringBuilder.Append(flag ? ":" : ",");
 					flag = false;
@@ -108,7 +106,7 @@ namespace BetterSmithingContinued.MainFrame
 				}
 			}
 			InformationManager.DisplayMessage(new InformationMessage(stringBuilder.ToString()));
-			this.m_WeaponTierCounts.Clear();
+			this.m_WeaponQualityCounts.Clear();
 		}
 
 		private int GetDesiredOperationCount()
@@ -171,7 +169,7 @@ namespace BetterSmithingContinued.MainFrame
 			return Campaign.Current.Models.SmithingModel.GetEnergyCostForSmithing(currentCraftedItemObject, hero);
 		}
 
-		private Dictionary<WeaponTier, int> m_WeaponTierCounts;
+		private Dictionary<TaleWorlds.Core.ItemQuality, int> m_WeaponQualityCounts;
 
 		private ISmithingManager m_SmithingManager;
 	}

@@ -184,7 +184,7 @@ namespace BetterSmithingContinued.MainFrame.Persistence
 				}
 				WeaponDesign weaponDesign = new WeaponDesign(template, new TextObject("{=!}" + this.Name, null), array);
 				ItemObject itemObject = new ItemObject();
-				CraftingUtils.SmartGenerateItem(weaponDesign, this.Name, Instances.SmithingManager.WeaponDesignVM.GetCraftingComponent().CurrentCulture, new ItemModifierGroup(), ref itemObject, null);
+				CraftingUtils.SmartGenerateItem(weaponDesign, this.Name, Instances.SmithingManager.WeaponDesignVM.GetCraftingComponent().CurrentCulture, new ItemModifierGroup(), ref itemObject);
 				string text = MBRandom.RandomInt(10000000).ToString();
 				while (MBObjectManager.Instance.GetObject<ItemObject>(text) != null)
 				{
