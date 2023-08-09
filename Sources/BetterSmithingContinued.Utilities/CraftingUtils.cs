@@ -15,7 +15,7 @@ namespace BetterSmithingContinued.Utilities
 
 		private static readonly Lazy<CraftingUtils.GenerateItem> m_LazyGenerateItemInvoker = new Lazy<CraftingUtils.GenerateItem>(delegate()
 		{
-			MethodInfo generateItemMethodInfo = typeof(Crafting).GetMethod("GenerateItem", MemberExtractor.StaticPublicMemberFlags);
+			MethodInfo generateItemMethodInfo = MemberExtractor.GetStaticMethodInfo<Crafting>("GenerateItem");
 			if (generateItemMethodInfo.GetParameters()[3].ParameterType == typeof(ItemModifierGroup))
 			{
 				return delegate(WeaponDesign _design, string _name, BasicCultureObject _culture, ItemModifierGroup _group, ref ItemObject _itemObject)

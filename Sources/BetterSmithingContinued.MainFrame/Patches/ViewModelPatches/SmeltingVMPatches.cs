@@ -13,8 +13,17 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 	{
 		public new static void RegisterCustomPatches(Harmony _harmony)
 		{
-			_harmony.Patch(typeof(SmeltingVM).GetMethod("RefreshList", MemberExtractor.PublicMemberFlags), new HarmonyMethod(typeof(SmeltingVMPatches).GetMethod("RefreshListPrefix", MemberExtractor.StaticPrivateMemberFlags)), null, null, null);
-			_harmony.Patch(typeof(SmeltingVM).GetMethod("SmeltSelectedItems", MemberExtractor.PrivateMemberFlags), new HarmonyMethod(typeof(SmeltingVMPatches).GetMethod("SmeltSelectedItemsPrefix", MemberExtractor.StaticPrivateMemberFlags)), null, null, null);
+			_harmony.Patch(
+				MemberExtractor.GetMethodInfo<SmeltingVM>("RefreshList"), 
+				new HarmonyMethod(MemberExtractor.GetStaticPrivateMethodInfo<SmeltingVMPatches>("RefreshListPrefix")),
+				null, null, null
+			);
+
+			_harmony.Patch(
+				MemberExtractor.GetPrivateMethodInfo<SmeltingVM>("SmeltSelectedItems"),
+				new HarmonyMethod(MemberExtractor.GetStaticPrivateMethodInfo<SmeltingVMPatches>("SmeltSelectedItemsPrefix")),
+				null, null, null
+			);
 		}
 
 		private static bool RefreshListPrefix(ref SmeltingVM __instance, ref Action ____updateValuesOnSelectItemAction, ref Action ____updateValuesOnSmeltItemAction)
@@ -24,17 +33,9 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 			{
 				smeltingVM.SmeltableItemList = new MBBindingList<SmeltingItemVM>();
 			}
-			Action action = ____updateValuesOnSmeltItemAction;
-			if (action != null)
-			{
-				action();
-			}
+			____updateValuesOnSmeltItemAction?.Invoke();
 			__instance.RefreshValues();
-			Action action2 = ____updateValuesOnSelectItemAction;
-			if (action2 != null)
-			{
-				action2();
-			}
+			____updateValuesOnSelectItemAction?.Invoke();
 			return false;
 		}
 
@@ -48,11 +49,7 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 					craftingCampaignBehavior.DoSmelting(currentCraftingHero, ____currentSelectedItem.EquipmentElement);
 				}
 			}
-			Action action = ____updateValuesOnSmeltItemAction;
-			if (action != null)
-			{
-				action();
-			}
+			____updateValuesOnSmeltItemAction?.Invoke();
 			__instance.RefreshValues();
 			return false;
 		}

@@ -109,7 +109,9 @@ namespace BetterSmithingContinued.Inputs.Code
 			return key != null && _getState != null && _getState(key.InputKey);
 		}
 
-		private static readonly Lazy<PropertyInfo> KeyProperty = new Lazy<PropertyInfo>(() => typeof(GameKey).GetProperty("PrimaryKey", MemberExtractor.PublicMemberFlags) ?? typeof(GameKey).GetProperty("KeyboardKey", MemberExtractor.PublicMemberFlags));
+		private static readonly Lazy<PropertyInfo> KeyProperty = new Lazy<PropertyInfo>(() => {
+			return MemberExtractor.GetPropertyInfo<GameKey>("PrimaryKey") ?? MemberExtractor.GetPropertyInfo<GameKey>("KeyboardKey");
+		});
 
 		private int m_CurrentHotkeyId;
 

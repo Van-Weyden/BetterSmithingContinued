@@ -165,13 +165,10 @@ namespace BetterSmithingContinued.Utilities
 			return typeof(ItemRoster).GetMethod("AddToCounts", MemberExtractor.PublicMemberFlags, null, CallingConventions.Any, _params, new ParameterModifier[0]);
 		}
 
-		private static Lazy<MethodInfo> m_LazyOnRosterUpdatedMethodInfo = new Lazy<MethodInfo>(() => typeof(ItemRoster).GetMethod("OnRosterUpdated", MemberExtractor.PrivateMemberFlags));
-
-		private static Lazy<MethodInfo> m_LazyAddNewElementMethodInfo = new Lazy<MethodInfo>(() => typeof(ItemRoster).GetMethod("AddNewElement", MemberExtractor.PrivateMemberFlags));
-
-		private static Lazy<FieldInfo> m_LazyCountFieldInfo = new Lazy<FieldInfo>(() => typeof(ItemRoster).GetField("_count", MemberExtractor.PrivateMemberFlags));
-
-		private static Lazy<FieldInfo> m_LazyDataFieldInfo = new Lazy<FieldInfo>(() => typeof(ItemRoster).GetField("_data", MemberExtractor.PrivateMemberFlags));
+		private static Lazy<MethodInfo> m_LazyOnRosterUpdatedMethodInfo = new Lazy<MethodInfo>(() => MemberExtractor.GetPrivateMethodInfo<ItemRoster>("OnRosterUpdated"));
+		private static Lazy<MethodInfo> m_LazyAddNewElementMethodInfo = new Lazy<MethodInfo>(() => MemberExtractor.GetPrivateMethodInfo<ItemRoster>("AddNewElement"));
+		private static Lazy<FieldInfo> m_LazyCountFieldInfo = new Lazy<FieldInfo>(() => MemberExtractor.GetPrivateFieldInfo<ItemRoster>("_count"));
+		private static Lazy<FieldInfo> m_LazyDataFieldInfo = new Lazy<FieldInfo>(() => MemberExtractor.GetPrivateFieldInfo<ItemRoster>("_data"));
 
 		private static readonly Lazy<Func<ItemRoster, ItemObject, int, object>> m_LazyAddToCountsItemObjectMethodInfo = new Lazy<Func<ItemRoster, ItemObject, int, object>>(delegate()
 		{

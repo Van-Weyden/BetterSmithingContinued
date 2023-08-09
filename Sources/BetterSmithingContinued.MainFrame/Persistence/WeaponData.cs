@@ -203,17 +203,16 @@ namespace BetterSmithingContinued.MainFrame.Persistence
 
 		private readonly Lazy<Func<WeaponDesignVM, Dictionary<CraftingPiece.PieceTypes, CraftingPieceListVM>>> m_LazyPieceLists = new Lazy<Func<WeaponDesignVM, Dictionary<CraftingPiece.PieceTypes, CraftingPieceListVM>>>(delegate()
 		{
-			FieldInfo fieldInfo = typeof(WeaponDesignVM).GetField("_pieceListsDictionary", MemberExtractor.PrivateMemberFlags);
+			FieldInfo fieldInfo = MemberExtractor.GetPrivateFieldInfo<WeaponDesignVM>("_pieceListsDictionary");
 			return delegate(WeaponDesignVM _vm)
 			{
-				FieldInfo fieldInfo_ = fieldInfo;
-				return ((fieldInfo_ != null) ? fieldInfo_.GetValue(_vm) : null) as Dictionary<CraftingPiece.PieceTypes, CraftingPieceListVM>;
+				return (fieldInfo?.GetValue(_vm)) as Dictionary<CraftingPiece.PieceTypes, CraftingPieceListVM>;
 			};
 		});
 
 		private readonly Lazy<Action<WeaponDesignVM, CraftingPieceVM, int, bool, bool>> m_LazyOnSetItemPart = new Lazy<Action<WeaponDesignVM, CraftingPieceVM, int, bool, bool>>(delegate()
 		{
-			MethodInfo methodInfo = typeof(WeaponDesignVM).GetMethod("OnSetItemPiece", MemberExtractor.PrivateMemberFlags);
+			MethodInfo methodInfo = MemberExtractor.GetPrivateMethodInfo<WeaponDesignVM>("OnSetItemPiece");
 			if (methodInfo == null)
 			{
 				return delegate(WeaponDesignVM instance, CraftingPieceVM part, int scalePercentage, bool shouldUpdateWholeWeapon, bool forceUpdatePiece)
@@ -233,13 +232,9 @@ namespace BetterSmithingContinued.MainFrame.Persistence
 		});
 
 		private string m_Id;
-
 		private WeaponClass m_CraftingTemplate;
-
 		private string m_Name;
-
 		private PieceData[] m_PieceData;
-
 		private ItemObject m_ItemObject;
 	}
 }

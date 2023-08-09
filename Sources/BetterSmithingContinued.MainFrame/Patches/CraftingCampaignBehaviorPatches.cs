@@ -41,8 +41,7 @@ namespace BetterSmithingContinued.MainFrame.Patches
 			MCMBetterSmithingSettings instance = GlobalSettings<MCMBetterSmithingSettings>.Instance;
 			if (instance != null && instance.GroupIdenticalCraftedWeapons)
 			{
-				ItemRoster itemRoster = MobileParty.MainParty.ItemRoster;
-				item = ((itemRoster != null) ? itemRoster.CompressIdenticalCraftedWeapons(__result) : null);
+				item = MobileParty.MainParty.ItemRoster?.CompressIdenticalCraftedWeapons(__result);
 			}
 			Instances.SmithingManager.SmeltingItemRoster.ModifyItem(new EquipmentElement(item, null, null, false), 1);
 			if (CraftingCampaignBehaviorPatches.m_IsCrafting)
