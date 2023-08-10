@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -41,14 +41,14 @@ namespace BetterSmithingContinued.MainFrame.Patches
 			MCMBetterSmithingSettings instance = GlobalSettings<MCMBetterSmithingSettings>.Instance;
 			if (instance != null && instance.GroupIdenticalCraftedWeapons)
 			{
-				item = MobileParty.MainParty.ItemRoster?.CompressIdenticalCraftedWeapons(__result);
+				item = MobileParty.MainParty.ItemRoster?.CompressIdenticalCraftedWeapons(__result, weaponModifier);
 			}
-			Instances.SmithingManager.SmeltingItemRoster.ModifyItem(new EquipmentElement(item, null, null, false), 1);
-			if (CraftingCampaignBehaviorPatches.m_IsCrafting)
+			Instances.SmithingManager.SmeltingItemRoster.ModifyItem(new EquipmentElement(item, weaponModifier), 1);
+			if (m_IsCrafting)
 			{
 				return;
 			}
-			CraftingCampaignBehaviorPatches.m_IsCrafting = true;
+			m_IsCrafting = true;
 			try
 			{
 				Instances.CraftingRepeater.DoMultiCrafting(ref __instance, hero, weaponDesign);
@@ -60,7 +60,7 @@ namespace BetterSmithingContinued.MainFrame.Patches
 			finally
 			{
 				Instances.SmithingManager.CraftingVM.SmartRefreshEnabledMainAction();
-				CraftingCampaignBehaviorPatches.m_IsCrafting = false;
+				m_IsCrafting = false;
 			}
 		}
 
