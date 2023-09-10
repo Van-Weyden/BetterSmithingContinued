@@ -38,7 +38,7 @@ namespace BetterSmithingContinued.MainFrame.Patches
 		[HarmonyPostfix]
 		private static void GetCraftedWeaponModifierPostfix(ref ItemModifier __result)
 		{
-			Instances.SmithingManager.LastSmithedWeaponQuality = __result?.ItemQuality ?? ItemQuality.Common;
+			Instances.SmithingManager.LastSmithedWeaponModifier = __result;
 		}
 	}
 }

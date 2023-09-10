@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -28,7 +28,7 @@ namespace BetterSmithingContinued.MainFrame.Patches
 		[MethodImpl(MethodImplOptions.NoInlining)]
 		public static void CreateCraftedWeaponInFreeBuildModePrefix(ItemModifier weaponModifier)
 		{
-			Instances.SmithingManager.LastSmithedWeaponQuality = (weaponModifier == null ? ItemQuality.Common : weaponModifier.ItemQuality);
+			Instances.SmithingManager.LastSmithedWeaponModifier = weaponModifier;
 		}
 
 		[HarmonyPatch("CreateCraftedWeaponInFreeBuildMode")]

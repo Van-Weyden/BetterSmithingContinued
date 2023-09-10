@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,7 +29,7 @@ namespace BetterSmithingContinued.MainFrame
 	{
 		public void AddWeaponTierType()
 		{
-			ItemQuality weaponQuality = this.m_SmithingManager.LastSmithedWeaponQuality;
+			ItemQuality weaponQuality = this.m_SmithingManager.LastSmithedWeaponModifier?.ItemQuality ?? ItemQuality.Common;
 			if (!this.m_WeaponQualityCounts.ContainsKey(weaponQuality))
 			{
 				this.m_WeaponQualityCounts.Add(weaponQuality, 0);
