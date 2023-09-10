@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 using TaleWorlds.Core;
 using TaleWorlds.CampaignSystem;
@@ -39,8 +39,6 @@ namespace BetterSmithingContinued.MainFrame
 		CraftingScreen CurrentCraftingScreen { get; set; }
 
 		CraftingAvailableHeroItemVM CurrentCraftingHero { get; set; }
-
-		bool ApplyNamePrefix { get; set; }
 
 		bool HeroHasEnoughStaminaForMainAction(Hero _hero);
 	}
