@@ -128,15 +128,14 @@ namespace BetterSmithingContinued.MainFrame.Persistence
 				CraftingTemplate craftingTemplate = CraftingTemplateUtilities.GetAll().FirstOrDefault((CraftingTemplate x) => x.StringId == this.Id);
 				_weaponDesignVMInstance.SelectPrimaryWeaponClass(craftingTemplate);
 				_weaponDesignVMInstance.RefreshValues();
-				PieceData[] pieceData2 = this.PieceData;
-				for (int i = 0; i < pieceData2.Length; i++)
+				foreach (PieceData pieceData in this.PieceData)
 				{
-					PieceData pieceData = pieceData2[i];
 					if (pieceData.PieceType != CraftingPiece.PieceTypes.Invalid && !string.IsNullOrEmpty(pieceData.Id) && craftingTemplate.IsPieceTypeUsable(pieceData.PieceType))
 					{
 						CraftingPiece craftingPiece = CraftingPiece.All.FirstOrDefault((CraftingPiece p) => p.StringId == pieceData.Id);
 						MBBindingList<CraftingPieceVM> pieces = this.m_LazyPieceLists.Value(_weaponDesignVMInstance)[craftingPiece.PieceType].Pieces;
-						CraftingPieceVM craftingPieceVM = pieces.FirstOrDefault((CraftingPieceVM piece) => piece.CraftingPiece.CraftingPiece == craftingPiece) ?? pieces.FirstOrDefault<CraftingPieceVM>();
+						CraftingPieceVM craftingPieceVM = pieces.FirstOrDefault((CraftingPieceVM piece) => piece.CraftingPiece.CraftingPiece == craftingPiece)
+														?? pieces.FirstOrDefault();
 						if (craftingPieceVM != null)
 						{
 							this.m_LazyOnSetItemPart.Value(_weaponDesignVMInstance, craftingPieceVM, pieceData.ScaleFactor, true, false);

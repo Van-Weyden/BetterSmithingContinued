@@ -38,8 +38,7 @@ namespace BetterSmithingContinued.MainFrame.Patches
 		{
 			Instances.CraftingRepeater.AddWeaponTierType();
 			ItemObject item = __result;
-			MCMBetterSmithingSettings instance = GlobalSettings<MCMBetterSmithingSettings>.Instance;
-			if (instance != null && instance.GroupIdenticalCraftedWeapons)
+			if (GlobalSettings<MCMBetterSmithingSettings>.Instance?.GroupIdenticalCraftedWeapons ?? false)
 			{
 				item = MobileParty.MainParty.ItemRoster?.CompressIdenticalCraftedWeapons(__result, weaponModifier);
 			}
