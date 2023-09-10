@@ -14,15 +14,15 @@
     <string id="BSC_Msg_IR" text="Refined {COUNT} {?IS_PLURAL}times{?}time{\?}." />
     <string id="BSC_Msg_IS" text="Smelted {COUNT} {?IS_PLURAL}weapons{?}weapon{\?}." />
     <string id="BSC_Msg_INF" text="Could not find item {ITEM_NAME} in smelting list. Performing full refresh." />
-    
-    <!-- Weapon tier prefixes -->
-    <string id="BSC_WT_1" text="Broken" />
-    <string id="BSC_WT_2" text="Rusty" />
-    <string id="BSC_WT_3" text="Crude" />
-    <string id="BSC_WT_4" text="Normal" />
-    <string id="BSC_WT_5" text="Fine" />
-    <string id="BSC_WT_6" text="Masterwork" />
-    <string id="BSC_WT_7" text="Legendary" />
+	
+	<!-- Weapon tier prefixes --> 
+    <string id="BSC_WT_1" text="Broken" /> 
+    <string id="BSC_WT_2" text="Rusty" /> 
+    <string id="BSC_WT_3" text="Dull" /> 
+    <string id="BSC_WT_4" text="Normal" /> 
+    <string id="BSC_WT_5" text="Balanced" /> 
+    <string id="BSC_WT_6" text="Masterwork" /> 
+    <string id="BSC_WT_7" text="Legendary" /> 
 
     <!-- Buttons -->
     <string id="BSC_BT_Designs" text="Saved Designs" />
@@ -89,8 +89,6 @@
     <string id="BSC_SPH_34" text="If Enabled, toggle button &quot;Show only unlocked pieces&quot; will be enabled by default." />
     <string id="BSC_SPN_35" text="Group Identical Crafted Weapons" />
     <string id="BSC_SPH_35" text="If Enabled, will group all identical crafted weapons (Weapons with the same name, same type, same stats, etc) together." />
-    <string id="BSC_SPN_36" text="Add Weapon Tier Prefixes" />
-    <string id="BSC_SPH_36" text="If Enabled, weapon names will be prefixed with their appropriate tiers (Legendary(3), Masterwork(2), Fine(1), Crude(-1), Rusty(-2), Broken(-3) ). 0 Tier weapons don't get a prefix." />
     <string id="BSC_SPN_41" text="Use Crafting Stamina" />
     <string id="BSC_SPH_41" text="Disable this option for unlimited crafting stamina." />
     <string id="BSC_SPN_42" text="Recovery rate inside towns" />

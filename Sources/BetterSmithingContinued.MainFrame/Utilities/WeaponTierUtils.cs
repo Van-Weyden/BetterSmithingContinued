@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using TaleWorlds.Core;
@@ -30,13 +30,13 @@ namespace BetterSmithingContinued.MainFrame.Utilities
 				result = new TextObject("{=BSC_WT_2}Rusty", null).ToString();
 				break;
 			case ItemQuality.Inferior:
-				result = new TextObject("{=BSC_WT_3}Crude", null).ToString();
+				result = new TextObject("{=BSC_WT_3}Dull", null).ToString();
 				break;
 			case ItemQuality.Common:
 				result = (_includeNormal ? new TextObject("{=BSC_WT_4}Normal", null).ToString() : "");
 				break;
 			case ItemQuality.Fine:
-				result = new TextObject("{=BSC_WT_5}Fine", null).ToString();
+				result = new TextObject("{=BSC_WT_5}Balanced", null).ToString();
 				break;
 			case ItemQuality.Masterwork:
 				result = new TextObject("{=BSC_WT_6}Masterwork", null).ToString();
