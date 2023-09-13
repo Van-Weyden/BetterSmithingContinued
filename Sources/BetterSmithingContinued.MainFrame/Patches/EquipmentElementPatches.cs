@@ -10,7 +10,7 @@ namespace BetterSmithingContinued.MainFrame.Patches
 	{
 		[HarmonyPatch("GetModifiedItemName")]
 		[HarmonyPostfix]
-		private static void InitializePreCraftedWeaponOnLoadPostfix(ref EquipmentElement __instance, ref TextObject __result)
+		private static void GetModifiedItemNamePostfix(ref EquipmentElement __instance, ref TextObject __result)
 		{
 			if (__instance.Item.IsCraftedByPlayer && __instance.ItemModifier != null)
 			{
