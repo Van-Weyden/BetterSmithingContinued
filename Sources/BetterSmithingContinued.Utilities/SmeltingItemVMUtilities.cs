@@ -10,25 +10,25 @@ namespace BetterSmithingContinued.Utilities
 		{
 			if (_onItemLockedStateChanged == null)
 			{
-				_onItemLockedStateChanged = delegate(SmeltingItemVM item, bool state)
-				{
-				};
+				_onItemLockedStateChanged = delegate(SmeltingItemVM item, bool state) { };
 			}
 			return SmeltingItemVMUtilities.m_SmeltingItemVMActivator.Value(_equipmentElement, _onSelection, _onItemLockedStateChanged, _isLocked, _numOfItems);
 		}
 
-		private static Lazy<Func<EquipmentElement, Action<SmeltingItemVM>, Action<SmeltingItemVM, bool>, bool, int, SmeltingItemVM>> m_SmeltingItemVMActivator = new Lazy<Func<EquipmentElement, Action<SmeltingItemVM>, Action<SmeltingItemVM, bool>, bool, int, SmeltingItemVM>>(delegate()
-		{
-			Activator<SmeltingItemVM> activator = typeof(SmeltingItemVM).GetActivator<SmeltingItemVM>(new Type[]
-			{
+		private static Lazy<Func<EquipmentElement, Action<SmeltingItemVM>, Action<SmeltingItemVM, bool>, bool, int, SmeltingItemVM>> m_SmeltingItemVMActivator = new Lazy<Func<EquipmentElement, Action<SmeltingItemVM>, Action<SmeltingItemVM, bool>, bool, int, SmeltingItemVM>>(delegate() {
+			Activator<SmeltingItemVM> activator = typeof(SmeltingItemVM).GetActivator<SmeltingItemVM>(new Type[] {
 				typeof(EquipmentElement),
 				typeof(Action<SmeltingItemVM>),
 				typeof(Action<SmeltingItemVM, bool>),
 				typeof(bool),
 				typeof(int)
 			});
-			return (EquipmentElement _equipmentElement, Action<SmeltingItemVM> _onSelection, Action<SmeltingItemVM, bool> _onItemLockedStateChanged, bool _isLocked, int _numOfItems) => activator(new object[]
-			{
+
+			return (EquipmentElement _equipmentElement, 
+					Action<SmeltingItemVM> _onSelection,
+					Action<SmeltingItemVM, bool> _onItemLockedStateChanged,
+					bool _isLocked,
+					int _numOfItems) => activator(new object[] {
 				_equipmentElement,
 				_onSelection,
 				_onItemLockedStateChanged,
