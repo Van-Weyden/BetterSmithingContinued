@@ -132,8 +132,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			this.LockedItemsToggle.RefreshValues();
 			this.PlayerCraftedItemsToggle.RefreshValues();
 			this.NonPlayerCraftedItemsToggle.RefreshValues();
-			this.m_CraftingResourceToggles.ApplyActionOnAllItems(delegate(CraftingResourceToggleVM x)
-			{
+			this.m_CraftingResourceToggles.ApplyActionOnAllItems(delegate(CraftingResourceToggleVM x) {
 				x.RefreshValues();
 			});
 		}
@@ -155,8 +154,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 
 		private void OnSettingsChanged(object _sender, SettingsSection _e)
 		{
-			SmeltingSettings smeltingSettings = _e as SmeltingSettings;
-			if (smeltingSettings != null)
+			if (_e is SmeltingSettings smeltingSettings)
 			{
 				this.m_SmeltingSettings = smeltingSettings;
 			}
@@ -187,7 +185,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			};
 			this.NonPlayerCraftedItemsToggle.ToggleStateChanged += this.OnNonPlayerCraftedItemsToggleStateChanged;
 			this.CraftingResourceToggles = new MBBindingList<CraftingResourceToggleVM>();
-			for (int i = 0; i < 9; i++)
+			for (int i = 0; i < (int) CraftingMaterials.NumCraftingMats; i++)
 			{
 				CraftingMaterials craftingMaterials = (CraftingMaterials)i;
 				if (craftingMaterials != CraftingMaterials.Charcoal && craftingMaterials != CraftingMaterials.IronOre)
@@ -238,8 +236,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			{
 				return;
 			}
-			CraftingResourceToggleVM craftingResourceToggleVM = _sender as CraftingResourceToggleVM;
-			if (craftingResourceToggleVM != null)
+			if (_sender is CraftingResourceToggleVM craftingResourceToggleVM)
 			{
 				if (Input.IsKeyDown(InputKey.LeftControl))
 				{
@@ -301,7 +298,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			{
 				return false;
 			}
-			for (int i = 0; i < 9; i++)
+			for (int i = 0; i < (int) CraftingMaterials.NumCraftingMats; i++)
 			{
 				if (array[i] > 0 && this.m_SmeltingSettings.GetMaterialIsDisplayed((CraftingMaterials)i))
 				{

@@ -17,18 +17,10 @@ namespace BetterSmithingContinued.MainFrame.Patches
 		[HarmonyPostfix]
 		private static void InitializeRostersPrefix(ItemRoster leftItemRoster, ItemRoster rightItemRoster)
 		{
-			MCMBetterSmithingSettings instance = GlobalSettings<MCMBetterSmithingSettings>.Instance;
-			if (instance == null || !instance.GroupIdenticalCraftedWeapons)
+			if (GlobalSettings<MCMBetterSmithingSettings>.Instance?.GroupIdenticalCraftedWeapons ?? false)
 			{
-				return;
-			}
-			if (rightItemRoster != null)
-			{
-				rightItemRoster.CompressIdenticalCraftedWeapons();
-			}
-			if (leftItemRoster != null)
-			{
-				leftItemRoster.CompressIdenticalCraftedWeapons();
+				leftItemRoster?.CompressIdenticalCraftedWeapons();
+				rightItemRoster?.CompressIdenticalCraftedWeapons();
 			}
 		}
 	}

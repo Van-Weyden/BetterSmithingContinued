@@ -26,35 +26,28 @@ namespace BetterSmithingContinued.MainFrame.Patches
 		[HarmonyPatch("CreateCraftedWeaponInFreeBuildMode")]
 		[HarmonyPrefix]
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void CreateCraftedWeaponPrefix(ref int modifierTier)
+		public static void CreateCraftedWeaponInFreeBuildModePrefix(ItemModifier weaponModifier)
 		{
-			MCMBetterSmithingSettings instance = GlobalSettings<MCMBetterSmithingSettings>.Instance;
-			if (instance != null && instance.AddWeaponTierPrefixes)
-			{
-				Instances.SmithingManager.ApplyNamePrefix = true;
-			}
-			Instances.SmithingManager.LastSmithedWeaponTier = modifierTier;
+			Instances.SmithingManager.LastSmithedWeaponModifier = weaponModifier;
 		}
 
 		[HarmonyPatch("CreateCraftedWeaponInFreeBuildMode")]
 		[HarmonyPostfix]
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void CreateCraftedWeaponPostfix(ref CraftingCampaignBehavior __instance, Hero hero, WeaponDesign weaponDesign, ref ItemObject __result)
+		public static void CreateCraftedWeaponInFreeBuildModePostfix(ref CraftingCampaignBehavior __instance, ref ItemObject __result, Hero hero, WeaponDesign weaponDesign, ItemModifier weaponModifier)
 		{
 			Instances.CraftingRepeater.AddWeaponTierType();
 			ItemObject item = __result;
-			MCMBetterSmithingSettings instance = GlobalSettings<MCMBetterSmithingSettings>.Instance;
-			if (instance != null && instance.GroupIdenticalCraftedWeapons)
+			if (GlobalSettings<MCMBetterSmithingSettings>.Instance?.GroupIdenticalCraftedWeapons ?? false)
 			{
-				ItemRoster itemRoster = MobileParty.MainParty.ItemRoster;
-				item = ((itemRoster != null) ? itemRoster.CompressIdenticalCraftedWeapons(__result) : null);
+				item = MobileParty.MainParty.ItemRoster?.CompressIdenticalCraftedWeapons(__result, weaponModifier);
 			}
-			Instances.SmithingManager.SmeltingItemRoster.ModifyItem(new EquipmentElement(item, null, null, false), 1);
-			if (CraftingCampaignBehaviorPatches.m_IsCrafting)
+			Instances.SmithingManager.SmeltingItemRoster.ModifyItem(new EquipmentElement(item, weaponModifier), 1);
+			if (m_IsCrafting)
 			{
 				return;
 			}
-			CraftingCampaignBehaviorPatches.m_IsCrafting = true;
+			m_IsCrafting = true;
 			try
 			{
 				Instances.CraftingRepeater.DoMultiCrafting(ref __instance, hero, weaponDesign);
@@ -66,7 +59,7 @@ namespace BetterSmithingContinued.MainFrame.Patches
 			finally
 			{
 				Instances.SmithingManager.CraftingVM.SmartRefreshEnabledMainAction();
-				CraftingCampaignBehaviorPatches.m_IsCrafting = false;
+				m_IsCrafting = false;
 			}
 		}
 

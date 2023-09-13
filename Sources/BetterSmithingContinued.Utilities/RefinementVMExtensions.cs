@@ -9,17 +9,12 @@ namespace BetterSmithingContinued.Utilities
 	{
 		public static void SmartOnSelectAction(this RefinementVM _refinementVM, RefinementActionItemVM _selectedAction)
 		{
-			MethodInfo value = RefinementVMExtensions.OnSelectActionMethodInfo.Value;
-			if (value == null)
-			{
-				return;
-			}
-			value.Invoke(_refinementVM, new object[]
+			OnSelectActionMethodInfo.Value?.Invoke(_refinementVM, new object[]
 			{
 				_selectedAction
 			});
 		}
 
-		private static readonly Lazy<MethodInfo> OnSelectActionMethodInfo = new Lazy<MethodInfo>(() => typeof(RefinementVM).GetMethod("OnSelectAction", MemberExtractor.PrivateMemberFlags));
+		private static readonly Lazy<MethodInfo> OnSelectActionMethodInfo = new Lazy<MethodInfo>(() => MemberExtractor.GetPrivateMethodInfo<RefinementVM>("OnSelectAction"));
 	}
 }

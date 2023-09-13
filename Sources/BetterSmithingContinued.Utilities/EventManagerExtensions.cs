@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -29,9 +29,8 @@ namespace BetterSmithingContinued.Utilities
 
 		private static readonly Lazy<Func<EventManager, Vector2>> m_LazyMousePosition = new Lazy<Func<EventManager, Vector2>>(delegate()
 		{
-			PropertyInfo mousePositionProperty = typeof(EventManager).GetProperty("MousePosition", MemberExtractor.PublicMemberFlags);
-			PropertyInfo mousePositionProperty2 = mousePositionProperty;
-			if (((mousePositionProperty2 != null) ? mousePositionProperty2.GetMethod : null) != null)
+			PropertyInfo mousePositionProperty = MemberExtractor.GetPropertyInfo<EventManager>("MousePosition");
+			if ((mousePositionProperty?.GetMethod) != null)
 			{
 				return (EventManager eventManager) => (Vector2)mousePositionProperty.GetMethod.Invoke(eventManager, null);
 			}
@@ -40,22 +39,10 @@ namespace BetterSmithingContinued.Utilities
 
 		private static readonly Lazy<Func<EventManager, List<Widget>>> m_LazyGetCurrentListInvoker = new Lazy<Func<EventManager, List<Widget>>>(delegate()
 		{
-			FieldInfo widgetContainer = typeof(EventManager).GetField("_widgetsWithUpdateContainer", MemberExtractor.PrivateMemberFlags);
-			FieldInfo widgetContainer3 = widgetContainer;
-			MethodInfo methodInfo = (widgetContainer3 != null) ? widgetContainer3.FieldType.GetMethod("GetCurrentList", MemberExtractor.PublicMemberFlags | BindingFlags.NonPublic) : null;
-			return delegate(EventManager eventManager)
-			{
-				MethodInfo methodInfo_ = methodInfo;
-				object obj;
-				if (methodInfo_ == null)
-				{
-					obj = null;
-				}
-				else
-				{
-					FieldInfo widgetContainer2 = widgetContainer;
-					obj = methodInfo_.Invoke((widgetContainer2 != null) ? widgetContainer2.GetValue(eventManager) : null, null);
-				}
+			FieldInfo widgetContainer = MemberExtractor.GetPrivateFieldInfo<EventManager>("_widgetsWithUpdateContainer");
+			MethodInfo methodInfo = widgetContainer?.FieldType.GetMethod("GetCurrentList", MemberExtractor.PrivateMemberFlags);
+			return delegate(EventManager eventManager) {
+				object obj = methodInfo?.Invoke(widgetContainer?.GetValue(eventManager), null);
 				return obj as List<Widget>;
 			};
 		});

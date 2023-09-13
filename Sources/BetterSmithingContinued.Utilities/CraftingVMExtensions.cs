@@ -1,9 +1,7 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using BetterSmithingContinued.Core;
 using TaleWorlds.CampaignSystem.CampaignBehaviors;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting;
-using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
 
 namespace BetterSmithingContinued.Utilities
 {
@@ -11,25 +9,18 @@ namespace BetterSmithingContinued.Utilities
 	{
 		public static CraftingCampaignBehavior GetCraftingCampaignBehavior(this CraftingVM _craftingVm)
 		{
-			FieldInfo craftingCampaignBehavior = CraftingVMExtensions.CraftingCampaignBehavior;
-			return (CraftingCampaignBehavior)((craftingCampaignBehavior != null) ? craftingCampaignBehavior.GetValue(_craftingVm) : null);
+			return (CraftingCampaignBehavior) CraftingCampaignBehavior?.GetValue(_craftingVm);
 		}
 
 		public static bool SmartHaveEnergy(this CraftingVM _craftingVM)
 		{
-			MethodInfo haveEnergyMethodInfo = CraftingVMExtensions.HaveEnergyMethodInfo;
-			return (bool)(((haveEnergyMethodInfo != null) ? haveEnergyMethodInfo.Invoke(_craftingVM, new object[0]) : null) ?? false);
+			return (bool)(HaveEnergyMethodInfo?.Invoke(_craftingVM, new object[0]) ?? false);
 		}
 
 		public static bool SmartRefreshEnabledMainAction(this CraftingVM _craftingVM)
 		{
-			MethodInfo refreshEnableMainActionMethodInfo = CraftingVMExtensions.RefreshEnableMainActionMethodInfo;
-			bool result = (bool)(((refreshEnableMainActionMethodInfo != null) ? refreshEnableMainActionMethodInfo.Invoke(_craftingVM, new object[0]) : null) ?? false);
-			WeaponDesignVM weaponDesign = _craftingVM.WeaponDesign;
-			if (weaponDesign != null)
-			{
-				weaponDesign.SafeRefreshCurrentHeroSkillLevel();
-			}
+			bool result = (bool)(RefreshEnableMainActionMethodInfo?.Invoke(_craftingVM, new object[0]) ?? false);
+			_craftingVM.WeaponDesign?.SafeRefreshCurrentHeroSkillLevel();
 			return result;
 		}
 
@@ -37,12 +28,11 @@ namespace BetterSmithingContinued.Utilities
 		{
 			get
 			{
-				FieldInfo fieldInfo = CraftingVMExtensions.m_CraftingCampaignBehavior;
-				if (fieldInfo == null)
+				if (m_CraftingCampaignBehavior == null)
 				{
-					fieldInfo = (CraftingVMExtensions.m_CraftingCampaignBehavior = typeof(CraftingVM).GetField("_craftingBehavior", MemberExtractor.PrivateMemberFlags));
+					m_CraftingCampaignBehavior = MemberExtractor.GetPrivateFieldInfo<CraftingVM>("_craftingBehavior");
 				}
-				return fieldInfo;
+				return m_CraftingCampaignBehavior;
 			}
 		}
 
@@ -50,12 +40,11 @@ namespace BetterSmithingContinued.Utilities
 		{
 			get
 			{
-				MethodInfo methodInfo = CraftingVMExtensions.m_HaveEnergyMethodInfo;
-				if (methodInfo == null)
+				if (m_HaveEnergyMethodInfo == null)
 				{
-					methodInfo = (CraftingVMExtensions.m_HaveEnergyMethodInfo = typeof(CraftingVM).GetMethod("HaveEnergy", MemberExtractor.PrivateMemberFlags));
+					m_HaveEnergyMethodInfo = MemberExtractor.GetPrivateMethodInfo<CraftingVM>("HaveEnergy");
 				}
-				return methodInfo;
+				return m_HaveEnergyMethodInfo;
 			}
 		}
 
@@ -63,19 +52,16 @@ namespace BetterSmithingContinued.Utilities
 		{
 			get
 			{
-				MethodInfo methodInfo = CraftingVMExtensions.m_RefreshEnableMainActionMethodInfo;
-				if (methodInfo == null)
+				if (m_RefreshEnableMainActionMethodInfo == null)
 				{
-					methodInfo = (CraftingVMExtensions.m_RefreshEnableMainActionMethodInfo = typeof(CraftingVM).GetMethod("RefreshEnableMainAction", MemberExtractor.PrivateMemberFlags));
+					m_RefreshEnableMainActionMethodInfo = MemberExtractor.GetPrivateMethodInfo<CraftingVM>("RefreshEnableMainAction");
 				}
-				return methodInfo;
+				return m_RefreshEnableMainActionMethodInfo;
 			}
 		}
 
 		private static FieldInfo m_CraftingCampaignBehavior;
-
 		private static MethodInfo m_HaveEnergyMethodInfo;
-
 		private static MethodInfo m_RefreshEnableMainActionMethodInfo;
 	}
 }

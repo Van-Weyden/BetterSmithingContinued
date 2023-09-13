@@ -7,11 +7,16 @@ namespace BetterSmithingContinued.Utilities
 	{
 		public static bool CompareTo(this ItemObject _this, ItemObject _other)
 		{
-			if (_this == null)
+			if (_this == null || _other == null)
 			{
-				return _other == null;
+				return _this == _other;
 			}
-			return _other != null && !(_this.Name.ToString() != _other.Name.ToString()) && _this.ItemType == _other.ItemType && _this.Tier == _other.Tier && _this.WeaponDesign.CompareTo(_other.WeaponDesign) && _this.WeaponComponent.CompareTo(_other.WeaponComponent);
+
+			return _this.Name.Equals(_other.Name)
+				&& _this.ItemType == _other.ItemType
+				&& _this.Tier == _other.Tier
+				&& _this.WeaponDesign.CompareTo(_other.WeaponDesign)
+				&& _this.WeaponComponent.CompareTo(_other.WeaponComponent);
 		}
 	}
 }

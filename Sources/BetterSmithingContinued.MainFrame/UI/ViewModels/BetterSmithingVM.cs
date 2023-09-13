@@ -156,8 +156,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			this.m_SettingsHint.RefreshValues();
 			this.m_ExcludeNoEnergyHeroesToggle.RefreshValues();
 			this.m_ExcludeHeroesWithoutSameRecipeToggle.RefreshValues();
-			this.m_PerkPanelItems.ApplyActionOnAllItems(delegate(PerkPanelItemVM x)
-			{
+			this.m_PerkPanelItems.ApplyActionOnAllItems(delegate(PerkPanelItemVM x) {
 				x.RefreshValues();
 			});
 		}

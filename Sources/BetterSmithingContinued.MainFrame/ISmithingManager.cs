@@ -1,11 +1,14 @@
 ﻿using System;
-using BetterSmithingContinued.MainFrame.Utilities;
+
+using TaleWorlds.Core;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.CampaignBehaviors;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.Refinement;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.Smelting;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
+
+using BetterSmithingContinued.MainFrame.Utilities;
 
 namespace BetterSmithingContinued.MainFrame
 {
@@ -31,13 +34,11 @@ namespace BetterSmithingContinued.MainFrame
 
 		SmeltingItemRosterWrapper SmeltingItemRoster { get; }
 
-		int LastSmithedWeaponTier { get; set; }
+		ItemModifier LastSmithedWeaponModifier { get; set; }
 
 		CraftingScreen CurrentCraftingScreen { get; set; }
 
 		CraftingAvailableHeroItemVM CurrentCraftingHero { get; set; }
-
-		bool ApplyNamePrefix { get; set; }
 
 		bool HeroHasEnoughStaminaForMainAction(Hero _hero);
 	}

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reflection;
 using BetterSmithingContinued.Core;
 using SandBox.GauntletUI;
@@ -19,11 +19,9 @@ namespace BetterSmithingContinued.Utilities
 
 		private static readonly Lazy<Func<GauntletCraftingScreen, GauntletLayer>> m_LazyGauntletLayerAccessor = new Lazy<Func<GauntletCraftingScreen, GauntletLayer>>(delegate()
 		{
-			FieldInfo fieldInfo = typeof(GauntletCraftingScreen).GetField("_gauntletLayer", MemberExtractor.PrivateMemberFlags);
-			return delegate(GauntletCraftingScreen _GauntletCraftingScreen)
-			{
-				FieldInfo fieldInfo_ = fieldInfo;
-				return ((fieldInfo_ != null) ? fieldInfo_.GetValue(_GauntletCraftingScreen) : null) as GauntletLayer;
+			FieldInfo fieldInfo = MemberExtractor.GetPrivateFieldInfo<GauntletCraftingScreen>("_gauntletLayer");
+			return delegate(GauntletCraftingScreen _GauntletCraftingScreen) {
+				return (fieldInfo?.GetValue(_GauntletCraftingScreen)) as GauntletLayer;
 			};
 		});
 	}

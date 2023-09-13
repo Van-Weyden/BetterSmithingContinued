@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BetterSmithingContinued.Annotations;
-using BetterSmithingContinued.Core;
+
 using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Roster;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using TaleWorlds.ObjectSystem;
+
+using BetterSmithingContinued.Annotations;
+using BetterSmithingContinued.Core;
 
 namespace BetterSmithingContinued.Utilities
 {
@@ -32,24 +34,22 @@ namespace BetterSmithingContinued.Utilities
 
 		public static ItemRosterElement[] GetData(this ItemRoster _itemRoster)
 		{
-			FieldInfo value = ItemRosterExtensions.m_LazyDataFieldInfo.Value;
-			return (ItemRosterElement[])((value != null) ? value.GetValue(_itemRoster) : null);
+			return (ItemRosterElement[]) m_LazyDataFieldInfo.Value?.GetValue(_itemRoster);
 		}
 
 		public static void SetCount(this ItemRoster _itemRoster, int _newCount)
 		{
-			ItemRosterExtensions.m_LazyDataFieldInfo.Value.SetValue(_itemRoster, _newCount);
+			m_LazyDataFieldInfo.Value.SetValue(_itemRoster, _newCount);
 		}
 
 		public static int GetCount(this ItemRoster _itemRoster)
 		{
-			return (int)ItemRosterExtensions.m_LazyDataFieldInfo.Value.GetValue(_itemRoster);
+			return (int) m_LazyDataFieldInfo.Value.GetValue(_itemRoster);
 		}
 
 		public static int AddNewElement(this ItemRoster _itemRoster, ItemRosterElement rosterElement, bool insertAtFront = false)
 		{
-			return (int)ItemRosterExtensions.m_LazyAddNewElementMethodInfo.Value.Invoke(_itemRoster, new object[]
-			{
+			return (int) m_LazyAddNewElementMethodInfo.Value.Invoke(_itemRoster, new object[] {
 				rosterElement,
 				insertAtFront
 			});
@@ -57,16 +57,11 @@ namespace BetterSmithingContinued.Utilities
 
 		public static void OnRosterUpdated(this ItemRoster _itemRoster, ref ItemRosterElement _itemRosterElement, int count)
 		{
-			object[] array = new object[]
-			{
+			object[] array = new object[] {
 				_itemRosterElement,
 				count
 			};
-			MethodInfo value = ItemRosterExtensions.m_LazyOnRosterUpdatedMethodInfo.Value;
-			if (value != null)
-			{
-				value.Invoke(_itemRoster, array);
-			}
+			m_LazyOnRosterUpdatedMethodInfo.Value?.Invoke(_itemRoster, array);
 			_itemRosterElement = (ItemRosterElement)array[0];
 		}
 
@@ -78,26 +73,19 @@ namespace BetterSmithingContinued.Utilities
 			}
 			try
 			{
-				List<ItemRosterElement> list = _itemRoster.ToArray<ItemRosterElement>().Where(delegate(ItemRosterElement item)
-				{
-					ItemRosterElement itemRosterElement3 = item;
-					if (itemRosterElement3.EquipmentElement.Item != null)
-					{
-						itemRosterElement3 = item;
-						return itemRosterElement3.EquipmentElement.Item.IsCraftedByPlayer;
-					}
-					return false;
-				}).ToList<ItemRosterElement>();
+				List<ItemRosterElement> list = _itemRoster.ToArray().Where(delegate(ItemRosterElement item) {
+					return item.EquipmentElement.Item?.IsCraftedByPlayer ?? false;
+				}).ToList();
 				for (int i = 0; i < list.Count; i++)
 				{
-					ItemRosterElement itemRosterElement = list[i];
+					ItemObject item = list[i].EquipmentElement.Item;
+					ItemModifier modifier = list[i].EquipmentElement.ItemModifier;
 					for (int j = i + 1; j < list.Count; j++)
 					{
-						ItemRosterElement itemRosterElement2 = list[j];
-						if (itemRosterElement.EquipmentElement.Item.CompareTo(itemRosterElement2.EquipmentElement.Item))
+						if (item.CompareTo(list[j].EquipmentElement.Item) && modifier.CompareTo(list[j].EquipmentElement.ItemModifier))
 						{
-							_itemRoster.SafeAddToCounts(itemRosterElement2.EquipmentElement.Item, -itemRosterElement2.Amount);
-							_itemRoster.SafeAddToCounts(itemRosterElement.EquipmentElement.Item, itemRosterElement2.Amount);
+							_itemRoster.SafeAddToCounts(list[j].EquipmentElement, -list[j].Amount);
+							_itemRoster.SafeAddToCounts(list[i].EquipmentElement, list[j].Amount);
 							list.RemoveAt(j);
 							j--;
 						}
@@ -110,7 +98,7 @@ namespace BetterSmithingContinued.Utilities
 			}
 		}
 
-		public static ItemObject CompressIdenticalCraftedWeapons(this ItemRoster _itemRoster, ItemObject _weapon)
+		public static ItemObject CompressIdenticalCraftedWeapons(this ItemRoster _itemRoster, ItemObject _weapon, ItemModifier weaponModifier)
 		{
 			if (_itemRoster.Count <= 0)
 			{
@@ -121,11 +109,17 @@ namespace BetterSmithingContinued.Utilities
 				foreach (ItemRosterElement itemRosterElement in _itemRoster)
 				{
 					ItemObject item = itemRosterElement.EquipmentElement.Item;
-					if (item.IsCraftedByPlayer && !item.Equals(_weapon) && item.CompareTo(_weapon))
+					if (!item.IsCraftedByPlayer || item == _weapon)
 					{
-						PartyBase.MainParty.ItemRoster.SafeAddToCounts(_weapon, -1);
+						continue;
+					}
+
+					ItemModifier modifier = itemRosterElement.EquipmentElement.ItemModifier;
+					if (item.CompareTo(_weapon) && modifier.CompareTo(weaponModifier))
+					{
+						PartyBase.MainParty.ItemRoster.SafeAddToCounts(new EquipmentElement(_weapon, weaponModifier), -1);
 						MBObjectManager.Instance.UnregisterObject(_weapon);
-						PartyBase.MainParty.ItemRoster.SafeAddToCounts(item, 1);
+						PartyBase.MainParty.ItemRoster.SafeAddToCounts(itemRosterElement.EquipmentElement, 1);
 						return item;
 					}
 				}
@@ -137,17 +131,6 @@ namespace BetterSmithingContinued.Utilities
 			return _weapon;
 		}
 
-		public static int SafeAddToCounts(this ItemRoster _roster, ItemObject _itemObject, int _amount)
-		{
-			object obj = ItemRosterExtensions.m_LazyAddToCountsItemObjectMethodInfo.Value(_roster, _itemObject, _amount);
-			if (obj == null)
-			{
-				InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=BSC_EM_08}Could not find ItemRoster.AddToCounts method. Item grouping will not function.", null).ToString()));
-				return -1;
-			}
-			return (int)obj;
-		}
-
 		public static int SafeAddToCounts(this ItemRoster _roster, EquipmentElement _rosterElement, int _amount)
 		{
 			object obj = ItemRosterExtensions.m_LazyAddToCountsEquipmentElementMethodInfo.Value(_roster, _rosterElement, _amount);
@@ -156,7 +139,7 @@ namespace BetterSmithingContinued.Utilities
 				InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=BSC_EM_08}Could not find ItemRoster.AddToCounts method. Item grouping will not function.", null).ToString()));
 				return -1;
 			}
-			return (int)obj;
+			return (int) obj;
 		}
 
 		[CanBeNull]
@@ -165,18 +148,14 @@ namespace BetterSmithingContinued.Utilities
 			return typeof(ItemRoster).GetMethod("AddToCounts", MemberExtractor.PublicMemberFlags, null, CallingConventions.Any, _params, new ParameterModifier[0]);
 		}
 
-		private static Lazy<MethodInfo> m_LazyOnRosterUpdatedMethodInfo = new Lazy<MethodInfo>(() => typeof(ItemRoster).GetMethod("OnRosterUpdated", MemberExtractor.PrivateMemberFlags));
+		private static Lazy<MethodInfo> m_LazyOnRosterUpdatedMethodInfo = new Lazy<MethodInfo>(() => MemberExtractor.GetPrivateMethodInfo<ItemRoster>("OnRosterUpdated"));
+		private static Lazy<MethodInfo> m_LazyAddNewElementMethodInfo = new Lazy<MethodInfo>(() => MemberExtractor.GetPrivateMethodInfo<ItemRoster>("AddNewElement"));
+		private static Lazy<FieldInfo> m_LazyCountFieldInfo = new Lazy<FieldInfo>(() => MemberExtractor.GetPrivateFieldInfo<ItemRoster>("_count"));
+		private static Lazy<FieldInfo> m_LazyDataFieldInfo = new Lazy<FieldInfo>(() => MemberExtractor.GetPrivateFieldInfo<ItemRoster>("_data"));
 
-		private static Lazy<MethodInfo> m_LazyAddNewElementMethodInfo = new Lazy<MethodInfo>(() => typeof(ItemRoster).GetMethod("AddNewElement", MemberExtractor.PrivateMemberFlags));
-
-		private static Lazy<FieldInfo> m_LazyCountFieldInfo = new Lazy<FieldInfo>(() => typeof(ItemRoster).GetField("_count", MemberExtractor.PrivateMemberFlags));
-
-		private static Lazy<FieldInfo> m_LazyDataFieldInfo = new Lazy<FieldInfo>(() => typeof(ItemRoster).GetField("_data", MemberExtractor.PrivateMemberFlags));
-
-		private static readonly Lazy<Func<ItemRoster, ItemObject, int, object>> m_LazyAddToCountsItemObjectMethodInfo = new Lazy<Func<ItemRoster, ItemObject, int, object>>(delegate()
-		{
-			MethodInfo addToCountsMethodWithParams = ItemRosterExtensions.GetAddToCountsMethodWithParams(new Type[]
-			{
+		private static readonly Lazy<Func<ItemRoster, ItemObject, int, object>>
+		m_LazyAddToCountsItemObjectMethodInfo = new Lazy<Func<ItemRoster, ItemObject, int, object>>(delegate() {
+			MethodInfo addToCountsMethodWithParams = ItemRosterExtensions.GetAddToCountsMethodWithParams(new Type[] {
 				typeof(ItemObject),
 				typeof(int)
 			});
@@ -184,17 +163,15 @@ namespace BetterSmithingContinued.Utilities
 			{
 				return (ItemRoster instance, ItemObject itemObject, int amount) => null;
 			}
-			return (ItemRoster instance, ItemObject itemObject, int amount) => (int)addToCountsMethodWithParams.Invoke(instance, new object[]
-			{
+			return (ItemRoster instance, ItemObject itemObject, int amount) => (int)addToCountsMethodWithParams.Invoke(instance, new object[] {
 				itemObject,
 				amount
 			});
 		});
 
-		private static readonly Lazy<Func<ItemRoster, EquipmentElement, int, object>> m_LazyAddToCountsEquipmentElementMethodInfo = new Lazy<Func<ItemRoster, EquipmentElement, int, object>>(delegate()
-		{
-			MethodInfo addToCountsMethodWithParams = ItemRosterExtensions.GetAddToCountsMethodWithParams(new Type[]
-			{
+		private static readonly Lazy<Func<ItemRoster, EquipmentElement, int, object>> 
+		m_LazyAddToCountsEquipmentElementMethodInfo = new Lazy<Func<ItemRoster, EquipmentElement, int, object>>(delegate() {
+			MethodInfo addToCountsMethodWithParams = ItemRosterExtensions.GetAddToCountsMethodWithParams(new Type[] {
 				typeof(EquipmentElement),
 				typeof(int)
 			});
@@ -202,8 +179,7 @@ namespace BetterSmithingContinued.Utilities
 			{
 				return (ItemRoster instance, EquipmentElement itemObject, int amount) => null;
 			}
-			return (ItemRoster instance, EquipmentElement itemObject, int amount) => (int)addToCountsMethodWithParams.Invoke(instance, new object[]
-			{
+			return (ItemRoster instance, EquipmentElement itemObject, int amount) => (int)addToCountsMethodWithParams.Invoke(instance, new object[] {
 				itemObject,
 				amount
 			});

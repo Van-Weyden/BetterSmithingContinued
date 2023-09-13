@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
     <ProjectGuid>{6CC575CD-5A91-4B94-8AA7-9F05FFB0B368}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -11,8 +11,8 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -21,8 +21,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\bin\Win64_Shipping_Client\</OutputPath>
@@ -115,14 +115,17 @@
     <Compile Include="Patches\CraftingPatches.cs" />
     <Compile Include="Patches\CustomPatchManager.cs" />
     <Compile Include="Patches\DefaultSmithingModelPatches.cs" />
+    <Compile Include="Patches\EquipmentElementPatches.cs" />
     <Compile Include="Patches\HarmonyCustomPatches.cs" />
     <Compile Include="Patches\Instances.cs" />
     <Compile Include="Patches\InventoryLogicPatches.cs" />
     <Compile Include="Patches\ViewModelPatches\CraftingGauntletScreenPatches.cs" />
     <Compile Include="Patches\ViewModelPatches\CraftingVMPatches.cs" />
     <Compile Include="Patches\ViewModelPatches\RefinementVMPatches.cs" />
+    <Compile Include="Patches\ViewModelPatches\SmeltingItemVMPatches.cs" />
     <Compile Include="Patches\ViewModelPatches\SmeltingSortControllerVMPatches.cs" />
     <Compile Include="Patches\ViewModelPatches\SmeltingVMPatches.cs" />
+    <Compile Include="Patches\ViewModelPatches\WeaponDesignResultPopupVMPatches.cs" />
     <Compile Include="Patches\ViewModelPatches\WeaponDesignVMPatches.cs" />
     <Compile Include="Persistence\CraftingSettings.cs" />
     <Compile Include="Persistence\PieceData.cs" />
@@ -162,7 +165,6 @@
     <Compile Include="UI\Widgets\DynamicSpriteBrushWidget.cs" />
     <Compile Include="Utilities\CraftingScreen.cs" />
     <Compile Include="Utilities\SettingsButtonMessages.cs" />
-    <Compile Include="Utilities\WeaponTier.cs" />
     <Compile Include="Utilities\WeaponTierUtils.cs" />
   </ItemGroup>
   <ItemGroup>

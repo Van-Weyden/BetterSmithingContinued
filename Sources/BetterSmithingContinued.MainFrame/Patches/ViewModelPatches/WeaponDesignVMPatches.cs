@@ -33,14 +33,14 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 		private static void RefreshStatsPostfix(WeaponDesignVM __instance)
 		{
 			Crafting crafting;
-			MemberExtractor.GetPrivateFieldValue<WeaponDesignVM, Crafting>(__instance, "_crafting", out crafting);
-			ItemObject currentCraftedItemObject = crafting.GetCurrentCraftedItemObject(false, null);
+			MemberExtractor.GetPrivateFieldValue(__instance, "_crafting", out crafting);
+			ItemObject currentCraftedItemObject = crafting.GetCurrentCraftedItemObject(false);
 			EquipmentElement itemRosterElement = new EquipmentElement(currentCraftedItemObject, null, null, false);
 			int price = Campaign.Current.Models.TradeItemPriceFactorModel.GetPrice(itemRosterElement, Campaign.Current.MainParty, null, true, 0f, 0f, 0f);
 			CraftingListPropertyItem craftingListPropertyItem = new CraftingListPropertyItem(new TextObject("Value: ", null), 50000f, (float)price, 0f, CraftingTemplate.CraftingStatTypes.NumStatTypes, false);
 			craftingListPropertyItem.IsValidForUsage = true;
 			MBBindingList<CraftingListPropertyItem> mbbindingList;
-			MemberExtractor.GetPrivateFieldValue<WeaponDesignVM, MBBindingList<CraftingListPropertyItem>>(__instance, "_primaryPropertyList", out mbbindingList);
+			MemberExtractor.GetPrivateFieldValue(__instance, "_primaryPropertyList", out mbbindingList);
 			mbbindingList.Add(craftingListPropertyItem);
 		}
 
@@ -50,7 +50,7 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 		private static void UpdateResultPropertyListPostfix(WeaponDesignVM __instance)
 		{
 			MBBindingList<WeaponDesignResultPropertyItemVM> mbbindingList;
-			MemberExtractor.GetPrivateFieldValue<WeaponDesignVM, MBBindingList<WeaponDesignResultPropertyItemVM>>(__instance, "_designResultPropertyList", out mbbindingList);
+			MemberExtractor.GetPrivateFieldValue(__instance, "_designResultPropertyList", out mbbindingList);
 			mbbindingList.RemoveAt(mbbindingList.Count - 1);
 		}
 	}
