@@ -1,7 +1,10 @@
 ﻿using System;
-using BetterSmithingContinued.MainFrame.Persistence;
+
 using TaleWorlds.Core;
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
+
+using BetterSmithingContinued.MainFrame.Persistence;
 
 namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 {
@@ -64,7 +67,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 		{
 			this.WeaponData = _weaponData;
 			this.m_OnSelection = _onSelection;
-			this.Name = this.WeaponData.Name;
+			this.Name = this.WeaponData.Name.ToString();
 			this.Visual = new ImageIdentifierVM(this.WeaponData.ItemObject, "");
 			this.RefreshValues();
 		}

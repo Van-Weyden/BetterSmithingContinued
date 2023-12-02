@@ -25,17 +25,14 @@ namespace BetterSmithingContinued.MainFrame.Persistence
 		public static WeaponData GetWeaponData(string _weaponName, CraftingTemplate _craftingTemplate, WeaponDesignElement[] _selectedPieces)
 		{
 			WeaponData weaponData = new WeaponData();
-			weaponData.Id = _craftingTemplate.StringId;
-			weaponData.Name = _weaponName;
-			weaponData.CraftingTemplate = _craftingTemplate.WeaponDescriptions.Last<WeaponDescription>().WeaponClass;
-			weaponData.PieceData = (from x in _selectedPieces
-			where x.IsValid
-			select new PieceData
-			{
+			weaponData.m_Id = _craftingTemplate.StringId;
+			weaponData.m_Name = _weaponName;
+			weaponData.m_CraftingTemplate = _craftingTemplate.WeaponDescriptions.Last().WeaponClass;
+			weaponData.m_PieceData = (from x in _selectedPieces where x.IsValid select new PieceData {
 				Id = x.CraftingPiece.StringId,
 				ScaleFactor = x.ScalePercentage,
 				PieceType = x.CraftingPiece.PieceType
-			}).ToArray<PieceData>();
+			}).ToArray();
 			return weaponData;
 		}
 
@@ -143,7 +140,7 @@ namespace BetterSmithingContinued.MainFrame.Persistence
 						}
 					}
 				}
-				craftingComponent.SetCraftedWeaponName(this.Name);
+				craftingComponent.SetCraftedWeaponName(new TextObject("{=!}" + this.Name, null));
 				_weaponDesignVMInstance.RefreshValues();
 			}
 			catch (Exception)
@@ -181,9 +178,10 @@ namespace BetterSmithingContinued.MainFrame.Persistence
 					WeaponDesignElement weaponDesignElement = WeaponDesignElement.CreateUsablePiece(CraftingPiece.All.FirstOrDefault((CraftingPiece p) => p.StringId == pieceData.Id), pieceData.ScaleFactor);
 					array[(int)pieceData.PieceType] = weaponDesignElement;
 				}
-				WeaponDesign weaponDesign = new WeaponDesign(template, new TextObject("{=!}" + this.Name, null), array);
+				TextObject name = new TextObject("{=!}" + this.Name, null);
+				WeaponDesign weaponDesign = new WeaponDesign(template, name, array);
 				ItemObject itemObject = new ItemObject();
-				CraftingUtils.SmartGenerateItem(weaponDesign, this.Name, Instances.SmithingManager.WeaponDesignVM.GetCraftingComponent().CurrentCulture, new ItemModifierGroup(), ref itemObject);
+				CraftingUtils.SmartGenerateItem(weaponDesign, name, Instances.SmithingManager.WeaponDesignVM.GetCraftingComponent().CurrentCulture, new ItemModifierGroup(), ref itemObject);
 				string text = MBRandom.RandomInt(10000000).ToString();
 				while (MBObjectManager.Instance.GetObject<ItemObject>(text) != null)
 				{

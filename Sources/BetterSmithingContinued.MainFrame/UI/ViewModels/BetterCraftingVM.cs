@@ -368,7 +368,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 				this.DeleteButton.IsEnabled = false;
 				return;
 			}
-			this.WeaponName = _currentlySelectedItem.WeaponData.Name;
+			this.WeaponName = _currentlySelectedItem.WeaponData.Name.ToString();
 			this.EditButton.IsEnabled = true;
 			this.DeleteButton.IsEnabled = true;
 		}
@@ -457,11 +457,11 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			if (this.IsEditing)
 			{
 				this.m_WeaponDesignVMMixinInstance.CurrentlySelectedItem = null;
-				this.m_WeaponSaveData.EditWeapon(Instances.SmithingManager.WeaponDesignVM.GetCraftingComponent(), this.m_EditTarget);
+				this.m_WeaponSaveData.EditWeapon(this.WeaponName, Instances.SmithingManager.WeaponDesignVM.GetCraftingComponent(), this.m_EditTarget);
 				this.IsEditing = false;
 				return;
 			}
-			this.m_WeaponSaveData.SaveWeapon(Instances.SmithingManager.WeaponDesignVM.GetCraftingComponent());
+			this.m_WeaponSaveData.SaveWeapon(this.WeaponName, Instances.SmithingManager.WeaponDesignVM.GetCraftingComponent());
 		}
 
 		private void OnShowNewWeaponPopupToggleStateChanged(object _sender, bool _e)
