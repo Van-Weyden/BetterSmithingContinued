@@ -39,10 +39,10 @@ namespace BetterSmithingContinued.MainFrame.Persistence
 			}
 		}
 
-		public void SaveWeapon(Crafting _craftingInstance)
+		public void SaveWeapon(string weaponName, Crafting _craftingInstance)
 		{
 			WeaponData weaponData = WeaponData.GetWeaponData(
-				_craftingInstance.CraftedWeaponName.ToString(),
+				weaponName,
 				_craftingInstance.CurrentCraftingTemplate,
 				_craftingInstance.SelectedPieces
 			);
@@ -65,10 +65,10 @@ namespace BetterSmithingContinued.MainFrame.Persistence
 			}
 		}
 
-		public void EditWeapon(Crafting _craftingInstance, WeaponData _weaponToEdit)
+		public void EditWeapon(string weaponName, Crafting _craftingInstance, WeaponData _weaponToEdit)
 		{
 			this.DeleteWeapon(_weaponToEdit, false);
-			this.SaveWeapon(_craftingInstance);
+			this.SaveWeapon(weaponName, _craftingInstance);
 			base.NeedsSave = true;
 		}
 

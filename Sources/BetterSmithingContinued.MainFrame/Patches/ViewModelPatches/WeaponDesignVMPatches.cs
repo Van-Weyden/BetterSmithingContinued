@@ -1,13 +1,14 @@
-﻿using System;
-using BetterSmithingContinued.Core;
-using BetterSmithingContinued.MainFrame.Persistence;
-using HarmonyLib;
-using TaleWorlds.CampaignSystem;
+﻿using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+
+using HarmonyLib;
+
+using BetterSmithingContinued.Core;
+using BetterSmithingContinued.MainFrame.Persistence;
 
 namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 {
@@ -45,13 +46,11 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 		}
 
 		[HarmonyPatch(typeof(WeaponDesignVM))]
-		[HarmonyPatch("UpdateResultPropertyList")]
+		[HarmonyPatch("GetResultPropertyList")]
 		[HarmonyPostfix]
-		private static void UpdateResultPropertyListPostfix(WeaponDesignVM __instance)
+		private static void GetResultPropertyListPostfix(ref MBBindingList<WeaponDesignResultPropertyItemVM> __result)
 		{
-			MBBindingList<WeaponDesignResultPropertyItemVM> mbbindingList;
-			MemberExtractor.GetPrivateFieldValue(__instance, "_designResultPropertyList", out mbbindingList);
-			mbbindingList.RemoveAt(mbbindingList.Count - 1);
+			__result.RemoveAt(__result.Count - 1);
 		}
 	}
 }
