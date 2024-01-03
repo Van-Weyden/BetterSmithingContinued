@@ -1,6 +1,11 @@
 ﻿using System;
-using HarmonyLib;
+
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.Smelting;
+
+using HarmonyLib;
+using TaleWorlds.CampaignSystem.ViewModelCollection;
+using BetterSmithingContinued.Core;
+using TaleWorlds.Library;
 
 namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 {
