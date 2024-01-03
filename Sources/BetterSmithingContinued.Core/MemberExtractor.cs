@@ -4,6 +4,38 @@ namespace BetterSmithingContinued.Core
 {
 	public class MemberExtractor
 	{
+		// Methods call
+
+		public static void CallPrivateMethod<ObjectType>(ObjectType obj, string methodName, params object[] methodParams)
+		{
+			CallPrivateMethod<object, ObjectType>(obj, methodName, methodParams);
+		}
+
+		public static void CallPrivateMethod<ReturnType, ObjectType>(ObjectType obj, string methodName, out ReturnType returnValue, params object[] methodParams)
+		{
+			returnValue = CallPrivateMethod<ReturnType, ObjectType>(obj, methodName, methodParams);
+		}
+
+		public static ReturnType CallPrivateMethod<ReturnType, ObjectType>(ObjectType obj, string methodName, params object[] methodParams)
+		{
+			return (ReturnType) typeof(ObjectType).GetMethod(methodName, PrivateMemberFlags)?.Invoke(obj, methodParams);
+		}
+
+		public static void CallStaticPrivateMethod<ObjectType>(ObjectType obj, string methodName, params object[] methodParams)
+		{
+			CallStaticPrivateMethod<object, ObjectType>(obj, methodName, methodParams);
+		}
+
+		public static void CallStaticPrivateMethod<ReturnType, ObjectType>(ObjectType obj, string methodName, out ReturnType returnValue, params object[] methodParams)
+		{
+			returnValue = CallStaticPrivateMethod<ReturnType, ObjectType>(obj, methodName, methodParams);
+		}
+
+		public static ReturnType CallStaticPrivateMethod<ReturnType, ObjectType>(ObjectType obj, string methodName, params object[] methodParams)
+		{
+			return (ReturnType) typeof(ObjectType).GetMethod(methodName, StaticPrivateMemberFlags)?.Invoke(obj, methodParams);
+		}
+
 		// FieldInfo
 
 		public static FieldInfo GetFieldInfo<ObjectType>(string fieldName)
