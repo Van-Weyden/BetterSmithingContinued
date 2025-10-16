@@ -1,0 +1,3 @@
+[submodule "DLLs"]
+	path = DLLs
+	url = https://github.com/Van-Weyden/Bannerlord-dlls

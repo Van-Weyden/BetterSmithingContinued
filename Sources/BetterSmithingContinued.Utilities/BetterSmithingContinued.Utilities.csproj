@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6CC575CD-5A91-4B94-8AA7-9F05FFB0B36A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BetterSmithingContinued.Utilities</RootNamespace>
+    <AssemblyName>BetterSmithingContinued.Utilities</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Win64_Shipping_Client\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Win64_Shipping_Client\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SandBox.GauntletUI">
+      <HintPath>..\..\DLLs\TaleWorlds\SandBox.GauntletUI.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="TaleWorlds.CampaignSystem">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.CampaignSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.CampaignSystem.ViewModelCollection">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.CampaignSystem.ViewModelCollection.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.Core">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.Core.ViewModelCollection">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.Core.ViewModelCollection.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.Engine.GauntletUI">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.Engine.GauntletUI.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.GauntletUI">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.GauntletUI.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.InputSystem">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.InputSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.Library">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.Library.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.Localization">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.Localization.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.ObjectSystem">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.ObjectSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="TaleWorlds.ScreenSystem">
+      <HintPath>..\..\DLLs\TaleWorlds\TaleWorlds.ScreenSystem.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Activator.cs" />
+    <Compile Include="CraftingGauntletScreenExtensions.cs" />
+    <Compile Include="CraftingTemplateUtilities.cs" />
+    <Compile Include="CraftingUtils.cs" />
+    <Compile Include="CraftingVMExtensions.cs" />
+    <Compile Include="EventManagerExtensions.cs" />
+    <Compile Include="HintViewModelUtilities.cs" />
+    <Compile Include="ItemObjectExtensions.cs" />
+    <Compile Include="ItemRosterExtensions.cs" />
+    <Compile Include="Messaging.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RefinementVMExtensions.cs" />
+    <Compile Include="SmeltingItemVMUtilities.cs" />
+    <Compile Include="SmeltingVMExtensions.cs" />
+    <Compile Include="TextObjectUtilities.cs" />
+    <Compile Include="TypeExtensions.cs" />
+    <Compile Include="WeaponComponentDataExtensions.cs" />
+    <Compile Include="WeaponComponentExtensions.cs" />
+    <Compile Include="WeaponDesignExtensions.cs" />
+    <Compile Include="WeaponDesignVMExtensions.cs" />
+    <Compile Include="WidgetExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BetterSmithingContinued.Core\BetterSmithingContinued.Core.csproj">
+      <Project>{6CC575CD-5A91-4B94-8AA7-9F05FFB0B365}</Project>
+      <Name>BetterSmithingContinued.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterSmithingContinued.Settings\BetterSmithingContinued.Settings.csproj">
+      <Project>{6CC575CD-5A91-4B94-8AA7-9F05FFB0B369}</Project>
+      <Name>BetterSmithingContinued.Settings</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,7 @@
+<Prefab>
+  <Widget IsVisible="@IsCategorySelectionDisabled"
+          WidthSizePolicy="Fixed"
+          HeightSizePolicy="Fixed"
+          SuggestedHeight="35"
+          MarginTop="8" />
+</Prefab>

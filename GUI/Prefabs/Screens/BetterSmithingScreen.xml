@@ -1,0 +1,118 @@
+<!--Loaded in every smithing menu tab.-->
+<Prefab>
+  <Constants>
+    <Constant Name="ResetIconSprite"
+              BrushLayer="Default"
+              BrushName="BetterSmithingContinued.ResetIcon.Loader"
+              BrushValueType="Sprite" />
+    <Constant Name="LockIconSprite"
+              BrushLayer="Default"
+              BrushName="BetterSmithingContinued.LockIcon.Loader"
+              BrushValueType="Sprite" />
+    <Constant Name="PopupIconSprite"
+              BrushLayer="Default"
+              BrushName="BetterSmithingContinued.PopupIcon.Loader"
+              BrushValueType="Sprite" />
+  </Constants>
+  <Variables>
+  </Variables>
+  <VisualDefinitions>
+    <VisualDefinition Name="TopMenu"
+                      TransitionDuration="0.2">
+      <VisualState PositionYOffset="0"
+                   State="Default" />
+    </VisualDefinition>
+  </VisualDefinitions>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent"
+            HeightSizePolicy="StretchToParent"
+            DoNotAcceptEvents="true">
+      <Children>
+        <!-- Top Right Settings Bar -->
+        <Widget Id="SettingsBar"
+                VisualDefinition="TopMenu"
+                WidthSizePolicy="Fixed"
+                HeightSizePolicy="Fixed"
+                SuggestedWidth="650"
+                SuggestedHeight="200"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                MarginRight="10"
+                MarginTop="10"
+                DoNotAcceptEvents="true">
+          <Children>
+            <!-- Settings Menu Button -->
+            <ButtonWidget Id="OpenSettings"
+                          DoNotPassEventsToChildren="true"
+                          WidthSizePolicy="Fixed"
+                          HeightSizePolicy="Fixed"
+                          SuggestedWidth="45"
+                          SuggestedHeight="45"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Top"
+                          MarginRight="0"
+                          MarginTop="0"
+                          Brush="BetterSmithingContinued.Settings"
+                          Command.Click="OpenSettingsScreen">
+              <Children>
+                <HintWidget DataSource="{SettingHint}"
+                            WidthSizePolicy="StretchToParent"
+                            HeightSizePolicy="StretchToParent"
+                            Command.HoverBegin="ExecuteBeginHint"
+                            Command.HoverEnd="ExecuteEndHint" />
+              </Children>
+            </ButtonWidget>
+          </Children>
+        </Widget>
+
+        <!-- Bottom Left Hero cycle options. -->
+        <Widget Id="BottomLeftHeroCycleToggles"
+                WidthSizePolicy="CoverChildren"
+                HeightSizePolicy="CoverChildren"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                MarginLeft="20"
+                MarginBottom="20"
+                DoNotAcceptEvents="true">
+          <Children>
+            <!-- Exclude Low Energy Heroes in Cycle actions Toggle. -->
+            <BetterSmithingContinuedToggleWidget DataSource="{ExcludeNoEnergyHeroesToggle}"
+                                        Id="ExcludeNoEnergyHeroesToggle"
+                                        WidthSizePolicy="Fixed"
+                                        HeightSizePolicy="Fixed"
+                                        SuggestedWidth="60"
+                                        SuggestedHeight="60"
+                                        MarginLeft="25" />
+
+            <!-- Only cycle heroes with same recipe toggle -->
+            <BetterSmithingContinuedToggleWidget DataSource="{ExcludeHeroesWithoutSameRecipeToggle}"
+                                        Id="ExcludeHeroesWithoutSameRecipeToggle"
+                                        WidthSizePolicy="Fixed"
+                                        HeightSizePolicy="Fixed"
+                                        SuggestedWidth="60"
+                                        SuggestedHeight="60"
+                                        MarginLeft="85" />
+          </Children>
+        </Widget>
+
+        <!-- Left Perks Panel -->
+        <ListPanel DataSource="{PerkPanelItems}"
+                   WidthSizePolicy="CoverChildren"
+                   HeightSizePolicy="CoverChildren"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   MarginLeft="40"
+                   MarginBottom="225"
+                   LayoutImp.LayoutMethod="VerticalTopToBottom">
+          <ItemTemplate>
+            <PerksPanel Id="PerkPanelItem"
+                        WidthSizePolicy="Fixed"
+                        HeightSizePolicy="Fixed"
+                        SuggestedWidth="150"
+                        SuggestedHeight="24" />
+          </ItemTemplate>
+        </ListPanel>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

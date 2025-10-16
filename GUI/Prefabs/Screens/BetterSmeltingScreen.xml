@@ -1,0 +1,97 @@
+<Prefab>
+  <Constants>
+  </Constants>
+  <Variables>
+  </Variables>
+  <VisualDefinitions>
+  </VisualDefinitions>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent"
+            HeightSizePolicy="StretchToParent"
+            DoNotAcceptEvents="true">
+      <Children>
+        <ListPanel WidthSizePolicy="CoverChildren"
+                   HeightSizePolicy="CoverChildren"
+                   LayoutImp.LayoutMethod="VerticalBottomToTop"
+                   MarginTop="170"
+                   MarginRight="675"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   DoNotUseCustomScale="true">
+          <Children>
+            <!-- Reset Filters Button -->
+            <ButtonWidget Id="ResetAll"
+                          DoNotPassEventsToChildren="true"
+                          WidthSizePolicy="Fixed"
+                          HeightSizePolicy="Fixed"
+                          SuggestedWidth="60"
+                          SuggestedHeight="60"
+                          MarginBottom="20"
+                          Brush="BetterSmithingContinued.ResetAll"
+                          Command.Click="OnResetAllClicked">
+              <Children>
+                <HintWidget DataSource="{ResetAllHint}"
+                            WidthSizePolicy="StretchToParent"
+                            HeightSizePolicy="StretchToParent"
+                            Command.HoverBegin="ExecuteBeginHint"
+                            Command.HoverEnd="ExecuteEndHint" />
+              </Children>
+            </ButtonWidget>
+
+            <!-- Locked Items Toggle -->
+            <BetterSmithingContinuedToggleWidget DataSource="{LockedItemsToggle}"
+                                        Id="LockedItemsToggle"
+                                        WidthSizePolicy="Fixed"
+                                        HeightSizePolicy="Fixed"
+                                        SuggestedWidth="60"
+                                        SuggestedHeight="60" />
+
+            <!-- Player Crafted Items Toggle -->
+            <BetterSmithingContinuedToggleWidget DataSource="{PlayerCraftedItemsToggle}"
+                                        Id="ToggleDisplayPlayerCraftedWeapons"
+                                        WidthSizePolicy="Fixed"
+                                        HeightSizePolicy="Fixed"
+                                        SuggestedWidth="60"
+                                        SuggestedHeight="60" />
+
+            <!-- Non-Player Crafted Items Toggle -->
+            <BetterSmithingContinuedToggleWidget DataSource="{NonPlayerCraftedItemsToggle}"
+                                        Id="ToggleDisplayNonPlayerCraftedWeapons"
+                                        WidthSizePolicy="Fixed"
+                                        HeightSizePolicy="Fixed"
+                                        SuggestedWidth="60"
+                                        SuggestedHeight="60"
+                                        MarginBottom="20" />
+
+            <!-- Resource Material Types Toggle List -->
+            <ListPanel DataSource="{CraftingResourceToggles}"
+                       WidthSizePolicy="CoverChildren"
+                       HeightSizePolicy="CoverChildren"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       MarginTop="10"
+                       MarginRight="0"
+                       MarginBottom="0"
+                       LayoutImp.LayoutMethod="VerticalTopToBottom">
+              <ItemTemplate>
+                <!--Resource Item-->
+                <Widget Id="ResourceButtonToggleWidget"
+                        SuggestedWidth="60"
+                        SuggestedHeight="60"
+                        DoNotAcceptEvents="true">
+                  <Children>
+                    <BetterSmithingContinuedToggleWidget Id="ResourceButtonToggleWidget"
+                                                WidthSizePolicy="Fixed"
+                                                HeightSizePolicy="Fixed"
+                                                SuggestedWidth="60"
+                                                SuggestedHeight="37" />
+                  </Children>
+                </Widget>
+              </ItemTemplate>
+            </ListPanel>
+          </Children>
+        </ListPanel>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

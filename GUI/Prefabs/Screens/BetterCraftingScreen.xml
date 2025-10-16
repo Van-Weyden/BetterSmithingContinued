@@ -1,0 +1,124 @@
+<Prefab>
+  <Constants>
+  </Constants>
+  <Variables>
+  </Variables>
+  <VisualDefinitions>
+  </VisualDefinitions>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent"
+        HeightSizePolicy="StretchToParent"
+        DoNotAcceptEvents="true">
+      <Children>
+        <!-- Show Created Weapon Popup Toggle -->
+        <Widget WidthSizePolicy="CoverChildren"
+                HeightSizePolicy="CoverChildren"
+                MarginRight="500"
+                MarginBottom="0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                DoNotUseCustomScale="true">
+          <Children>
+            <BetterSmithingContinuedToggleWidget 
+                DataSource="{ShowNewWeaponPopupToggle}"
+                Id="ShowNewWeaponPopupToggle"
+                WidthSizePolicy="Fixed"
+                HeightSizePolicy="Fixed"
+                SuggestedWidth="60"
+                SuggestedHeight="60"
+            />
+          </Children>
+        </Widget>
+        
+
+        <!-- Weapon Name Input. -->
+        <ListPanel WidthSizePolicy="Fixed"
+                   HeightSizePolicy="CoverChildren"
+                   SuggestedWidth="300"
+                   MarginTop="122"
+                   MarginRight="660"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   LayoutImp.LayoutMethod="HorizontalLeftToRight"
+                   IsVisible="@IsWeaponNameInputVisible"
+                   DoNotUseCustomScale="true">
+          <Children>
+            <BrushWidget DoNotAcceptEvents="true"
+                         WidthSizePolicy="StretchToParent"
+                         HeightSizePolicy="Fixed"
+                         SuggestedHeight="55"
+                         Brush="SPOptions.Dropdown.Center">
+              <Children>
+                <BetterSmithingContinuedEditableTextWidget WidthSizePolicy="StretchToParent"
+                                                  HeightSizePolicy="StretchToParent"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  Brush="Crafting.NameInput.Text"
+                                                  Text="@WeaponName" />
+              </Children>
+            </BrushWidget>
+          </Children>
+        </ListPanel>
+
+        <!-- Save/Edit/Cancel/Delete buttons on the bottom of the right pane. 109 -->
+        <ListPanel WidthSizePolicy="Fixed"
+                   HeightSizePolicy="Fixed"
+                   SuggestedWidth="650"
+                   SuggestedHeight="168"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Bottom"
+                   LayoutImp.LayoutMethod="HorizontalCentered"
+                   DoNotAcceptEvents="true"
+                   DoNotUseCustomScaleAndChildren="true">
+          <Children>
+            <!-- Save weapon design button -->
+            <BetterSmithingContinuedTextButton DataSource="{SaveButton}" />
+            <BetterSmithingContinuedTextButton DataSource="{CancelButton}" />
+            <BetterSmithingContinuedTextButton DataSource="{EditButton}" />
+            <BetterSmithingContinuedTextButton DataSource="{DeleteButton}" />
+                        
+            <!-- Toggle to switch between crafting/saved weapons modes. -->
+            <ButtonWidget Id="SavedWeaponListToggle"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Top"
+                          DoNotPassEventsToChildren="true"
+                          WidthSizePolicy="Fixed"
+                          HeightSizePolicy="Fixed"
+                          SuggestedWidth="200"
+                          SuggestedHeight="50"
+                          Brush="BetterSmithingContinued.Lower.TextButton"
+                          Command.Click="SavedWeaponListTogglePressed"
+                          UpdateChildrenStates="true">
+                <Children>
+                    <TextWidget WidthSizePolicy="CoverChildren"
+                                HeightSizePolicy="CoverChildren"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                MarginTop="15"
+                                Brush="Crafting.MainAction.Text"
+                                Brush.FontSize="20"
+                                Text="@SavedWeaponListToggleText" />
+
+                    <HintWidget DataSource="{SavedWeaponListToggleHint}"
+                                WidthSizePolicy="StretchToParent"
+                                HeightSizePolicy="StretchToParent"
+                                Command.HoverBegin="ExecuteBeginHint"
+                                Command.HoverEnd="ExecuteEndHint"
+                                IsEnabled="false" />
+                                
+                    <Widget DoNotAcceptEvents="true"
+                            WidthSizePolicy="Fixed"
+                            HeightSizePolicy="Fixed"
+                            SuggestedWidth="210"
+                            SuggestedHeight="60"
+                            PositionYOffset="-10"
+                            PositionXOffset="-2"
+                            Sprite="Crafting\bottom_crafting" />
+                </Children>
+            </ButtonWidget>
+          </Children>
+        </ListPanel>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

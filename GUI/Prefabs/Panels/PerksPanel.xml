@@ -1,0 +1,47 @@
+<Prefab>
+  <Parameters>
+  </Parameters>
+  <Constants>
+  </Constants>
+  <Variables>
+  </Variables>
+  <VisualDefinitions>
+  </VisualDefinitions>
+  <Window>
+    <Widget WidthSizePolicy="StretchToParent"
+            HeightSizePolicy="StretchToParent"
+            DoNotPassEventsToChildren="true">
+      <Children>
+        <ListPanel WidthSizePolicy="CoverChildren"
+                   HeightSizePolicy="CoverChildren"
+                   LayoutImp.LayoutMethod="HorizontalLeftToRight"
+                   MarginTop="4"
+                   DoNotAcceptEvents="true"
+                   UpdateChildrenStates="true">
+          <Children>
+            <DynamicSpriteBrushWidget WidthSizePolicy="Fixed"
+                                      HeightSizePolicy="Fixed"
+                                      SuggestedWidth="24"
+                                      SuggestedHeight="24"
+                                      Sprite="@SpriteAsStr"
+                                      MarginRight="10"
+                                      UpdateChildrenStates="true" />
+
+            <TextWidget WidthSizePolicy="CoverChildren"
+                        HeightSizePolicy="CoverChildren"
+                        VerticalAlignment="Bottom"
+                        Brush="Crafting.Difficulty.Text"
+                        Brush.FontSize="16"
+                        Text="@PerkText" />
+          </Children>
+        </ListPanel>
+        
+        <HintWidget DataSource="{PerkBasicHint}"
+                    WidthSizePolicy="StretchToParent"
+                    HeightSizePolicy="StretchToParent"
+                    Command.HoverBegin="ExecuteBeginHint"
+                    Command.HoverEnd="ExecuteEndHint" />
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>
