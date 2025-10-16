@@ -1,9 +1,9 @@
-﻿using System;
+﻿using TaleWorlds.InputSystem;
+
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
-using MCM.Abstractions.Dropdown;
-using MCM.Abstractions.Settings.Base.Global;
-using TaleWorlds.InputSystem;
+using MCM.Abstractions.Base.Global;
+using MCM.Common;
 
 namespace BetterSmithingContinued.Settings
 {
@@ -23,7 +23,7 @@ namespace BetterSmithingContinued.Settings
 
 		[SettingPropertyDropdown("{=BSC_SPN_21}Smelt Multiple Key", RequireRestart = false, Order = 1, HintText = "{=BSC_SPH_21}The key to hold when pressing the \"Smelt\" Button to perform a Smelt Multiple operation. Smelt Multiple will only smelt the currently selected equipment.")]
 		[SettingPropertyGroup("{=BSC_SPG_02}Smelting", GroupOrder = 3)]
-		public DropdownDefault<KeybindingDropdownOption> SmeltMultipleKey { get; set; } = KeybindingDropdown.GetKeybindingDropdownOptions(InputKey.LeftControl);
+		public Dropdown<KeybindingDropdownOption> SmeltMultipleKey { get; set; } = KeybindingDropdown.GetKeybindingDropdownOptions(InputKey.LeftControl);
 
 		[SettingPropertyInteger("{=BSC_SPN_22}Smelt Multiple Count", 0, 1000, "0", RequireRestart = false, Order = 2, HintText = "{=BSC_SPH_22}The number of smelting operations to perform when pressing \"Smelt\" while holding the key specified in the \"Smelt Multiple\" setting. Set to 0 for Maximum.")]
 		[SettingPropertyGroup("{=BSC_SPG_02}Smelting")]
@@ -31,7 +31,7 @@ namespace BetterSmithingContinued.Settings
 
 		[SettingPropertyDropdown("{=BSC_SPN_23}Smelt All Key", RequireRestart = false, Order = 3, HintText = "{=BSC_SPH_23}The key to hold when pressing the \"Smelt\" Button to perform a Smelt All operation. Smelt All will smelt all unlocked equipment starting from the top of the equipment list.")]
 		[SettingPropertyGroup("{=BSC_SPG_02}Smelting")]
-		public DropdownDefault<KeybindingDropdownOption> SmeltAllKey { get; set; } = KeybindingDropdown.GetKeybindingDropdownOptions(InputKey.LeftShift);
+		public Dropdown<KeybindingDropdownOption> SmeltAllKey { get; set; } = KeybindingDropdown.GetKeybindingDropdownOptions(InputKey.LeftShift);
 
 		[SettingPropertyBool("{=BSC_SPN_24}Enable Smart Smelting", RequireRestart = false, Order = 4, HintText = "{=BSC_SPH_24}If set to true, when doing a \"Smelt All\" operation, will only smelt either Player Crafted weapons, or Non-Player Crafted weapons, depending on the selected piece of equipment when the button is pressed.")]
 		[SettingPropertyGroup("{=BSC_SPG_02}Smelting")]

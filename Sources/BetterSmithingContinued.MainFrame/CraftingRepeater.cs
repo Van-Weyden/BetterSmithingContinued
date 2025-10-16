@@ -8,7 +8,7 @@ using BetterSmithingContinued.MainFrame.Patches;
 using BetterSmithingContinued.MainFrame.Utilities;
 using BetterSmithingContinued.Settings;
 using BetterSmithingContinued.Utilities;
-using MCM.Abstractions.Settings.Base.Global;
+using MCM.Abstractions.Base.Global;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.CampaignBehaviors;
 using TaleWorlds.CampaignSystem.GameState;
