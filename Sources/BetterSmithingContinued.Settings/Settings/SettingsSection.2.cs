@@ -33,7 +33,7 @@ namespace BetterSmithingContinued.Settings
 					{
 						MethodInfo defaultValueMethodInfo = typeof(T).GetMethod((string)defaultValueAttribute.DefaultValue, MemberExtractor.PrivateMemberFlags);
 						action = (Action<SettingsSection<T>>)Delegate.Combine(action, new Action<SettingsSection<T>>(delegate(SettingsSection<T> _section)
-                        {
+						{
 							propertyInfo.SetValue(_section, (defaultValueMethodInfo != null) ? defaultValueMethodInfo.Invoke(_section, new object[0]) : null);
 						}));
 					}

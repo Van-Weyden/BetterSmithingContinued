@@ -22,7 +22,7 @@ namespace BetterSmithingContinued.Utilities
 				{
 					return;
 				}
-                methodInfo_.Invoke(_weaponDesignVM, new object[0]);
+				methodInfo_.Invoke(_weaponDesignVM, new object[0]);
 			};
 		});
 	}
