@@ -116,7 +116,7 @@ namespace BetterSmithingContinued.MainFrame.UI
 					{
 						viewModel2.OnPropertyChangedWithValue(this.IsCategorySelectionDisabled, "IsCategorySelectionDisabled");
 					}
-					GauntletLayer gauntletLayer = this.m_ScreenSwitcher.CraftingGauntletScreen.GetGauntletLayer();
+					GauntletLayer gauntletLayer = this.m_ScreenSwitcher.GauntletCraftingScreen.GetGauntletLayer();
 					if (gauntletLayer == null)
 					{
 						return;
@@ -212,12 +212,12 @@ namespace BetterSmithingContinued.MainFrame.UI
 			this.m_ScreenSwitcher = Instances.ScreenSwitcher;
 			this.m_WeaponSaveData.WeaponsListUpdated += this.OnWeaponsListUpdated;
 			weaponDesign.PropertyChangedWithValue += this.OnWeaponDesignVMPropertyChanged;
-			if (this.m_ScreenSwitcher.CraftingGauntletScreen != null)
+			if (this.m_ScreenSwitcher.GauntletCraftingScreen != null)
 			{
-				this.OnCraftingGauntletScreenUpdated(null, this.m_ScreenSwitcher.CraftingGauntletScreen);
+				this.OnGauntletCraftingScreenUpdated(null, this.m_ScreenSwitcher.GauntletCraftingScreen);
 				return;
 			}
-			this.m_ScreenSwitcher.CraftingGauntletScreenUpdated += this.OnCraftingGauntletScreenUpdated;
+			this.m_ScreenSwitcher.GauntletCraftingScreenUpdated += this.OnGauntletCraftingScreenUpdated;
 		}
 
 		public override void OnFinalize()
@@ -232,7 +232,7 @@ namespace BetterSmithingContinued.MainFrame.UI
 			{
 				try
 				{
-					this.m_ScreenSwitcher.CraftingGauntletScreenUpdated -= this.OnCraftingGauntletScreenUpdated;
+					this.m_ScreenSwitcher.GauntletCraftingScreenUpdated -= this.OnGauntletCraftingScreenUpdated;
 				}
 				catch (Exception)
 				{
@@ -249,7 +249,7 @@ namespace BetterSmithingContinued.MainFrame.UI
 			}
 		}
 
-		private void OnCraftingGauntletScreenUpdated(object _sender, CraftingGauntletScreen _e)
+		private void OnGauntletCraftingScreenUpdated(object _sender, GauntletCraftingScreen _e)
 		{
 			if (_e != null)
 			{

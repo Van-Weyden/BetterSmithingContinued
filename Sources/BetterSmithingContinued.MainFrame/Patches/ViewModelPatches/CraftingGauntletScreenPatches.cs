@@ -4,14 +4,14 @@ using SandBox.GauntletUI;
 
 namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 {
-	[HarmonyPatch(typeof(CraftingGauntletScreen))]
-	public class CraftingGauntletScreenPatches
+	[HarmonyPatch(typeof(GauntletCraftingScreen))]
+	public class GauntletCraftingScreenPatches
 	{
 		[HarmonyPatch("Initialize")]
 		[HarmonyPostfix]
-		public static void InitializePostfix(ref CraftingGauntletScreen __instance)
+		public static void InitializePostfix(ref GauntletCraftingScreen __instance)
 		{
-			Instances.ScreenSwitcher.CraftingGauntletScreen = __instance;
+			Instances.ScreenSwitcher.GauntletCraftingScreen = __instance;
 		}
 
 		[HarmonyPatch("OnFinalize")]
@@ -19,7 +19,7 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 		public static void OnFinalizePostfix()
 		{
 			Instances.SmithingManager.CraftingVM = null;
-			Instances.ScreenSwitcher.CraftingGauntletScreen = null;
+			Instances.ScreenSwitcher.GauntletCraftingScreen = null;
 		}
 	}
 }
