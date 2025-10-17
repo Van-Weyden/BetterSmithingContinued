@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BetterSmithingContinued.Core;
-using BetterSmithingContinued.Core.Modules;
+
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
 
+using BetterSmithingContinued.Core;
+
 namespace BetterSmithingContinued.Inputs.Code
 {
-	public class InputManager : BetterSmithingContinued.Core.Modules.Module, IInputManager
+	public class InputManager : Core.Modules.Module, IInputManager
 	{
 		public void AddHotkey(HotKey _hotKey)
 		{
@@ -28,14 +29,16 @@ namespace BetterSmithingContinued.Inputs.Code
 		{
 			base.Create(_publicContainer);
 			this.m_Hotkeys = new Dictionary<string, List<HotKey>>();
-			this.m_CurrentHotkeyId = HotKeyManager.GetAllCategories().SelectMany((GameKeyContext context) => ((context != null) ? context.RegisteredGameKeys : null) ?? new MBReadOnlyList<GameKey>(new List<GameKey>())).Max(delegate(GameKey gameKey)
-			{
-				if (gameKey == null)
-				{
-					return 0;
-				}
-				return gameKey.Id;
-			}) + 50;
+			this.m_CurrentHotkeyId = HotKeyManager.GetAllCategories().
+				SelectMany(
+					(GameKeyContext context) => (context?.RegisteredGameKeys) ?? new MBReadOnlyList<GameKey>(new List<GameKey>())
+				).Max(delegate(GameKey gameKey) {
+					if (gameKey == null)
+					{
+						return 0;
+					}
+					return gameKey.Id;
+				}) + 50;
 			this.RegisterModule<IInputManager>("");
 		}
 
@@ -56,8 +59,7 @@ namespace BetterSmithingContinued.Inputs.Code
 
 		private void RegisterHotKeys()
 		{
-			HotKeyManager.RegisterInitialContexts(this.m_Hotkeys.Select(delegate(KeyValuePair<string, List<HotKey>> category)
-			{
+			HotKeyManager.RegisterInitialContexts(this.m_Hotkeys.Select(delegate(KeyValuePair<string, List<HotKey>> category) {
 				string id = "BetterSmithingContinued";
 				int gameKeysCount = this.m_CurrentHotkeyId + 1;
 				KeyValuePair<string, List<HotKey>> keyValuePair = category;
@@ -103,8 +105,7 @@ namespace BetterSmithingContinued.Inputs.Code
 			Key key = null;
 			if (_hotKey.GameKey != null)
 			{
-				PropertyInfo value = InputManager.KeyProperty.Value;
-				key = (((value != null) ? value.GetValue(_hotKey.GameKey) : null) as Key);
+				key = KeyProperty.Value?.GetValue(_hotKey.GameKey) as Key;
 			}
 			return key != null && _getState != null && _getState(key.InputKey);
 		}
