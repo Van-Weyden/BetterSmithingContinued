@@ -134,7 +134,7 @@ namespace BetterSmithingContinued.MainFrame
 
 		public SmeltingItemRosterWrapper SmeltingItemRoster { get; private set; }
 
-		public ItemQuality LastSmithedWeaponQuality { get; set; }
+		public ItemModifier LastSmithedWeaponModifier { get; set; }
 
 		public CraftingScreen CurrentCraftingScreen
 		{
