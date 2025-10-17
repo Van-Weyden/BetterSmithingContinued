@@ -70,23 +70,11 @@ namespace BetterSmithingContinued.MainFrame
 				{
 					this.m_CurrentScreenLayer.ReleaseMovie(this.m_CurrentMovie);
 				}
-				GauntletCraftingScreen GauntletCraftingScreen = this.GauntletCraftingScreen;
-				if (GauntletCraftingScreen != null)
-				{
-					GauntletCraftingScreen.RemoveLayer(this.m_CurrentScreenLayer);
-				}
+				this.GauntletCraftingScreen?.RemoveLayer(this.m_CurrentScreenLayer);
 			}
 			this.m_CurrentScreenLayer = this.UpdateScreen(_currentCraftingScreen);
-			GauntletCraftingScreen GauntletCraftingScreen2 = this.GauntletCraftingScreen;
-			if (GauntletCraftingScreen2 != null)
-			{
-				GauntletCraftingScreen2.AddLayer(this.m_CurrentScreenLayer);
-			}
-			CraftingVM craftingVM = this.m_SmithingManager.CraftingVM;
-			if (craftingVM != null)
-			{
-				craftingVM.SmartRefreshEnabledMainAction();
-			}
+			this.GauntletCraftingScreen?.AddLayer(this.m_CurrentScreenLayer);
+			this.m_SmithingManager.CraftingVM?.SmartRefreshEnabledMainAction();
 			this.m_SmithingManager.CurrentCraftingScreen = this.m_CurrentCraftingScreen;
 		}
 
@@ -129,49 +117,24 @@ namespace BetterSmithingContinued.MainFrame
 			this.m_BetterSmithingMovie = this.m_BetterSmithingScreenLayer.LoadMovie("BetterSmithingScreen", this.m_BetterSmithingViewModel);
 			this.m_BetterSmithingScreenLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
 			this.GauntletCraftingScreen.AddLayer(this.m_BetterSmithingScreenLayer);
-			FieldInfo value = ScreenSwitcher.m_LazySceneLayerFieldInfo.Value;
-			this.m_WeaponPreviewSceneLayer = (SceneLayer)((value != null) ? value.GetValue(this.GauntletCraftingScreen) : null);
+			this.m_WeaponPreviewSceneLayer = (SceneLayer)(m_LazySceneLayerFieldInfo.Value?.GetValue(this.GauntletCraftingScreen));
 			this.m_SubModuleEventNotifier.GameTick += this.OnGameTick;
-			ISmithingManager smithingManager = this.m_BetterSmithingViewModel.SmithingManager();
-			WeaponDesignVM weaponDesignVM;
-			if (smithingManager == null)
-			{
-				weaponDesignVM = null;
-			}
-			else
-			{
-				CraftingVM craftingVM = smithingManager.CraftingVM;
-				weaponDesignVM = ((craftingVM != null) ? craftingVM.WeaponDesign : null);
-			}
-			WeaponDesignVM weaponDesignVM2 = weaponDesignVM;
+			WeaponDesignVM weaponDesignVM = this.m_BetterSmithingViewModel.SmithingManager()?.CraftingVM?.WeaponDesign;
 			MCMBetterSmithingSettings instance = GlobalSettings<MCMBetterSmithingSettings>.Instance;
-			if (weaponDesignVM2 != null && instance != null && instance.ShowUnlockedPiecesByDefault && !weaponDesignVM2.ShowOnlyUnlockedPieces)
+			if (weaponDesignVM != null && instance != null && instance.ShowUnlockedPiecesByDefault && !weaponDesignVM.ShowOnlyUnlockedPieces)
 			{
-				weaponDesignVM2.ExecuteToggleShowOnlyUnlockedPieces();
+				weaponDesignVM.ExecuteToggleShowOnlyUnlockedPieces();
 			}
-			ISmithingManager smithingManager2 = this.m_BetterSmithingViewModel.SmithingManager();
-			if (smithingManager2 == null)
-			{
-				return;
-			}
-			CraftingAvailableHeroItemVM currentCraftingHero = smithingManager2.CurrentCraftingHero;
-			if (currentCraftingHero == null)
-			{
-				return;
-			}
-			currentCraftingHero.ExecuteSelection();
+			this.m_BetterSmithingViewModel.SmithingManager()?.CurrentCraftingHero?.ExecuteSelection();
 		}
 
 		private void ExitSmithingScreen()
 		{
 			foreach (KeyValuePair<CraftingScreen, ConnectedViewModel> keyValuePair in this.m_ViewModels)
 			{
-				ConnectedViewModel value = keyValuePair.Value;
-				if (value != null)
-				{
-					value.OnFinalize();
-				}
+				keyValuePair.Value?.OnFinalize();
 			}
+
 			if (this.m_CurrentScreenLayer != null)
 			{
 				if (this.m_CurrentMovie != null)
@@ -182,10 +145,7 @@ namespace BetterSmithingContinued.MainFrame
 			}
 			this.m_BetterSmithingScreenLayer.ReleaseMovie(this.m_BetterSmithingMovie);
 			BetterSmithingVM betterSmithingViewModel = this.m_BetterSmithingViewModel;
-			if (betterSmithingViewModel != null)
-			{
-				betterSmithingViewModel.OnFinalize();
-			}
+			betterSmithingViewModel?.OnFinalize();
 			this.GauntletCraftingScreen.RemoveLayer(this.m_BetterSmithingScreenLayer);
 			this.m_BetterSmithingScreenLayer = null;
 			this.m_BetterSmithingViewModel = null;
@@ -222,10 +182,7 @@ namespace BetterSmithingContinued.MainFrame
 					break;
 				}
 				connectedViewModel = connectedViewModel2;
-				if (connectedViewModel != null)
-				{
-					connectedViewModel.Load();
-				}
+				connectedViewModel?.Load();
 				this.m_ViewModels.Add(_currentCraftingScreen, connectedViewModel);
 			}
 			GauntletLayer gauntletLayer = new GauntletLayer(51, "GauntletLayer", false);
@@ -236,38 +193,21 @@ namespace BetterSmithingContinued.MainFrame
 
 		private void OnGauntletCraftingScreenUpdated(GauntletCraftingScreen _e)
 		{
-			EventHandler<GauntletCraftingScreen> GauntletCraftingScreenUpdated = this.GauntletCraftingScreenUpdated;
-			if (GauntletCraftingScreenUpdated == null)
-			{
-				return;
-			}
-			GauntletCraftingScreenUpdated(this, _e);
+			GauntletCraftingScreenUpdated?.Invoke(this, _e);
 		}
 
-		private static readonly Lazy<FieldInfo> m_LazySceneLayerFieldInfo = new Lazy<FieldInfo>(() => typeof(GauntletCraftingScreen).GetField("_sceneLayer", MemberExtractor.PrivateMemberFlags));
-
+		private static readonly Lazy<FieldInfo> m_LazySceneLayerFieldInfo = new Lazy<FieldInfo>(() => MemberExtractor.GetPrivateFieldInfo<GauntletCraftingScreen>("_sceneLayer"));
 		private readonly Dictionary<CraftingScreen, ConnectedViewModel> m_ViewModels = new Dictionary<CraftingScreen, ConnectedViewModel>();
-
 		private GauntletLayer m_CurrentScreenLayer;
-
 		private GauntletCraftingScreen m_GauntletCraftingScreen;
-
 		private IGauntletMovie m_CurrentMovie;
-
 		private CraftingScreen m_CurrentCraftingScreen;
-
 		private BetterSmithingVM m_BetterSmithingViewModel;
-
 		private GauntletLayer m_BetterSmithingScreenLayer;
-
 		private IGauntletMovie m_BetterSmithingMovie;
-
 		private ISmithingManager m_SmithingManager;
-
 		private ISubModuleEventNotifier m_SubModuleEventNotifier;
-
 		private SceneLayer m_WeaponPreviewSceneLayer;
-
 		private SpriteCategory m_CharacterDeveloperSpriteCategory;
 	}
 }

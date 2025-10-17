@@ -268,7 +268,7 @@ namespace BetterSmithingContinued.MainFrame.UI
 		private void UpdateSavedItemList()
 		{
 			string text;
-			this.UpdateSavedItemList(MemberExtractor.GetPropertyValue<WeaponDesignVM, string>(base.ViewModel, "CurrentCraftedWeaponTemplateId", out text));
+			this.UpdateSavedItemList(MemberExtractor.GetPropertyValue(base.ViewModel, "CurrentCraftedWeaponTemplateId", out text));
 		}
 
 		private void UpdateSavedItemList(string weaponClassId)

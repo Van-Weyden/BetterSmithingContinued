@@ -52,8 +52,8 @@ namespace BetterSmithingContinued.MainFrame
 			this.m_SmeltingVM = _smeltingVM;
 			if (this.m_SmeltingVM != null)
 			{
-				this.m_ProcessLockItemMethodInfo = MemberExtractor.GetPrivateMethodInfo<SmeltingVM>(this.m_SmeltingVM, "ProcessLockItem");
-				this.m_IsItemLockedMethodInfo = MemberExtractor.GetPrivateMethodInfo<SmeltingVM>(this.m_SmeltingVM, "IsItemLocked");
+				this.m_ProcessLockItemMethodInfo = MemberExtractor.GetPrivateMethodInfo<SmeltingVM>("ProcessLockItem");
+				this.m_IsItemLockedMethodInfo = MemberExtractor.GetPrivateMethodInfo<SmeltingVM>("IsItemLocked");
 			}
 			this.m_CurrentFilter = ((EquipmentElement _element) => true);
 			this.m_SmeltingVM.SmeltableItemList = this.DisplayedSmeltableItemList;
@@ -131,10 +131,9 @@ namespace BetterSmithingContinued.MainFrame
 		public bool IsItemLocked(EquipmentElement _equipmentElement)
 		{
 			MethodInfo isItemLockedMethodInfo = this.m_IsItemLockedMethodInfo;
-			return (bool)((isItemLockedMethodInfo != null) ? isItemLockedMethodInfo.Invoke(this.m_SmeltingVM, new object[]
-			{
+			return (bool) isItemLockedMethodInfo?.Invoke(this.m_SmeltingVM, new object[] {
 				_equipmentElement
-			}) : null);
+			});
 		}
 
 		public void ModifyItem(EquipmentElement _equipmentElement, int _count)
