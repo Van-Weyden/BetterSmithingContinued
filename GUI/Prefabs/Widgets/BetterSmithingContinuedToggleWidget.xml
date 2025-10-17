@@ -1,0 +1,37 @@
+<Prefab>
+  <Constants>
+  </Constants>
+  <Variables>
+  </Variables>
+  <VisualDefinitions>
+  </VisualDefinitions>
+  <Window>
+    <ButtonWidget UpdateChildrenStates="true"
+                  DoNotPassEventsToChildren="true"
+                  WidthSizePolicy="StretchToParent"
+                  HeightSizePolicy="StretchToParent"
+                  Command.Click="OnButtonPressed"
+                  IsVisible="@IsVisible" >
+      <Children>
+        <DynamicSpriteBrushWidget WidthSizePolicy="StretchToParent"
+                                  HeightSizePolicy="StretchToParent"
+                                  Sprite="@SpriteAsStr"
+                                  Brush="BetterSmithingContinued.Enabled.Toggle.Brush"
+                                  IsVisible="@IsToggledOn" />
+
+        <DynamicSpriteBrushWidget WidthSizePolicy="StretchToParent"
+                                  HeightSizePolicy="StretchToParent"
+                                  Sprite="@SpriteAsStr"
+                                  Brush="BetterSmithingContinued.Disabled.Toggle.Brush"
+                                  IsVisible="@IsToggledOff" />
+
+        <HintWidget DataSource="{ToggleHint}"
+                    WidthSizePolicy="StretchToParent"
+                    HeightSizePolicy="StretchToParent"
+                    Command.HoverBegin="ExecuteBeginHint"
+                    Command.HoverEnd="ExecuteEndHint"
+                    IsDisabled="true" />
+      </Children>
+    </ButtonWidget>
+  </Window>
+</Prefab>

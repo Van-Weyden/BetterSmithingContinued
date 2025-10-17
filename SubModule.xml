@@ -1,0 +1,33 @@
+<Module>
+	<Name value="Better Smithing Continued" />
+	<Id value="BetterSmithingContinued" />
+	<Version value="v1.8.0.5" />
+	<SingleplayerModule value="true" />
+	<MultiplayerModule value="false" />
+	<DependedModules>
+		<DependedModule Id="Bannerlord.Harmony" />
+		<DependedModule Id="Bannerlord.ButterLib" />
+		<DependedModule Id="Bannerlord.MBOptionScreen" />
+	</DependedModules>
+	<SubModules>
+		<SubModule>
+			<Name value="BetterSmithingContinued.MainFrame" />
+			<DLLName value="BetterSmithingContinued.MainFrame.dll" />
+			<SubModuleClassType value="BetterSmithingContinued.MainFrame.MainFrameSubModule" />
+			<Tags>
+				<Tag key="DedicatedServerType" value="none" />
+				<Tag key="IsNoRenderModeElement" value="false" />
+			</Tags>
+		</SubModule>
+		<SubModule>
+			<Name value="BetterSmithingContinued" />
+			<DLLName value="BetterSmithingContinued.Main.dll" />
+			<SubModuleClassType value="BetterSmithingContinued.Main.Main" />
+			<Tags>
+				<Tag key="DedicatedServerType" value="none" />
+				<Tag key="IsNoRenderModeElement" value="false" />
+			</Tags>
+		</SubModule>
+	</SubModules>
+	<Xmls />
+</Module>

@@ -1,0 +1,67 @@
+<Prefab>
+  <Parameters>
+    <Parameter Name="TextButtonInnerWidth"
+               DefaultValue="200"/>
+    <Parameter Name="TextButtonInnerHeight"
+               DefaultValue="50"/>
+    <Parameter Name="TextButtonWidth"
+               DefaultValue="210"/>
+    <Parameter Name="TextButtonHeight"
+               DefaultValue="60"/>
+    <Parameter Name="TextButtonFontSize"
+               DefaultValue="20"/>
+  </Parameters>
+  <Window>
+    <Widget Id="TextButtonWidget"
+            WidthSizePolicy="Fixed"
+            HeightSizePolicy="Fixed"
+            SuggestedWidth="*TextButtonInnerWidth"
+            SuggestedHeight="*TextButtonInnerHeight"
+            IsVisible="@IsVisible">
+      <Children>
+        <ButtonWidget Id="BetterSmithingContinuedButton"
+                      DoNotPassEventsToChildren="true"
+                      WidthSizePolicy="StretchToParent"
+                      HeightSizePolicy="StretchToParent"
+                      Brush="BetterSmithingContinued.Lower.TextButton"
+                      Command.Click="OnButtonPressed"
+                      UpdateChildrenStates="true"
+                      IsEnabled="@IsEnabled">
+          <Children>
+            <TextWidget WidthSizePolicy="CoverChildren"
+                        HeightSizePolicy="CoverChildren"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        MarginTop="15"
+                        Brush="Crafting.MainAction.Text"
+                        Brush.FontSize="*TextButtonFontSize"
+                        Text="@TextValue" />
+
+            <HintWidget DataSource="{TextButtonHint}"
+                        WidthSizePolicy="StretchToParent"
+                        HeightSizePolicy="StretchToParent"
+                        Command.HoverBegin="ExecuteBeginHint"
+                        Command.HoverEnd="ExecuteEndHint"
+                        IsDisabled="true" />
+          </Children>
+        </ButtonWidget>
+
+        <HintWidget DataSource="{DisabledButtonHint}"
+                    WidthSizePolicy="StretchToParent"
+                    HeightSizePolicy="StretchToParent"
+                    Command.HoverBegin="ExecuteBeginHint"
+                    Command.HoverEnd="ExecuteEndHint"
+                    IsDisabled="true" />
+
+        <Widget DoNotAcceptEvents="true"
+                WidthSizePolicy="Fixed"
+                HeightSizePolicy="Fixed"
+                SuggestedWidth="*TextButtonWidth"
+                SuggestedHeight="*TextButtonHeight"
+                PositionYOffset="-10"
+                PositionXOffset="-2"
+                Sprite="Crafting\bottom_crafting" />
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>
