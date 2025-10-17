@@ -16,13 +16,13 @@
     <string id="BSC_Msg_INF" text="Не удалось найти предмет {ITEM_NAME} в списке переплавки. Произведено полное обновление." />
     
     <!-- Weapon tier prefixes -->
-    <string id="BSC_WT_1" text="Слом." />
-    <string id="BSC_WT_2" text="Ржав." />
-    <string id="BSC_WT_3" text="Груб." />
-    <string id="BSC_WT_4" text="Норм." />
-    <string id="BSC_WT_5" text="Качеств." />
-    <string id="BSC_WT_6" text="Мастер." />
-    <string id="BSC_WT_7" text="Легенд." />
+    <string id="BSC_WT_1" text="Слом." /> 
+    <string id="BSC_WT_2" text="Ржав." /> 
+    <string id="BSC_WT_3" text="Туп." /> 
+    <string id="BSC_WT_4" text="Норм." /> 
+    <string id="BSC_WT_5" text="Сбалансир." /> 
+    <string id="BSC_WT_6" text="Тонкой работы" /> 
+    <string id="BSC_WT_7" text="Легенд." /> 
 
     <!-- Buttons -->
     <string id="BSC_BT_Designs" text="Чертежи" />
@@ -89,8 +89,6 @@
     <string id="BSC_SPH_34" text="Если включено, переключатель &quot;Показывать только доступные части&quot; будет включен по умолчанию." />
     <string id="BSC_SPN_35" text="Группировать одинаковое созданное оружие" />
     <string id="BSC_SPH_35" text="Если включено, созданное оружие с одинаковым названием и характеристикам будет объединяться в пачки." />
-    <string id="BSC_SPN_36" text="Добавлять префикс качества к названию оружия" />
-    <string id="BSC_SPH_36" text="Если включено, при создании оружия к его названию будет добавлен префикс качества (Легендарный(3), Мастерский(2), Качественный(1), Грубый(-1), Ржавый(-2), Сломанный(-3) ). Оружие качества 0 (нормальное) будет без префикса." /> 
     <string id="BSC_SPN_41" text="Включить кузнечную выносливость" />
     <string id="BSC_SPH_41" text="Выключите эту опцию для получения бесконечной кузнечной выносливости." />
     <string id="BSC_SPN_42" text="Множитель восстановления в городах" />

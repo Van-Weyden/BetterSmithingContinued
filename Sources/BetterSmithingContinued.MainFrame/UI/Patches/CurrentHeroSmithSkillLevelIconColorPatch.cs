@@ -5,7 +5,7 @@ using Bannerlord.UIExtenderEx.Prefabs2;
 
 namespace BetterSmithingContinued.MainFrame.UI.Patches
 {
-	[PrefabExtension("Crafting", "descendant::ToggleButtonWidget[@Id='CurrentCraftingHeroToggleWidget']/Children/ListPanel/Children/Widget")]
+	[PrefabExtension("Crafting", "descendant::ButtonWidget[@Id='CurrentCraftingHeroToggleWidget']/Children/ListPanel/Children/Widget")]
 	public class CurrentHeroSmithSkillLevelIconColorPatch : PrefabExtensionSetAttributePatch
 	{
 		public override List<PrefabExtensionSetAttributePatch.Attribute> Attributes

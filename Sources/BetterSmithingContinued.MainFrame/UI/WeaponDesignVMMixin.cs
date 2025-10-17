@@ -268,7 +268,7 @@ namespace BetterSmithingContinued.MainFrame.UI
 		private void UpdateSavedItemList()
 		{
 			string text;
-			this.UpdateSavedItemList(MemberExtractor.GetPropertyValue<WeaponDesignVM, string>(base.ViewModel, "CurrentCraftedWeaponTemplateId", out text));
+			this.UpdateSavedItemList(MemberExtractor.GetPropertyValue(base.ViewModel, "CurrentCraftedWeaponTemplateId", out text));
 		}
 
 		private void UpdateSavedItemList(string weaponClassId)
@@ -289,7 +289,7 @@ namespace BetterSmithingContinued.MainFrame.UI
 			this.CurrentlySelectedItem = _currentSelectedItem;
 		}
 
-		private void OnPropertyChanged([CallerMemberName] string _callerName = "")
+		private new void OnPropertyChanged([CallerMemberName] string _callerName = "")
 		{
 			WeaponDesignVM viewModel = base.ViewModel;
 			if (viewModel == null)

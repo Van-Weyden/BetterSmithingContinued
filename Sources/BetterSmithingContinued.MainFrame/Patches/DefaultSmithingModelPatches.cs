@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using HarmonyLib;
+
 using TaleWorlds.CampaignSystem.GameComponents;
 using TaleWorlds.Core;
+
+using HarmonyLib;
 
 namespace BetterSmithingContinued.MainFrame.Patches
 {
@@ -33,11 +34,11 @@ namespace BetterSmithingContinued.MainFrame.Patches
 			__result = list;
 		}
 
-		[HarmonyPatch("GetModifierTierForSmithedWeapon")]
+		[HarmonyPatch("GetCraftedWeaponModifier")]
 		[HarmonyPostfix]
-		private static void GetModifierTierForSmithedWeaponPostfix(ref int __result)
+		private static void GetCraftedWeaponModifierPostfix(ref ItemModifier __result)
 		{
-			Instances.SmithingManager.LastSmithedWeaponTier = __result;
+			Instances.SmithingManager.LastSmithedWeaponModifier = __result;
 		}
 	}
 }

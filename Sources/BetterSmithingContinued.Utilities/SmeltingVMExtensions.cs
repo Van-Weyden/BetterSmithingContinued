@@ -10,25 +10,17 @@ namespace BetterSmithingContinued.Utilities
 	{
 		public static void SmartSelectItem(this SmeltingVM _smeltingVM, SmeltingItemVM _newItem)
 		{
-			MethodInfo value = SmeltingVMExtensions.m_OnItemSelectionMethodInfo.Value;
-			if (value == null)
-			{
-				return;
-			}
-			value.Invoke(_smeltingVM, new object[]
-			{
+			m_OnItemSelectionMethodInfo.Value?.Invoke(_smeltingVM, new object[] {
 				_newItem
 			});
 		}
 
 		public static ItemRoster GetPlayerItemRoster(this SmeltingVM _smeltingVM)
 		{
-			FieldInfo value = SmeltingVMExtensions.m_PlayerItemRosterFieldInfo.Value;
-			return (ItemRoster)((value != null) ? value.GetValue(_smeltingVM) : null);
+			return (ItemRoster) m_PlayerItemRosterFieldInfo.Value?.GetValue(_smeltingVM);
 		}
 
-		private static readonly Lazy<MethodInfo> m_OnItemSelectionMethodInfo = new Lazy<MethodInfo>(() => typeof(SmeltingVM).GetMethod("OnItemSelection", MemberExtractor.PrivateMemberFlags));
-
-		private static readonly Lazy<FieldInfo> m_PlayerItemRosterFieldInfo = new Lazy<FieldInfo>(() => typeof(SmeltingVM).GetField("_playerItemRoster", MemberExtractor.PrivateMemberFlags));
+		private static readonly Lazy<MethodInfo> m_OnItemSelectionMethodInfo = new Lazy<MethodInfo>(() => MemberExtractor.GetPrivateMethodInfo<SmeltingVM>("OnItemSelection"));
+		private static readonly Lazy<FieldInfo> m_PlayerItemRosterFieldInfo = new Lazy<FieldInfo>(() => MemberExtractor.GetPrivateFieldInfo<SmeltingVM>("_playerItemRoster"));
 	}
 }

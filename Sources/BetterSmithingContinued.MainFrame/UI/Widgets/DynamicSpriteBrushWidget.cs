@@ -20,11 +20,12 @@ namespace BetterSmithingContinued.MainFrame.UI.Widgets
 			}
 			set
 			{
-				foreach (StyleLayer styleLayer in from _style in base.Brush.Styles
-				from state in DynamicSpriteBrushWidget.GetStates(this)
-				select _style.GetLayer(state) into layer
-				where layer != null
-				select layer)
+				foreach (StyleLayer styleLayer in 
+					from _style in base.Brush.Styles
+					from state in GetStates(this)
+					select _style.GetLayer(state) into layer
+					where layer != null
+					select layer)
 				{
 					styleLayer.Sprite = value;
 				}
@@ -37,13 +38,12 @@ namespace BetterSmithingContinued.MainFrame.UI.Widgets
 
 		private static List<string> GetStates(Widget _caller)
 		{
-			if (DynamicSpriteBrushWidget.m_StatesFieldInfo == null)
+			if (m_StatesFieldInfo == null)
 			{
-				DynamicSpriteBrushWidget.m_StatesFieldInfo = typeof(Widget).GetField("_states", MemberExtractor.PrivateMemberFlags);
+				m_StatesFieldInfo = MemberExtractor.GetPrivateFieldInfo<Widget>("_states");
 			}
-			FieldInfo statesFieldInfo = DynamicSpriteBrushWidget.m_StatesFieldInfo;
 			List<string> result;
-			if ((result = (List<string>)((statesFieldInfo != null) ? statesFieldInfo.GetValue(_caller) : null)) == null)
+			if ((result = (List<string>)m_StatesFieldInfo?.GetValue(_caller)) == null)
 			{
 				(result = new List<string>()).Add("Default");
 			}

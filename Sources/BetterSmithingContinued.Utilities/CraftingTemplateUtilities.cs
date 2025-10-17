@@ -17,13 +17,13 @@ namespace BetterSmithingContinued.Utilities
 
 		private static readonly Lazy<Func<CraftingTemplate[]>> m_LazyCraftingTemplateGetAll = new Lazy<Func<CraftingTemplate[]>>(delegate()
 		{
-			PropertyInfo property = typeof(CraftingTemplate).GetProperty("All", MemberExtractor.StaticPublicMemberFlags);
-			if (((property != null) ? property.PropertyType : null) == typeof(IEnumerable<CraftingTemplate>))
+			PropertyInfo property = MemberExtractor.GetStaticPropertyInfo<CraftingTemplate>("All");
+			if (property?.PropertyType == typeof(IEnumerable<CraftingTemplate>))
 			{
 				Func<IEnumerable<CraftingTemplate>> getAll = (Func<IEnumerable<CraftingTemplate>>)property.GetMethod.CreateDelegate(typeof(Func<IEnumerable<CraftingTemplate>>));
 				return () => getAll().ToArray<CraftingTemplate>();
 			}
-			if (((property != null) ? property.PropertyType : null) == typeof(MBReadOnlyList<CraftingTemplate>))
+			if (property?.PropertyType == typeof(MBReadOnlyList<CraftingTemplate>))
 			{
 				Func<MBReadOnlyList<CraftingTemplate>> getAll = (Func<MBReadOnlyList<CraftingTemplate>>)property.GetMethod.CreateDelegate(typeof(Func<MBReadOnlyList<CraftingTemplate>>));
 				return () => getAll().ToArray<CraftingTemplate>();

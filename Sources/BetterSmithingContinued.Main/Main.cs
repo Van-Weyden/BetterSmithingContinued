@@ -47,7 +47,7 @@ namespace BetterSmithingContinued.Main
 		protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
 		{
 			Harmony harmony = new Harmony("Bannerlord.BetterSmithingContinued");
-			MethodInfo method = typeof(SmeltingVM).GetMethod("RefreshList", MemberExtractor.PublicMemberFlags);
+			MethodInfo method = MemberExtractor.GetMethodInfo<SmeltingVM>("RefreshList");
 			Patches patchInfo = Harmony.GetPatchInfo(method);
 			if (patchInfo != null)
 			{

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using BetterSmithingContinued.Core;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
 using TaleWorlds.Core;
@@ -10,17 +9,21 @@ namespace BetterSmithingContinued.Utilities
 	{
 		public static bool CompareTo(this WeaponDesign _this, WeaponDesign _other)
 		{
-			return _this == _other;
+			if (_this == null || _other == null)
+			{
+				return _this == _other;
+			}
+
+			return _this.HashedCode == _other.HashedCode && _this.WeaponName.Equals(_other.WeaponName);
 		}
 
 		public static Crafting GetCraftingComponent(this WeaponDesignVM _weaponDesignVM)
 		{
-			if (WeaponDesignExtensions.m_CraftingFieldInfo == null)
+			if (m_CraftingFieldInfo == null)
 			{
-				WeaponDesignExtensions.m_CraftingFieldInfo = typeof(WeaponDesignVM).GetField("_crafting", MemberExtractor.PrivateMemberFlags);
+				m_CraftingFieldInfo = MemberExtractor.GetPrivateFieldInfo<WeaponDesignVM>("_crafting");
 			}
-			FieldInfo craftingFieldInfo = WeaponDesignExtensions.m_CraftingFieldInfo;
-			return (Crafting)((craftingFieldInfo != null) ? craftingFieldInfo.GetValue(_weaponDesignVM) : null);
+			return (Crafting) m_CraftingFieldInfo?.GetValue(_weaponDesignVM);
 		}
 
 		private static FieldInfo m_CraftingFieldInfo;
