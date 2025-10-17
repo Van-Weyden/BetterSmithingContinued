@@ -34,6 +34,7 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 				smeltingVM.SmeltableItemList = new MBBindingList<SmeltingItemVM>();
 			}
 			____updateValuesOnSmeltItemAction?.Invoke();
+			smeltingVM.SortController.SetListToControl(smeltingVM.SmeltableItemList);
 			__instance.RefreshValues();
 			____updateValuesOnSelectItemAction?.Invoke();
 			return false;

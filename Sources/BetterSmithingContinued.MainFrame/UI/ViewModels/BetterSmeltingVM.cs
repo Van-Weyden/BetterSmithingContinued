@@ -1,10 +1,5 @@
 ﻿using System;
-using BetterSmithingContinued.Core;
-using BetterSmithingContinued.Core.Modules;
-using BetterSmithingContinued.MainFrame.Persistence;
-using BetterSmithingContinued.MainFrame.UI.ViewModels.Templates;
-using BetterSmithingContinued.Settings;
-using BetterSmithingContinued.Utilities;
+
 using SandBox.GauntletUI;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.ComponentInterfaces;
@@ -13,6 +8,13 @@ using TaleWorlds.Core.ViewModelCollection.Information;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+
+using BetterSmithingContinued.Core;
+using BetterSmithingContinued.Core.Modules;
+using BetterSmithingContinued.MainFrame.Persistence;
+using BetterSmithingContinued.MainFrame.UI.ViewModels.Templates;
+using BetterSmithingContinued.Settings;
+using BetterSmithingContinued.Utilities;
 
 namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 {
