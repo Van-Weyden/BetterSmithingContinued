@@ -9,7 +9,11 @@ namespace BetterSmithingContinued.Utilities
 	{
 		public static bool CompareTo(this WeaponDesign _this, WeaponDesign _other)
 		{
-			return _this == _other;
+			if (_this == null)
+			{
+				return _other == null;
+			}
+			return _other != null && _this.HashedCode == _other.HashedCode && _this.WeaponName.Equals(_other.WeaponName);
 		}
 
 		public static Crafting GetCraftingComponent(this WeaponDesignVM _weaponDesignVM)
