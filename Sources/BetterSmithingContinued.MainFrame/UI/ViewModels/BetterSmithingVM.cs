@@ -119,7 +119,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			}
 		}
 
-		public BetterSmithingVM(IPublicContainer _publicContainer, CraftingGauntletScreen _parentScreen) : base(_publicContainer)
+		public BetterSmithingVM(IPublicContainer _publicContainer, GauntletCraftingScreen _parentScreen) : base(_publicContainer)
 		{
 			this.m_ParentScreen = _parentScreen;
 		}
@@ -342,7 +342,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			this.m_SettingsManager.GetSettings<RefiningSettings>().OnlyCycleHeroesWithCurrentRecipe = _isToggleOn;
 		}
 
-		private readonly CraftingGauntletScreen m_ParentScreen;
+		private readonly GauntletCraftingScreen m_ParentScreen;
 
 		private HintViewModel m_SettingsHint;
 
