@@ -23,7 +23,7 @@ namespace BetterSmithingContinued.Utilities
 				{
 					return;
 				}
-                methodInfo_.Invoke(widget, new object[]
+				methodInfo_.Invoke(widget, new object[]
 				{
 					value,
 					name

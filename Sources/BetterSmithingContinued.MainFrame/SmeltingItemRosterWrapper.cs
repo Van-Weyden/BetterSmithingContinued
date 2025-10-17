@@ -280,24 +280,41 @@ namespace BetterSmithingContinued.MainFrame
 		{
 			this.m_SmeltingItemVMList.Clear();
 			this.DisplayedSmeltableItemList.Clear();
-			foreach (ItemRosterElement itemRosterElement in this.m_PartyItemRoster.Where(delegate(ItemRosterElement x)
+
+			IEnumerable<ItemRosterElement> craftedItemList = this.GetCraftedItemList();
+			foreach (ItemRosterElement itemRosterElement in craftedItemList)
 			{
-				ItemRosterElement itemRosterElement2 = x;
-				return itemRosterElement2.EquipmentElement.Item.IsCraftedWeapon;
-			}))
-			{
-				SmeltingItemVM smeltingItemVM = SmeltingItemVMUtilities.CreateSmeltingItemVM(itemRosterElement.EquipmentElement, new Action<SmeltingItemVM>(this.SetCurrentItem), itemRosterElement.Amount, new Action<SmeltingItemVM, bool>(this.ProcessLockItem), this.IsItemLocked(itemRosterElement.EquipmentElement));
-				bool flag = this.m_CurrentFilter(itemRosterElement.EquipmentElement);
-				this.m_SmeltingItemVMList.Add(this.GetStringID(itemRosterElement.EquipmentElement), new SmeltingItemRosterWrapper.ViewableSmeltingItem(smeltingItemVM, flag));
-				if (flag)
-				{
-					this.DisplayedSmeltableItemList.Add(smeltingItemVM);
-				}
+				SetItemDisplay(itemRosterElement);
 			}
+
 			if (!string.IsNullOrEmpty(_message))
 			{
 				Messaging.DisplayMessage(_message);
 			}
+		}
+
+		private IEnumerable<ItemRosterElement> GetCraftedItemList()
+		{
+			return this.m_PartyItemRoster.Where(delegate (ItemRosterElement x) {
+				ItemRosterElement itemRosterElement2 = x;
+				return itemRosterElement2.EquipmentElement.Item.IsCraftedWeapon;
+			});
+		}
+
+		private void SetItemDisplay(ItemRosterElement itemRosterElement)
+		{
+			SmeltingItemVM smeltingItemVM = SmeltingItemVMUtilities.CreateSmeltingItemVM(itemRosterElement.EquipmentElement, new Action<SmeltingItemVM>(this.SetCurrentItem), itemRosterElement.Amount, new Action<SmeltingItemVM, bool>(this.ProcessLockItem), this.IsItemLocked(itemRosterElement.EquipmentElement));
+			bool isNeedDisplayItem = this.IsNeedDisplayItem(itemRosterElement.EquipmentElement);
+			this.m_SmeltingItemVMList.Add(this.GetStringID(itemRosterElement.EquipmentElement), new SmeltingItemRosterWrapper.ViewableSmeltingItem(smeltingItemVM, isNeedDisplayItem));
+			if (isNeedDisplayItem)
+			{
+				this.DisplayedSmeltableItemList.Add(smeltingItemVM);
+			}
+		}
+
+		private bool IsNeedDisplayItem(EquipmentElement _equipmentElement)
+		{
+			return this.m_CurrentFilter(_equipmentElement);
 		}
 
 		private string GetStringID(EquipmentElement _equipmentElement)

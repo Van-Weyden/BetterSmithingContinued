@@ -122,10 +122,6 @@ namespace BetterSmithingContinued.MainFrame
 					if (Input.IsKeyDown(InputKey.LeftControl) && Input.IsKeyDown(InputKey.LeftShift))
 					{
 						num = instance.ControlShiftCraftOperationCount;
-						if (num == 0)
-						{
-							num = int.MaxValue;
-						}
 					}
 					else if (Input.IsKeyDown(InputKey.LeftShift))
 					{
@@ -134,6 +130,11 @@ namespace BetterSmithingContinued.MainFrame
 					else if (Input.IsKeyDown(InputKey.LeftControl))
 					{
 						num = instance.ControlCraftOperationCount;
+					}
+
+					if (num == 0)
+					{
+						num = int.MaxValue;
 					}
 				}
 				else

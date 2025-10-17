@@ -1,4 +1,12 @@
 ﻿using System;
+
+using SandBox.GauntletUI;
+
+using TaleWorlds.CampaignSystem.GameState;
+using TaleWorlds.Core.ViewModelCollection.Information;
+using TaleWorlds.Library;
+using TaleWorlds.Localization;
+
 using BetterSmithingContinued.Core;
 using BetterSmithingContinued.Core.Modules;
 using BetterSmithingContinued.MainFrame.Patches;
@@ -6,14 +14,10 @@ using BetterSmithingContinued.MainFrame.Persistence;
 using BetterSmithingContinued.MainFrame.UI.ViewModels.Templates;
 using BetterSmithingContinued.Settings;
 using BetterSmithingContinued.Utilities;
-using SandBox.GauntletUI;
-using TaleWorlds.Core.ViewModelCollection.Information;
-using TaleWorlds.Library;
-using TaleWorlds.Localization;
 
 namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 {
-	public sealed class BetterCraftingVM : ConnectedViewModel
+	public sealed class BetterCraftingVM : ConnectedViewModel, ICraftingStateHandler
 	{
 		[DataSourceProperty]
 		public ButtonToggleVM ShowNewWeaponPopupToggle
@@ -145,7 +149,20 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			{
 				if (this.m_WeaponName != value)
 				{
-					this.m_WeaponName = value;
+					if (value == null || value == "")
+					{
+						if (this.m_WeaponName == this.m_DefaultWeaponName)
+						{
+							return;
+						}
+
+						this.m_WeaponName = this.m_DefaultWeaponName;
+					}
+					else
+					{
+						this.m_WeaponName = value;
+					}
+
 					base.OnPropertyChanged("WeaponName");
 					this.m_SmithingManager.WeaponDesignVM.ItemName = this.m_WeaponName;
 				}
@@ -198,9 +215,11 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			}
 		}
 
-		public BetterCraftingVM(IPublicContainer _publicContainer, GauntletCraftingScreen _parentScreen) : base(_publicContainer)
+		public BetterCraftingVM(IPublicContainer _publicContainer, GauntletCraftingScreen _parentScreen) : 
+			base(_publicContainer)
 		{
 			this.m_ParentScreen = _parentScreen;
+			MemberExtractor.GetPrivateFieldValue(m_ParentScreen, "_craftingState", out this.m_CraftingState);
 		}
 
 		public override void Load()
@@ -216,6 +235,8 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 				this.OnWeaponDesignVMMixinInstanceChanged(null, WeaponDesignVMMixin.Instance);
 			}
 			this.InitializeChildren();
+			this.m_CraftingState.Handler = this;
+			this.OnDefaultWeaponNameChanged();
 			this.UpdateWeaponNameInputVisibility();
 			this.RefreshValues();
 			IBetterSmithingUIContext module = base.PublicContainer.GetModule<IBetterSmithingUIContext>("");
@@ -283,6 +304,18 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 				}
 				this.SavedWeaponListToggleText = new TextObject("{=BSC_BT_Craft}Crafting", null).ToString();
 			}
+		}
+
+		public void OnCraftingLogicInitialized()
+		{
+			this.m_ParentScreen.OnCraftingLogicInitialized();
+			this.OnDefaultWeaponNameChanged();
+		}
+
+		public void OnCraftingLogicRefreshed()
+		{
+			this.m_ParentScreen.OnCraftingLogicRefreshed();
+			this.OnDefaultWeaponNameChanged();
 		}
 
 		private void OnWeaponDesignVMMixinInstanceChanged(object _sender, WeaponDesignVMMixin _instance)
@@ -452,7 +485,24 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			}
 		}
 
+		private void OnDefaultWeaponNameChanged()
+		{
+			string oldName = this.m_DefaultWeaponName;
+			this.m_DefaultWeaponName = m_CraftingState.CraftingLogic.CraftedWeaponName.ToString();
+			if (this.WeaponName == oldName || this.WeaponName == null)
+			{
+				this.WeaponName = this.m_DefaultWeaponName;
+			}
+			else if (this.WeaponName != null)
+			{
+				// Need to change WeaponDesignVM.ItemName back to this.WeaponName
+				this.m_SmithingManager.WeaponDesignVM.ItemName = this.WeaponName;
+			}
+		}
+
 		private readonly GauntletCraftingScreen m_ParentScreen;
+
+		private CraftingState m_CraftingState;
 
 		private CraftingSettings m_CraftingSettings;
 
@@ -477,6 +527,8 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 		private bool m_IsEditing;
 
 		private string m_WeaponName;
+
+		private string m_DefaultWeaponName;
 
 		private string m_SavedWeaponListToggleText;
 
