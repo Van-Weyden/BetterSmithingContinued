@@ -1,5 +1,5 @@
-﻿using System;
-using BetterSmithingContinued.MainFrame.Utilities;
+using System;
+
 using TaleWorlds.Core;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.CampaignBehaviors;
@@ -7,6 +7,8 @@ using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.Refinement;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.Smelting;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
+
+using BetterSmithingContinued.MainFrame.Utilities;
 
 namespace BetterSmithingContinued.MainFrame
 {

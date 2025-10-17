@@ -41,7 +41,11 @@ namespace BetterSmithingContinued.MainFrame.Persistence
 
 		public void SaveWeapon(Crafting _craftingInstance)
 		{
-			WeaponData weaponData = WeaponData.GetWeaponData(_craftingInstance.CraftedWeaponName.ToString(), _craftingInstance.CurrentCraftingTemplate, _craftingInstance.SelectedPieces);
+			WeaponData weaponData = WeaponData.GetWeaponData(
+				_craftingInstance.CraftedWeaponName.ToString(),
+				_craftingInstance.CurrentCraftingTemplate,
+				_craftingInstance.SelectedPieces
+			);
 			this.Weapons.Add(weaponData);
 			base.NeedsSave = true;
 			this.OnWeaponsListUpdated();

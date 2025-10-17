@@ -165,23 +165,21 @@ namespace BetterSmithingContinued.MainFrame
 			ConnectedViewModel connectedViewModel;
 			if (!this.m_ViewModels.TryGetValue(_currentCraftingScreen, out connectedViewModel))
 			{
-				ConnectedViewModel connectedViewModel2;
 				switch (_currentCraftingScreen)
 				{
 				case CraftingScreen.Smelting:
-					connectedViewModel2 = new BetterSmeltingVM(base.PublicContainer, this.GauntletCraftingScreen);
+					connectedViewModel = new BetterSmeltingVM(base.PublicContainer, this.GauntletCraftingScreen);
 					break;
 				case CraftingScreen.Crafting:
-					connectedViewModel2 = new BetterCraftingVM(base.PublicContainer, this.GauntletCraftingScreen);
+					connectedViewModel = new BetterCraftingVM(base.PublicContainer, this.GauntletCraftingScreen);
 					break;
 				case CraftingScreen.Refining:
-					connectedViewModel2 = new BetterRefiningVM(base.PublicContainer, this.GauntletCraftingScreen);
+					connectedViewModel = new BetterRefiningVM(base.PublicContainer, this.GauntletCraftingScreen);
 					break;
 				default:
-					connectedViewModel2 = null;
+					connectedViewModel = null;
 					break;
 				}
-				connectedViewModel = connectedViewModel2;
 				connectedViewModel?.Load();
 				this.m_ViewModels.Add(_currentCraftingScreen, connectedViewModel);
 			}
