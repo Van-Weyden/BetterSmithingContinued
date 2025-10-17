@@ -78,9 +78,11 @@ namespace BetterSmithingContinued.Utilities
 				}).ToList();
 				for (int i = 0; i < list.Count; i++)
 				{
+					ItemObject item = list[i].EquipmentElement.Item;
+					ItemModifier modifier = list[i].EquipmentElement.ItemModifier;
 					for (int j = i + 1; j < list.Count; j++)
 					{
-						if (list[i].EquipmentElement.Item.CompareTo(list[j].EquipmentElement.Item))
+						if (item.CompareTo(list[j].EquipmentElement.Item) && modifier.CompareTo(list[j].EquipmentElement.ItemModifier))
 						{
 							_itemRoster.SafeAddToCounts(list[j].EquipmentElement, -list[j].Amount);
 							_itemRoster.SafeAddToCounts(list[i].EquipmentElement, list[j].Amount);
@@ -107,7 +109,13 @@ namespace BetterSmithingContinued.Utilities
 				foreach (ItemRosterElement itemRosterElement in _itemRoster)
 				{
 					ItemObject item = itemRosterElement.EquipmentElement.Item;
-					if (item.IsCraftedByPlayer && !item.Equals(_weapon) && item.CompareTo(_weapon))
+					if (!item.IsCraftedByPlayer || item == _weapon)
+					{
+						continue;
+					}
+
+					ItemModifier modifier = itemRosterElement.EquipmentElement.ItemModifier;
+					if (item.CompareTo(_weapon) && modifier.CompareTo(weaponModifier))
 					{
 						PartyBase.MainParty.ItemRoster.SafeAddToCounts(new EquipmentElement(_weapon, weaponModifier), -1);
 						MBObjectManager.Instance.UnregisterObject(_weapon);

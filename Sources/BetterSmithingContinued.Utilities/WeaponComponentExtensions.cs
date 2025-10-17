@@ -7,14 +7,11 @@ namespace BetterSmithingContinued.Utilities
 	{
 		public static bool CompareTo(this WeaponComponent _this, WeaponComponent _other)
 		{
-			if (_this == null)
+			if (_this == null || _other == null)
 			{
-				return _other == null;
+				return _this == _other;
 			}
-			if (_other == null)
-			{
-				return false;
-			}
+
 			if (_this.Weapons.Count == _other.Weapons.Count)
 			{
 				for (int i = 0; i < _this.Weapons.Count; i++)
