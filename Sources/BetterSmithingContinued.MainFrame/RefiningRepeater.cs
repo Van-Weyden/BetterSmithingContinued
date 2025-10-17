@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using BetterSmithingContinued.Core;
-using BetterSmithingContinued.Core.Modules;
-using BetterSmithingContinued.MainFrame.Patches;
-using BetterSmithingContinued.Settings;
-using BetterSmithingContinued.Utilities;
-using MCM.Abstractions.Settings.Base.Global;
+
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.CampaignBehaviors;
 using TaleWorlds.CampaignSystem.Party;
@@ -14,6 +9,14 @@ using TaleWorlds.Core;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Localization;
 using TaleWorlds.ScreenSystem;
+
+using MCM.Abstractions.Base.Global;
+
+using BetterSmithingContinued.Core;
+using BetterSmithingContinued.Core.Modules;
+using BetterSmithingContinued.MainFrame.Patches;
+using BetterSmithingContinued.Settings;
+using BetterSmithingContinued.Utilities;
 
 namespace BetterSmithingContinued.MainFrame
 {

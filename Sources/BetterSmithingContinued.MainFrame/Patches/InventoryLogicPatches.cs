@@ -1,10 +1,12 @@
-﻿using System;
+﻿using TaleWorlds.CampaignSystem.Inventory;
+using TaleWorlds.CampaignSystem.Roster;
+
+using HarmonyLib;
+
+using MCM.Abstractions.Base.Global;
+
 using BetterSmithingContinued.Settings;
 using BetterSmithingContinued.Utilities;
-using HarmonyLib;
-using MCM.Abstractions.Settings.Base.Global;
-using TaleWorlds.CampaignSystem.Inventory;
-using TaleWorlds.CampaignSystem.Roster;
 
 namespace BetterSmithingContinued.MainFrame.Patches
 {
