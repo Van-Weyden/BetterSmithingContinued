@@ -122,6 +122,7 @@
     <Compile Include="Patches\ViewModelPatches\CraftingGauntletScreenPatches.cs" />
     <Compile Include="Patches\ViewModelPatches\CraftingVMPatches.cs" />
     <Compile Include="Patches\ViewModelPatches\RefinementVMPatches.cs" />
+    <Compile Include="Patches\ViewModelPatches\SmeltingItemVMPatches.cs" />
     <Compile Include="Patches\ViewModelPatches\SmeltingSortControllerVMPatches.cs" />
     <Compile Include="Patches\ViewModelPatches\SmeltingVMPatches.cs" />
     <Compile Include="Patches\ViewModelPatches\WeaponDesignResultPopupVMPatches.cs" />
