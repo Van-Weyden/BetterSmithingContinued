@@ -162,7 +162,6 @@
     <Compile Include="UI\Widgets\DynamicSpriteBrushWidget.cs" />
     <Compile Include="Utilities\CraftingScreen.cs" />
     <Compile Include="Utilities\SettingsButtonMessages.cs" />
-    <Compile Include="Utilities\WeaponTier.cs" />
     <Compile Include="Utilities\WeaponTierUtils.cs" />
   </ItemGroup>
   <ItemGroup>

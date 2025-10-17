@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using BetterSmithingContinued.Core;
 using BetterSmithingContinued.Core.Modules;
@@ -134,7 +134,7 @@ namespace BetterSmithingContinued.MainFrame
 
 		public SmeltingItemRosterWrapper SmeltingItemRoster { get; private set; }
 
-		public int LastSmithedWeaponTier { get; set; }
+		public ItemQuality LastSmithedWeaponQuality { get; set; }
 
 		public CraftingScreen CurrentCraftingScreen
 		{
@@ -188,7 +188,7 @@ namespace BetterSmithingContinued.MainFrame
 					}
 					SmithingModel smithingModel2 = Campaign.Current.Models.SmithingModel;
 					WeaponDesignVM weaponDesignVM = this.WeaponDesignVM;
-					num = smithingModel2.GetEnergyCostForSmithing((weaponDesignVM != null) ? weaponDesignVM.GetCraftingComponent().GetCurrentCraftedItemObject(false, null) : null, _hero);
+					num = smithingModel2.GetEnergyCostForSmithing((weaponDesignVM != null) ? weaponDesignVM.GetCraftingComponent().GetCurrentCraftedItemObject(false) : null, _hero);
 					break;
 				}
 				case CraftingScreen.Refining:

@@ -1,5 +1,6 @@
 ﻿using System;
 using BetterSmithingContinued.MainFrame.Utilities;
+using TaleWorlds.Core;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.CampaignBehaviors;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting;
@@ -31,7 +32,7 @@ namespace BetterSmithingContinued.MainFrame
 
 		SmeltingItemRosterWrapper SmeltingItemRoster { get; }
 
-		int LastSmithedWeaponTier { get; set; }
+		ItemQuality LastSmithedWeaponQuality { get; set; }
 
 		CraftingScreen CurrentCraftingScreen { get; set; }
 

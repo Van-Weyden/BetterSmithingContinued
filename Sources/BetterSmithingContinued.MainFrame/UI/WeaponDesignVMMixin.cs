@@ -289,7 +289,7 @@ namespace BetterSmithingContinued.MainFrame.UI
 			this.CurrentlySelectedItem = _currentSelectedItem;
 		}
 
-		private void OnPropertyChanged([CallerMemberName] string _callerName = "")
+		private new void OnPropertyChanged([CallerMemberName] string _callerName = "")
 		{
 			WeaponDesignVM viewModel = base.ViewModel;
 			if (viewModel == null)

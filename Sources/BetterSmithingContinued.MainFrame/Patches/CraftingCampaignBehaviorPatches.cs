@@ -26,20 +26,15 @@ namespace BetterSmithingContinued.MainFrame.Patches
 		[HarmonyPatch("CreateCraftedWeaponInFreeBuildMode")]
 		[HarmonyPrefix]
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void CreateCraftedWeaponPrefix(ref int modifierTier)
+		public static void CreateCraftedWeaponPrefix(ItemModifier weaponModifier)
 		{
-			MCMBetterSmithingSettings instance = GlobalSettings<MCMBetterSmithingSettings>.Instance;
-			if (instance != null && instance.AddWeaponTierPrefixes)
-			{
-				Instances.SmithingManager.ApplyNamePrefix = true;
-			}
-			Instances.SmithingManager.LastSmithedWeaponTier = modifierTier;
+			Instances.SmithingManager.LastSmithedWeaponQuality = (weaponModifier == null ? ItemQuality.Common : weaponModifier.ItemQuality);
 		}
 
 		[HarmonyPatch("CreateCraftedWeaponInFreeBuildMode")]
 		[HarmonyPostfix]
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void CreateCraftedWeaponPostfix(ref CraftingCampaignBehavior __instance, Hero hero, WeaponDesign weaponDesign, ref ItemObject __result)
+		public static void CreateCraftedWeaponPostfix(ref CraftingCampaignBehavior __instance, ref ItemObject __result, Hero hero, WeaponDesign weaponDesign, ItemModifier weaponModifier)
 		{
 			Instances.CraftingRepeater.AddWeaponTierType();
 			ItemObject item = __result;
