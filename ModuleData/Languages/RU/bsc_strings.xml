@@ -18,10 +18,10 @@
     <!-- Weapon tier prefixes -->
     <string id="BSC_WT_1" text="Слом." /> 
     <string id="BSC_WT_2" text="Ржав." /> 
-    <string id="BSC_WT_3" text="Груб." /> 
+    <string id="BSC_WT_3" text="Туп." /> 
     <string id="BSC_WT_4" text="Норм." /> 
     <string id="BSC_WT_5" text="Сбалансир." /> 
-    <string id="BSC_WT_6" text="Мастер." /> 
+    <string id="BSC_WT_6" text="Тонкой работы" /> 
     <string id="BSC_WT_7" text="Легенд." /> 
 
     <!-- Buttons -->
