@@ -45,8 +45,6 @@ namespace BetterSmithingContinued.MainFrame
 			}
 		}
 
-		public bool ApplyNamePrefix { get; set; }
-
 		public CraftingVM CraftingVM
 		{
 			get
