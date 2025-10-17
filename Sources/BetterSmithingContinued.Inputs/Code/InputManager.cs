@@ -59,55 +59,55 @@ namespace BetterSmithingContinued.Inputs.Code
 
 		private void RegisterHotKeys()
 		{
-			HotKeyManager.RegisterInitialContexts(this.m_Hotkeys.Select(delegate(KeyValuePair<string, List<HotKey>> category) {
+			List<GameKeyContext> contexts = HotKeyManager.GetAllCategories().ToList();
+			contexts.AppendList(m_Hotkeys.Select(delegate (KeyValuePair<string, List<HotKey>> category) {
 				string id = "BetterSmithingContinued";
-				int gameKeysCount = this.m_CurrentHotkeyId + 1;
+				int gameKeysCount = m_CurrentHotkeyId + 1;
 				KeyValuePair<string, List<HotKey>> keyValuePair = category;
-				return new HotKeyCategory(id, gameKeysCount, keyValuePair.Value);
-			}), true);
+				GameKeyContext context = new HotKeyCategory(id, gameKeysCount, keyValuePair.Value);
+				return context;
+			}).ToList());
+			HotKeyManager.RegisterInitialContexts(contexts, true);
 		}
 
 		private void OnGameTick(object _sender, float _e)
 		{
 			foreach (HotKey hotKey in this.m_Hotkeys.SelectMany((KeyValuePair<string, List<HotKey>> category) => category.Value))
 			{
-				KeyState keyState = KeyState.None;
-				if (InputManager.GetHotkeyState(hotKey, (InputKey inputKey) => inputKey.IsPressed()))
-				{
-					keyState = KeyState.KeyPressed;
-				}
-				else if (InputManager.GetHotkeyState(hotKey, (InputKey inputKey) => inputKey.IsReleased()))
-				{
-					keyState = KeyState.KeyReleased;
-				}
-				else if (InputManager.GetHotkeyState(hotKey, (InputKey inputKey) => inputKey.IsDown()))
-				{
-					keyState = KeyState.KeyDown;
-				}
+				KeyState keyState = GetHotkeyState(hotKey);
 				if (hotKey.CurrentKeyState != keyState)
 				{
-					Func<bool> isEnabled = hotKey.IsEnabled;
-					if (isEnabled != null && isEnabled())
+					if (keyState == KeyState.None || (hotKey.IsEnabled != null && hotKey.IsEnabled()))
 					{
 						hotKey.CurrentKeyState = keyState;
-						continue;
 					}
-				}
-				if (keyState == KeyState.None)
-				{
-					hotKey.CurrentKeyState = KeyState.None;
 				}
 			}
 		}
 
-		private static bool GetHotkeyState(HotKey _hotKey, Func<InputKey, bool> _getState)
+		private static KeyState GetHotkeyState(HotKey _hotKey)
 		{
-			Key key = null;
+			KeyState keyState = KeyState.None;
 			if (_hotKey.GameKey != null)
 			{
-				key = KeyProperty.Value?.GetValue(_hotKey.GameKey) as Key;
+				Key key = KeyProperty.Value?.GetValue(_hotKey.GameKey) as Key;
+				if (key != null)
+				{
+					if (key.InputKey.IsPressed())
+					{
+						keyState = KeyState.KeyPressed;
+					}
+					else if (key.InputKey.IsReleased())
+					{
+						keyState = KeyState.KeyReleased;
+					}
+					else if (key.InputKey.IsDown())
+					{
+						keyState = KeyState.KeyDown;
+					}
+				}
 			}
-			return key != null && _getState != null && _getState(key.InputKey);
+			return keyState;
 		}
 
 		private static readonly Lazy<PropertyInfo> KeyProperty = new Lazy<PropertyInfo>(() => {
@@ -115,9 +115,7 @@ namespace BetterSmithingContinued.Inputs.Code
 		});
 
 		private int m_CurrentHotkeyId;
-
 		private Dictionary<string, List<HotKey>> m_Hotkeys;
-
 		private ISubModuleEventNotifier m_SubModuleEventNotifier;
 	}
 }
