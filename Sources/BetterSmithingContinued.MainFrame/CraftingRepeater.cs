@@ -55,8 +55,9 @@ namespace BetterSmithingContinued.MainFrame
 						{
 							while (num3 < num2 && (this.m_SmithingManager.CraftingVM.SmartHaveEnergy() || this.GetCraftingStaminaCost(hero, currentCraftedItemObject) <= __instance.GetHeroCraftingStamina(hero)))
 							{
-								ItemModifier weaponModifier = Campaign.Current.Models.SmithingModel.GetCraftedWeaponModifier(weaponDesign, hero);
-								__instance.CreateCraftedWeaponInFreeBuildMode(hero, weaponDesign, weaponModifier);
+								ItemModifier craftedWeaponModifier = Campaign.Current.Models.SmithingModel.GetCraftedWeaponModifier(weaponDesign, hero);
+								__instance.SetCurrentItemModifier(craftedWeaponModifier);
+								__instance.CreateCraftedWeaponInFreeBuildMode(hero, weaponDesign, craftedWeaponModifier);
 								num3++;
 							}
 						}
