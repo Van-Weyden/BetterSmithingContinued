@@ -26,7 +26,7 @@ namespace BetterSmithingContinued.MainFrame.Patches
 		[HarmonyPatch("CreateCraftedWeaponInFreeBuildMode")]
 		[HarmonyPrefix]
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void CreateCraftedWeaponPrefix(ItemModifier weaponModifier)
+		public static void CreateCraftedWeaponInFreeBuildModePrefix(ItemModifier weaponModifier)
 		{
 			Instances.SmithingManager.LastSmithedWeaponQuality = (weaponModifier == null ? ItemQuality.Common : weaponModifier.ItemQuality);
 		}
@@ -34,7 +34,7 @@ namespace BetterSmithingContinued.MainFrame.Patches
 		[HarmonyPatch("CreateCraftedWeaponInFreeBuildMode")]
 		[HarmonyPostfix]
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void CreateCraftedWeaponPostfix(ref CraftingCampaignBehavior __instance, ref ItemObject __result, Hero hero, WeaponDesign weaponDesign, ItemModifier weaponModifier)
+		public static void CreateCraftedWeaponInFreeBuildModePostfix(ref CraftingCampaignBehavior __instance, ref ItemObject __result, Hero hero, WeaponDesign weaponDesign, ItemModifier weaponModifier)
 		{
 			Instances.CraftingRepeater.AddWeaponTierType();
 			ItemObject item = __result;
