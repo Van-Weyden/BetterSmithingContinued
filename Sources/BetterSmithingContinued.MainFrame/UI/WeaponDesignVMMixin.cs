@@ -121,7 +121,7 @@ namespace BetterSmithingContinued.MainFrame.UI
 					{
 						return;
 					}
-					gauntletLayer._gauntletUIContext.EventManager.PerformActionOnWidget(delegate(ListPanel _widget)
+					gauntletLayer.UIContext.EventManager.PerformActionOnWidget(delegate(ListPanel _widget)
 					{
 						if (_widget.Id == "CraftingFilters")
 						{

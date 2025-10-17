@@ -1,7 +1,7 @@
 <Module>
 	<Name value="Better Smithing Continued" />
 	<Id value="BetterSmithingContinued" />
-	<Version value="v1.2.3.9" />
+	<Version value="b1.2.6.9" /> 
     <Official value="false" />
 	<SingleplayerModule value="true" />
 	<MultiplayerModule value="false" />

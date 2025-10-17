@@ -8,7 +8,7 @@ namespace BetterSmithingContinued.Utilities
 {
 	public static class CraftingUtils
 	{
-		public static void SmartGenerateItem(WeaponDesign weaponDesign, string name, BasicCultureObject culture, ItemModifierGroup itemModifierGroup, ref ItemObject itemObject)
+		public static void SmartGenerateItem(WeaponDesign weaponDesign, TextObject name, BasicCultureObject culture, ItemModifierGroup itemModifierGroup, ref ItemObject itemObject)
 		{
 			CraftingUtils.m_LazyGenerateItemInvoker.Value(weaponDesign, name, culture, itemModifierGroup, ref itemObject);
 		}
@@ -18,30 +18,30 @@ namespace BetterSmithingContinued.Utilities
 			MethodInfo generateItemMethodInfo = MemberExtractor.GetStaticMethodInfo<Crafting>("GenerateItem");
 			if (generateItemMethodInfo.GetParameters()[3].ParameterType == typeof(ItemModifierGroup))
 			{
-				return delegate(WeaponDesign _design, string _name, BasicCultureObject _culture, ItemModifierGroup _group, ref ItemObject _itemObject)
+				return delegate(WeaponDesign _design, TextObject _name, BasicCultureObject _culture, ItemModifierGroup _group, ref ItemObject _itemObject)
 				{
 					generateItemMethodInfo.Invoke(null, new object[]
 					{
 						_design,
-						new TextObject("{=!}" + _name, null),
+						_name,
 						_culture,
 						_group,
 						_itemObject
 					});
 				};
 			}
-			return delegate(WeaponDesign _design, string _name, BasicCultureObject _culture, ItemModifierGroup _, ref ItemObject _itemObject)
+			return delegate(WeaponDesign _design, TextObject _name, BasicCultureObject _culture, ItemModifierGroup _, ref ItemObject _itemObject)
 			{
 				generateItemMethodInfo.Invoke(null, new object[]
 				{
 					_design,
-					new TextObject("{=!}" + _name, null),
+					_name,
 					_culture,
 					_itemObject
 				});
 			};
 		});
 
-		private delegate void GenerateItem(WeaponDesign weaponDesign, string name, BasicCultureObject culture, ItemModifierGroup itemModifierGroup, ref ItemObject itemObject);
+		private delegate void GenerateItem(WeaponDesign weaponDesign, TextObject name, BasicCultureObject culture, ItemModifierGroup itemModifierGroup, ref ItemObject itemObject);
 	}
 }
