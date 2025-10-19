@@ -43,10 +43,12 @@ namespace BetterSmithingContinued.MainFrame.Patches
 				item = MobileParty.MainParty.ItemRoster?.CompressIdenticalCraftedWeapons(__result, weaponModifier);
 			}
 			Instances.SmithingManager.SmeltingItemRoster.ModifyItem(new EquipmentElement(item, weaponModifier), 1);
+
 			if (m_IsCrafting)
 			{
 				return;
 			}
+
 			m_IsCrafting = true;
 			try
 			{

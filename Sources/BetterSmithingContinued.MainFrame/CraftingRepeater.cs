@@ -43,23 +43,19 @@ namespace BetterSmithingContinued.MainFrame
 			{
 				int desiredOperationCount = this.GetDesiredOperationCount();
 				CraftingState craftingState;
-				if (desiredOperationCount != -1 && (craftingState = (GameStateManager.Current.ActiveState as CraftingState)) != null)
+				if (desiredOperationCount > 0 && (craftingState = (GameStateManager.Current.ActiveState as CraftingState)) != null)
 				{
 					ItemObject currentCraftedItemObject = craftingState.CraftingLogic.GetCurrentCraftedItemObject(false);
-					int num = Math.Min(desiredOperationCount, this.GetMaxCraftingCount(weaponDesign) + 1);
-					if (num != 0)
+					int total = Math.Min(desiredOperationCount, this.GetMaxCraftingCount(weaponDesign));
+					int crafted = 1; // DoMultiCrafting calls in the CreateCraftedWeaponInFreeBuildModePostfix so we already crafted at least one weapon
+                    if (ScreenManager.TopScreen != null)
 					{
-						int num2 = Math.Min(desiredOperationCount, num);
-						int num3 = 1;
-						if (ScreenManager.TopScreen != null)
+						while (crafted < total && HaveEnergy(ref __instance, hero, currentCraftedItemObject))
 						{
-							while (num3 < num2 && (this.m_SmithingManager.CraftingVM.SmartHaveEnergy() || this.GetCraftingStaminaCost(hero, currentCraftedItemObject) <= __instance.GetHeroCraftingStamina(hero)))
-							{
-								ItemModifier craftedWeaponModifier = Campaign.Current.Models.SmithingModel.GetCraftedWeaponModifier(weaponDesign, hero);
-								__instance.SetCurrentItemModifier(craftedWeaponModifier);
-								__instance.CreateCraftedWeaponInFreeBuildMode(hero, weaponDesign, craftedWeaponModifier);
-								num3++;
-							}
+							ItemModifier craftedWeaponModifier = Campaign.Current.Models.SmithingModel.GetCraftedWeaponModifier(weaponDesign, hero);
+							__instance.SetCurrentItemModifier(craftedWeaponModifier);
+							__instance.CreateCraftedWeaponInFreeBuildMode(hero, weaponDesign, craftedWeaponModifier);
+							crafted++;
 						}
 					}
 				}
@@ -72,6 +68,14 @@ namespace BetterSmithingContinued.MainFrame
 			{
 				this.DisplayCraftingMessage();
 			}
+		}
+
+		public bool HaveEnergy(ref CraftingCampaignBehavior __instance, Hero hero, ItemObject item)
+		{
+			return (
+				this.m_SmithingManager.CraftingVM.SmartHaveEnergy() || 
+				this.GetCraftingStaminaCost(hero, item) <= __instance.GetHeroCraftingStamina(hero)
+			);
 		}
 
 		public override void Create(IPublicContainer _publicContainer)

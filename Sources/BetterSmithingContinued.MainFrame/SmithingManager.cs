@@ -22,11 +22,8 @@ namespace BetterSmithingContinued.MainFrame
 	public class SmithingManager : Module, ISmithingManager
 	{
 		public event EventHandler<CraftingAvailableHeroItemVM> CurrentCraftingHeroChanged;
-
 		public event EventHandler EnteredSmithingMenu;
-
 		public event EventHandler LeavingSmithingMenu;
-
 		public event EventHandler<CraftingScreen> CraftingScreenChanged;
 
 		public CraftingAvailableHeroItemVM CurrentCraftingHero

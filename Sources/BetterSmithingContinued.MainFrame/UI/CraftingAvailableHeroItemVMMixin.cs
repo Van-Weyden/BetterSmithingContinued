@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Bannerlord.UIExtenderEx.Attributes;
 using Bannerlord.UIExtenderEx.ViewModels;
 using TaleWorlds.CampaignSystem;
@@ -13,7 +13,7 @@ namespace BetterSmithingContinued.MainFrame.UI
 	{
 		public CraftingAvailableHeroItemVMMixin(CraftingAvailableHeroItemVM vm) : base(vm)
 		{
-			this.HeroSmithSkillColor = "#80AB22FF";
+			this.HeroSmithSkillColor = NoCapReachedColor;
 		}
 
 		[DataSourceProperty]
@@ -48,15 +48,16 @@ namespace BetterSmithingContinued.MainFrame.UI
 		{
 			if (this.IsHeroReachedHardCap(hero))
 			{
-				this.HeroSmithSkillColor = "#C75808FF";
-				return;
+				this.HeroSmithSkillColor = HardCapReachedColor;
 			}
-			if ((float)hero.GetSkillValue(DefaultSkills.Crafting) >= this.HeroSmithSkillSoftCap(hero))
+			else if (hero.GetSkillValue(DefaultSkills.Crafting) >= this.HeroSmithSkillSoftCap(hero))
 			{
-				this.HeroSmithSkillColor = "#EFAB6BFF";
-				return;
+				this.HeroSmithSkillColor = SoftCapReachedColor;
 			}
-			this.HeroSmithSkillColor = "#80AB22FF";
+			else
+			{
+				this.HeroSmithSkillColor = NoCapReachedColor;
+			}
 		}
 
 		private bool IsHeroReachedHardCap(Hero hero)
@@ -71,15 +72,15 @@ namespace BetterSmithingContinued.MainFrame.UI
 
 		private string GetColorType()
 		{
-			if (this.m_color == "#80AB22FF")
+			if (this.m_color == NoCapReachedColor)
 			{
 				return "none";
 			}
-			if (this.m_color == "#EFAB6BFF")
+			if (this.m_color == SoftCapReachedColor)
 			{
 				return "soft";
 			}
-			if (this.m_color == "#C75808FF")
+			if (this.m_color == HardCapReachedColor)
 			{
 				return "hard";
 			}
@@ -87,11 +88,9 @@ namespace BetterSmithingContinued.MainFrame.UI
 		}
 
 		private const string NoCapReachedColor = "#80AB22FF";
-
 		private const string SoftCapReachedColor = "#EFAB6BFF";
-
 		private const string HardCapReachedColor = "#C75808FF";
 
-		private string m_color;
-	}
+        private string m_color;
+    }
 }
