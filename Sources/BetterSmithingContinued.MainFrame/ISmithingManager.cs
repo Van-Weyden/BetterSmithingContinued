@@ -34,8 +34,6 @@ namespace BetterSmithingContinued.MainFrame
 
 		SmeltingItemRosterWrapper SmeltingItemRoster { get; }
 
-		ItemModifier LastSmithedWeaponModifier { get; set; }
-
 		CraftingScreen CurrentCraftingScreen { get; set; }
 
 		CraftingAvailableHeroItemVM CurrentCraftingHero { get; set; }

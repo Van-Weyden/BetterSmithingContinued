@@ -52,7 +52,20 @@ namespace BetterSmithingContinued.MainFrame
 			}
 		}
 
-		public void UpdateCurrentCraftingSubVM(CraftingScreen _currentCraftingScreen)
+		public ConnectedViewModel ConnectedViewModel(CraftingScreen screen)
+		{
+            ConnectedViewModel connectedViewModel;
+			if (this.m_ViewModels.TryGetValue(screen, out connectedViewModel))
+			{
+				return connectedViewModel;
+			}
+			else
+			{
+				return null;
+			}
+        }
+
+        public void UpdateCurrentCraftingSubVM(CraftingScreen _currentCraftingScreen)
 		{
 			if (this.GauntletCraftingScreen == null)
 			{
@@ -162,8 +175,8 @@ namespace BetterSmithingContinued.MainFrame
 
 		private GauntletLayer UpdateScreen(CraftingScreen _currentCraftingScreen)
 		{
-			ConnectedViewModel connectedViewModel;
-			if (!this.m_ViewModels.TryGetValue(_currentCraftingScreen, out connectedViewModel))
+			ConnectedViewModel connectedViewModel = this.ConnectedViewModel(_currentCraftingScreen);
+			if (connectedViewModel == null)
 			{
 				switch (_currentCraftingScreen)
 				{

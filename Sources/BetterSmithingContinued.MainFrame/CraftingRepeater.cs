@@ -27,36 +27,60 @@ namespace BetterSmithingContinued.MainFrame
 {
 	public sealed class CraftingRepeater : Module, ICraftingRepeater
 	{
-		public void AddWeaponTierType()
-		{
-			ItemQuality weaponQuality = this.m_SmithingManager.LastSmithedWeaponModifier?.ItemQuality ?? ItemQuality.Common;
-			if (!this.m_WeaponQualityCounts.ContainsKey(weaponQuality))
-			{
-				this.m_WeaponQualityCounts.Add(weaponQuality, 0);
-			}
-			this.m_WeaponQualityCounts[weaponQuality]++;
-		}
+        public void OnWeaponCrafted(ItemObject weapon, ItemModifier weaponModifier)
+        {
+            if (GlobalSettings<MCMBetterSmithingSettings>.Instance?.GroupIdenticalCraftedWeapons ?? false)
+            {
+                weapon = MobileParty.MainParty.ItemRoster?.CompressIdenticalCraftedWeapons(weapon, weaponModifier);
+            }
+            Instances.SmithingManager.SmeltingItemRoster.ModifyItem(new EquipmentElement(weapon, weaponModifier), 1);
 
-		public void DoMultiCrafting(ref CraftingCampaignBehavior __instance, Hero hero, WeaponDesign weaponDesign)
-		{
-			try
+            ItemQuality weaponQuality = weaponModifier?.ItemQuality ?? ItemQuality.Common;
+            if (!this.m_WeaponQualityCounts.ContainsKey(weaponQuality))
+            {
+                this.m_WeaponQualityCounts.Add(weaponQuality, 0);
+            }
+            this.m_WeaponQualityCounts[weaponQuality]++;
+        }
+
+        public void InitMultiCrafting(Hero hero, WeaponDesign weaponDesign)
+        {
+            m_hero = hero;
+            m_weaponDesign = weaponDesign;
+            m_desiredOperationCount = this.GetDesiredOperationCount();
+        }
+
+        public void DoMultiCrafting(ICraftingCampaignBehavior craftingBehavior)
+        {
+            if (m_hero == null || m_weaponDesign == null)
 			{
-				int desiredOperationCount = this.GetDesiredOperationCount();
-				CraftingState craftingState;
-				if (desiredOperationCount > 0 && (craftingState = (GameStateManager.Current.ActiveState as CraftingState)) != null)
+				return;
+			}
+
+			CraftingState craftingState = GameStateManager.Current.ActiveState as CraftingState;
+			if (craftingState == null)
+			{
+				return;
+			}
+
+            try
+			{
+				ItemObject craftedWeapon = craftingState.CraftingLogic.GetCurrentCraftedItemObject(false);
+                ItemModifier craftedWeaponModifier = craftingBehavior.GetCurrentItemModifier();
+
+                int total = Math.Min(m_desiredOperationCount, this.GetMaxCraftingCount(m_weaponDesign));
+				int crafted = 1; // DoMultiCrafting calls in the ExecuteFinalizeCrafting so we already crafted at least one weapon
+                OnWeaponCrafted(craftedWeapon, craftedWeaponModifier); // Process that first crafted weapon
+
+                if (ScreenManager.TopScreen != null)
 				{
-					ItemObject currentCraftedItemObject = craftingState.CraftingLogic.GetCurrentCraftedItemObject(false);
-					int total = Math.Min(desiredOperationCount, this.GetMaxCraftingCount(weaponDesign));
-					int crafted = 1; // DoMultiCrafting calls in the CreateCraftedWeaponInFreeBuildModePostfix so we already crafted at least one weapon
-                    if (ScreenManager.TopScreen != null)
+					while (crafted < total && HaveEnergy(craftingBehavior, m_hero, craftedWeapon))
 					{
-						while (crafted < total && HaveEnergy(ref __instance, hero, currentCraftedItemObject))
-						{
-							ItemModifier craftedWeaponModifier = Campaign.Current.Models.SmithingModel.GetCraftedWeaponModifier(weaponDesign, hero);
-							__instance.SetCurrentItemModifier(craftedWeaponModifier);
-							__instance.CreateCraftedWeaponInFreeBuildMode(hero, weaponDesign, craftedWeaponModifier);
-							crafted++;
-						}
+						craftedWeaponModifier = Campaign.Current.Models.SmithingModel.GetCraftedWeaponModifier(m_weaponDesign, m_hero);
+						craftingBehavior.SetCurrentItemModifier(craftedWeaponModifier);
+						craftedWeapon = craftingBehavior.CreateCraftedWeaponInFreeBuildMode(m_hero, m_weaponDesign, craftedWeaponModifier);
+                        OnWeaponCrafted(craftedWeapon, craftedWeaponModifier);
+                        crafted++;
 					}
 				}
 			}
@@ -70,11 +94,11 @@ namespace BetterSmithingContinued.MainFrame
 			}
 		}
 
-		public bool HaveEnergy(ref CraftingCampaignBehavior __instance, Hero hero, ItemObject item)
+		public bool HaveEnergy(ICraftingCampaignBehavior craftingBehavior, Hero hero, ItemObject item)
 		{
 			return (
 				this.m_SmithingManager.CraftingVM.SmartHaveEnergy() || 
-				this.GetCraftingStaminaCost(hero, item) <= __instance.GetHeroCraftingStamina(hero)
+				this.GetCraftingStaminaCost(hero, item) <= craftingBehavior.GetHeroCraftingStamina(hero)
 			);
 		}
 
@@ -177,5 +201,9 @@ namespace BetterSmithingContinued.MainFrame
 		private Dictionary<TaleWorlds.Core.ItemQuality, int> m_WeaponQualityCounts;
 
 		private ISmithingManager m_SmithingManager;
-	}
+        private Hero m_hero = null;
+        private WeaponDesign m_weaponDesign = null;
+
+        private int m_desiredOperationCount = 0;
+    }
 }

@@ -1,14 +1,19 @@
-﻿using TaleWorlds.CampaignSystem;
+﻿using HarmonyLib;
+using System;
+using System.Diagnostics;
+using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.CampaignBehaviors;
+using TaleWorlds.CampaignSystem.CharacterDevelopment;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
-using HarmonyLib;
-
 using BetterSmithingContinued.Core;
 using BetterSmithingContinued.MainFrame.Persistence;
+using BetterSmithingContinued.Utilities;
+using BetterSmithingContinued.MainFrame.UI.ViewModels;
 
 namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 {
@@ -19,16 +24,59 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 		[HarmonyPrefix]
 		public static bool CreateCraftingResultPopupPrefix(ref WeaponDesignVM __instance)
 		{
-			bool skipWeaponFinalizationPopup = Instances.SettingsManager.GetSettings<CraftingSettings>().SkipWeaponFinalizationPopup;
+            bool skipWeaponFinalizationPopup = Instances.SettingsManager.GetSettings<CraftingSettings>().SkipWeaponFinalizationPopup;
 			if (__instance.ActiveCraftingOrder == null && skipWeaponFinalizationPopup)
 			{
-				__instance.ExecuteFinalizeCrafting();
+                __instance.ExecuteFinalizeCrafting();
 				return false;
 			}
 			return true;
 		}
 
-		[HarmonyPatch(typeof(WeaponDesignVM))]
+        [HarmonyPatch("ExecuteFinalizeCrafting")]
+        [HarmonyPrefix]
+        public static bool ExecuteFinalizeCrafting(ref WeaponDesignVM __instance)
+        {
+            ICraftingCampaignBehavior craftingBehavior = Campaign.Current.GetCampaignBehavior<ICraftingCampaignBehavior>();
+
+            MemberExtractor.GetPrivateFieldValue(__instance, "_crafting", out Crafting crafting);
+            bool skipWeaponFinalizationPopup = Instances.SettingsManager.GetSettings<CraftingSettings>().SkipWeaponFinalizationPopup;
+			if (skipWeaponFinalizationPopup)
+            {
+                TextObject weaponName = new TextObject("{=!}" + __instance.ItemName, null);
+                crafting.SetCraftedWeaponName(weaponName);
+                craftingBehavior.SetCraftedWeaponName(__instance.CraftedItemObject, weaponName);
+            }
+			else
+			{
+                if (Instances.ScreenSwitcher.ConnectedViewModel(Utilities.CraftingScreen.Crafting) is BetterCraftingVM craftingVM)
+                {
+					craftingVM.WeaponName = crafting.CraftedWeaponName.ToString();
+                }
+            }
+
+			if (!CraftingCampaignBehaviorPatches.IsCrafting)
+			{
+				CraftingCampaignBehaviorPatches.IsCrafting = true;
+				try
+				{
+					Instances.CraftingRepeater.DoMultiCrafting(craftingBehavior);
+				}
+				catch (Exception value)
+				{
+					Core.Logger.Add("ExecuteFinalizeCrafting ERROR: " + value.Message);
+				}
+				finally
+				{
+					Instances.SmithingManager.CraftingVM.SmartRefreshEnabledMainAction();
+				}
+				CraftingCampaignBehaviorPatches.IsCrafting = false;
+			}
+
+            return true;
+		}
+
+        [HarmonyPatch(typeof(WeaponDesignVM))]
 		[HarmonyPatch("RefreshStats")]
 		[HarmonyPostfix]
 		private static void RefreshStatsPostfix(WeaponDesignVM __instance)

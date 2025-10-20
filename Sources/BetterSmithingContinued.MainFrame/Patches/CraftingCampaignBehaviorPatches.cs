@@ -23,46 +23,17 @@ namespace BetterSmithingContinued.MainFrame.Patches
 	[HarmonyPatch(typeof(CraftingCampaignBehavior))]
 	public class CraftingCampaignBehaviorPatches
 	{
-		[HarmonyPatch("CreateCraftedWeaponInFreeBuildMode")]
-		[HarmonyPrefix]
-		[MethodImpl(MethodImplOptions.NoInlining)]
-		public static void CreateCraftedWeaponInFreeBuildModePrefix(ItemModifier weaponModifier)
-		{
-			Instances.SmithingManager.LastSmithedWeaponModifier = weaponModifier;
-		}
+		public static bool IsCrafting;
 
 		[HarmonyPatch("CreateCraftedWeaponInFreeBuildMode")]
 		[HarmonyPostfix]
 		[MethodImpl(MethodImplOptions.NoInlining)]
 		public static void CreateCraftedWeaponInFreeBuildModePostfix(ref CraftingCampaignBehavior __instance, ref ItemObject __result, Hero hero, WeaponDesign weaponDesign, ItemModifier weaponModifier)
 		{
-			Instances.CraftingRepeater.AddWeaponTierType();
-			ItemObject item = __result;
-			if (GlobalSettings<MCMBetterSmithingSettings>.Instance?.GroupIdenticalCraftedWeapons ?? false)
-			{
-				item = MobileParty.MainParty.ItemRoster?.CompressIdenticalCraftedWeapons(__result, weaponModifier);
-			}
-			Instances.SmithingManager.SmeltingItemRoster.ModifyItem(new EquipmentElement(item, weaponModifier), 1);
-
-			if (m_IsCrafting)
-			{
-				return;
-			}
-
-			m_IsCrafting = true;
-			try
-			{
-				Instances.CraftingRepeater.DoMultiCrafting(ref __instance, hero, weaponDesign);
-			}
-			catch (Exception value)
-			{
-				Trace.WriteLine(value);
-			}
-			finally
-			{
-				Instances.SmithingManager.CraftingVM.SmartRefreshEnabledMainAction();
-				m_IsCrafting = false;
-			}
+			if (!IsCrafting)
+            {
+                Instances.CraftingRepeater.InitMultiCrafting(hero, weaponDesign);
+            }
 		}
 
 		[HarmonyPatch("DoRefinement")]
@@ -188,10 +159,7 @@ namespace BetterSmithingContinued.MainFrame.Patches
 			return MathF.Round((float)num * multiplier);
 		}
 
-		private static bool m_IsSmelting;
-
-		private static bool m_IsRefining;
-
-		private static bool m_IsCrafting;
+		private static bool m_IsSmelting = false;
+        private static bool m_IsRefining = false;
 	}
 }
