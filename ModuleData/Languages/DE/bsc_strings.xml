@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+      type="string">
+  <tags>
+    <tag language="Deutsch" />
+  </tags>
+  <strings>
+    <string id="BSC_Loaded" text="Geladen" />
+    <string id="BSC_Msg_CW" text="Gefertigte {COUNT} Waffen" />
+    <string id="BSC_Msg_NHA" text="Kein anderer gültiger Held verfügbar." />
+    <string id="BSC_Msg_All" text="Alle" />
+    <string id="BSC_Msg_Max" text="Max" />
+    <string id="BSC_Msg_IR" text="Verfeinert {COUNT} {?IS_PLURAL}mal{?}mal{\?}." />
+    <string id="BSC_Msg_IS" text="Geschmolzen {COUNT} {?IS_PLURAL}Waffe{?}Waffen{\?}." />
+    <string id="BSC_Msg_INF" text="Konnte Gegenstand {ITEM_NAME} in der Schmelzliste nicht finden. Führe eine vollständige Aktualisierung durch." />
+	
+	<!-- Weapon tier prefixes --> 
+    <string id="BSC_WT_1" text="Kaputt" /> 
+    <string id="BSC_WT_2" text="Verrostet" /> 
+    <string id="BSC_WT_3" text="Stumpf" /> 
+    <string id="BSC_WT_4" text="Normal" /> 
+    <string id="BSC_WT_5" text="Ausgeglichen" /> 
+    <string id="BSC_WT_6" text="Meisterwerk" /> 
+    <string id="BSC_WT_7" text="Legendär" /> 
+
+    <!-- Buttons -->
+    <string id="BSC_BT_Designs" text="Gespeicherte Designs" />
+    <string id="BSC_BH_Designs" text="Drücke, um zwischen den Listenansichten Herstellen und Gespeicherte Waffendesigns zu wechseln." />
+    <string id="BSC_BT_Craft" text="Herstellen" />
+    <string id="BSC_BT_Speichern" text="Entwurf speichern" />
+    <string id="BSC_BH_Save" text="Speichere die aktuell entworfene Waffe." />
+    <string id="BSC_BT_Cancel" text="Abbrechen" />
+    <string id="BSC_BH_Cancel" text="Alle Änderungen an der aktuell entworfenen Waffe rückgängig machen." />
+    <string id="BSC_BT_Edit" text="Entwurf bearbeiten" />
+    <string id="BSC_BH_Edit" text="Den aktuell ausgewählten Waffenentwurf bearbeiten." />
+    <string id="BSC_DBH_Edit" text="Wähle einen Waffenentwurf aus, um ihn zu bearbeiten." />
+    <string id="BSC_BT_Delete" text="Entwurf löschen" />
+    <string id="BSC_BH_Delete" text="Lösche den aktuell ausgewählten Waffenentwurf." />
+    <string id="BSC_DBH_Delete" text="Wähle einen Waffenentwurf aus, um ihn zu löschen." />
+    <string id="BSC_BH_Popup" text="Schalte aus, um den Popup-Dialog für neue Waffen zu überspringen." />
+    <string id="BSC_BH_Reset" text="Drücke dies, um alle Schalter auf ihren Standardzustand zurückzusetzen." />
+    <string id="BSC_BH_Locked" text="Schalte dies ein, um gesperrte Waffen einzuschließen." />
+    <string id="BSC_BH_PCW" text="Schalte ein, um von Spielern gefertigte Waffen einzuschließen." />
+    <string id="BSC_BH_NPCW" text="Einschalten, um nicht von Spielern gefertigte Waffen einzuschließen." />
+    <string id="BSC_BH_Settings" text="Einstellungen (Demnächst... vielleicht)" />
+    <string id="BSC_BH_RLEH" text="Schalte ein, um Helden mit zu wenig Energie aus den Zyklen zu entfernen." />
+    <string id="BSC_BH_RHWR" text="Schalte ein, um Helden, die nicht das aktuell ausgewählte Rezept haben, aus Zyklen zu entfernen." />
+    <string id="BSC_BH_IWGM" text="Einschalten, um Waffen einzuschließen, die mindestens einen " />
+
+    <!-- Hotkeys -->
+    <string id="BSC_HKN_01" text="Cycle Hero Forwards" />
+    <string id="BSC_HKH_01" text="HotKey, um in der Schmiede zwischen verschiedenen Helden vorwärts zu wechseln." />
+    <string id="BSC_HKN_02" text="Held rückwärts zyklieren" />
+    <string id="BSC_HKH_02" text="HotKey, um in der Schmiede zwischen verschiedenen Helden rückwärts zu wechseln." />
+    <string id="BSC_HKN_Left" text="Links" />
+    <string id="BSC_HKN_Right" text="Rechts" />
+    <string id="BSC_HKN_LA" text="Linker Pfeil" />
+    <string id="BSC_HKN_RA" text="Rechter Pfeil" />
+    
+    <!-- Settings groups -->
+    <string id="BSC_SPG_01" text="Veredelung" />
+    <string id="BSC_SPG_02" text="Schmelzen" />
+    <string id="BSC_SPG_03" text="Crafting" />
+    <string id="BSC_SPG_04" text="Handwerkliche Ausdauer" />
+    
+    <!-- Settings properties -->
+    <string id="BSC_SPN_11" text="Strg Verfeinern" />
+    <string id="BSC_SPH_11" text="Die Anzahl der Verfeinerungsvorgänge, die durchgeführt werden, wenn du &quot;Verfeinern&quot; drückst, während du die linke Strg-Taste gedrückt hältst. Für Maximum auf 0 setzen." />
+    <string id="BSC_SPN_12" text="Mit Umschalttaste verfeinern" />
+    <string id="BSC_SPH_12" text="Die Anzahl der Verfeinerungsvorgänge, die durchgeführt werden, wenn du &quot;Verfeinern&quot; drückst, während du die linke Umschalttaste gedrückt hältst. Für Maximum auf 0 setzen." />
+    <string id="BSC_SPN_13" text="Strg + Umschalttaste Verfeinern" />
+    <string id="BSC_SPH_13" text="Die Anzahl der Verfeinerungsvorgänge, die durchgeführt werden, wenn du &quot;Verfeinern&quot; drückst, während du die linke Strg + linke Umschalttaste gedrückt hältst. Für Maximum auf 0 setzen." />
+    <string id="BSC_SPN_21" text="Smelt Multiple Key" />
+    <string id="BSC_SPH_21" text="Die Taste, die du gedrückt halten musst, wenn du die Taste &quot;Schmelzen&quot; drückst, um einen Schmelzvorgang auszuführen. Bei der Mehrfachschmelze wird nur die aktuell ausgewählte Ausrüstung geschmolzen." />
+    <string id="BSC_SPN_22" text="Smelt Multiple Count" />
+    <string id="BSC_SPH_22" text="Die Anzahl der Schmelzvorgänge, die durchgeführt werden, wenn du die Taste &quot;Schmelzen&quot; drückst, während du die Taste hältst, die in der Einstellung &quot;Mehrfachschmelzen&quot; angegeben ist. Für Maximum auf 0 setzen." />
+    <string id="BSC_SPN_23" text="Alle Tasten riechen" />
+    <string id="BSC_SPH_23" text="Die Taste, die du gedrückt halten musst, wenn du den &quot;Smelt&quot; Button drückst, um eine Smelt All Operation durchzuführen. Mit Alles schmelzen werden alle freigeschalteten Ausrüstungen geschmolzen, beginnend mit dem Anfang der Ausrüstungsliste. />
+    <string id="BSC_SPN_24" text="Smart Smelting aktivieren" />
+    <string id="BSC_SPH_24" text="Wenn diese Option auf WAHR gesetzt ist, werden beim Schmelzen aller Waffen entweder nur von Spielern hergestellte Waffen oder nur von Nicht-Spielern hergestellte Waffen geschmolzen, je nachdem, welche Ausrüstung beim Drücken der Taste ausgewählt wurde." />
+    <string id="BSC_SPN_31" text="Ctrl Craft" />
+    <string id="BSC_SPH_31" text="Die Anzahl der Crafting-Vorgänge, die ausgeführt werden, wenn du &quot;Craft&quot; drückst, während du die linke Strg-Taste gedrückt hältst. Für Maximum auf 0 setzen." />
+    <string id="BSC_SPN_32" text="Shift Craft" />
+    <string id="BSC_SPH_32" text="Die Anzahl der Crafting-Vorgänge, die ausgeführt werden, wenn du &quot;Craft&quot; drückst, während du die linke Umschalttaste gedrückt hältst. Für Maximum auf 0 setzen." />
+    <string id="BSC_SPN_33" text="Strg + Umschalttaste Craft" />
+    <string id="BSC_SPH_33" text="Die Anzahl der Crafting-Vorgänge, die ausgeführt werden, wenn du &quot;Craft&quot; drückst, während du die linke Strg + linke Umschalttaste gedrückt hältst. Für Maximum auf 0 setzen." />
+    <string id="BSC_SPN_34" text="Standardmäßig nur freigeschaltete Teile anzeigen" />
+    <string id="BSC_SPH_34" text="Wenn aktiviert, wird die Schaltfläche &quot;Nur nicht gesperrte Teile anzeigen&quot; standardmäßig aktiviert." />
+    <string id="BSC_SPN_35" text="Identische gefertigte Waffen gruppieren" />
+    <string id="BSC_SPH_35" text="Wenn diese Option aktiviert ist, werden alle identischen Waffen (Waffen mit demselben Namen, demselben Typ, denselben Werten usw.) zusammengefasst." />
+    <string id="BSC_SPN_41" text="Handwerksausdauer verwenden" />
+    <string id="BSC_SPH_41" text="Deaktiviere diese Option für unbegrenzte Handwerksausdauer." />
+    <string id="BSC_SPN_42" text="Erholungsrate innerhalb von Städten" />
+    <string id="BSC_SPH_42" text="Die Wiederherstellungsrate der Ausdauer für das Crafting vervielfacht sich, wenn die Gruppe in Städten rastet. 100% bedeutet, dass die Erholungsrate in den Städten die gleiche ist wie bei Vanilla; 0% bedeutet, dass die Erholungsrate in den Städten deaktiviert ist." />
+    <string id="BSC_SPN_43" text="Erholungsrate außerhalb von Städten" />
+    <string id="BSC_SPH_43" text="Die Erholungsrate der Ausdauer wird vervielfacht, wenn sich die Gruppe außerhalb von Städten befindet. 100% bedeutet, dass die Erholungsrate in der Stadt die gleiche ist wie bei Vanilla; 0% bedeutet, dass die Erholungsrate außerhalb der Stadt deaktiviert ist." />
+    
+    <!-- Error messages -->
+    <string id="BSC_EM_01" text="Beim Versuch, einen Schmelzvorgang durchzuführen, ist ein Fehler aufgetreten. Exception: " />
+    <string id="BSC_EM_02" text="Bei dem Versuch, mehrere Handwerksvorgänge auszuführen, ist ein Fehler aufgetreten. Exception: " />
+    <string id="BSC_EM_03" text="Bei dem Versuch, mehrere Veredelungsvorgänge durchzuführen, ist ein Fehler aufgetreten. Ausnahme: " />
+    <string id="BSC_EM_04" text="Bei dem Versuch, das Schmieden von Zeichen zu wiederholen, ist eine Ausnahme aufgetreten. Ausnahme: " />
+    <string id="BSC_EM_05" text="Beim Aufruf von HeroHasEnoughStaminaForMainAction ist eine Ausnahme aufgetreten. Exception: " />
+    <string id="BSC_EM_06" text="Bei dem Versuch, mehrere zu riechen, ist ein Problem aufgetreten." />
+    <string id="BSC_EM_07" text="Beim Gruppieren von Gegenständen ist ein Problem aufgetreten. Exception: " />
+    <string id="BSC_EM_08" text="Die Methode ItemRoster.AddToCounts konnte nicht gefunden werden. Die Artikelgruppierung funktioniert nicht." />
+    <string id="BSC_EM_09" text="Item Filtering verursachte ein Problem." />
+  </strings>
+</base>

@@ -6,9 +6,10 @@ using TaleWorlds.Core;
 namespace BetterSmithingContinued.MainFrame
 {
 	public interface ICraftingRepeater
-	{
-		void AddWeaponTierType();
+    {
+        void OnWeaponCrafted(ItemObject weapon, ItemModifier weaponModifier);
 
-		void DoMultiCrafting(ref CraftingCampaignBehavior __instance, Hero hero, WeaponDesign weaponDesign);
+        void InitMultiCrafting(Hero hero, WeaponDesign weaponDesign);
+        void DoMultiCrafting(ICraftingCampaignBehavior craftingBehavior);
 	}
 }

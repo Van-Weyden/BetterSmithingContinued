@@ -66,8 +66,8 @@ namespace BetterSmithingContinued.Utilities
 		}
 
 		public static void CompressIdenticalCraftedWeapons(this ItemRoster _itemRoster)
-		{
-			if (_itemRoster.Count <= 0)
+        {
+            if (_itemRoster.Count <= 0)
 			{
 				return;
 			}
@@ -76,7 +76,7 @@ namespace BetterSmithingContinued.Utilities
 				List<ItemRosterElement> list = _itemRoster.ToArray().Where(delegate(ItemRosterElement item) {
 					return item.EquipmentElement.Item?.IsCraftedByPlayer ?? false;
 				}).ToList();
-				for (int i = 0; i < list.Count; i++)
+                for (int i = 0; i < list.Count; i++)
 				{
 					ItemObject item = list[i].EquipmentElement.Item;
 					ItemModifier modifier = list[i].EquipmentElement.ItemModifier;
@@ -90,8 +90,8 @@ namespace BetterSmithingContinued.Utilities
 							j--;
 						}
 					}
-				}
-			}
+                }
+            }
 			catch (Exception ex)
 			{
 				InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=BSC_EM_07}Issue occurred while grouping items. Exception: ", null).ToString() + ex.ToString()));

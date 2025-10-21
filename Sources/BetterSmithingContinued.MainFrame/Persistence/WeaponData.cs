@@ -5,15 +5,17 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
-using BetterSmithingContinued.Annotations;
-using BetterSmithingContinued.Core;
-using BetterSmithingContinued.MainFrame.Patches;
-using BetterSmithingContinued.Utilities;
+
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using TaleWorlds.ObjectSystem;
+
+using BetterSmithingContinued.Annotations;
+using BetterSmithingContinued.Core;
+using BetterSmithingContinued.MainFrame.Patches;
+using BetterSmithingContinued.Utilities;
 
 namespace BetterSmithingContinued.MainFrame.Persistence
 {
@@ -141,7 +143,8 @@ namespace BetterSmithingContinued.MainFrame.Persistence
 					}
 				}
 				craftingComponent.SetCraftedWeaponName(new TextObject("{=!}" + this.Name, null));
-				_weaponDesignVMInstance.RefreshValues();
+
+                _weaponDesignVMInstance.RefreshValues();
 			}
 			catch (Exception)
 			{
@@ -194,7 +197,7 @@ namespace BetterSmithingContinued.MainFrame.Persistence
 			catch (Exception value)
 			{
 				Console.WriteLine(value);
-				throw;
+				throw new Exception(this.Name);
 			}
 		}
 

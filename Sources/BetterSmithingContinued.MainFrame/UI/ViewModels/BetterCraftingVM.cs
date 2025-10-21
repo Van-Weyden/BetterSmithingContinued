@@ -1,19 +1,18 @@
-﻿using System;
-
-using SandBox.GauntletUI;
-
-using TaleWorlds.CampaignSystem.GameState;
-using TaleWorlds.Core.ViewModelCollection.Information;
-using TaleWorlds.Library;
-using TaleWorlds.Localization;
-
-using BetterSmithingContinued.Core;
+﻿using BetterSmithingContinued.Core;
 using BetterSmithingContinued.Core.Modules;
 using BetterSmithingContinued.MainFrame.Patches;
 using BetterSmithingContinued.MainFrame.Persistence;
 using BetterSmithingContinued.MainFrame.UI.ViewModels.Templates;
 using BetterSmithingContinued.Settings;
 using BetterSmithingContinued.Utilities;
+using SandBox.GauntletUI;
+using System;
+using TaleWorlds.CampaignSystem.GameState;
+using TaleWorlds.CampaignSystem.ViewModelCollection;
+using TaleWorlds.Core.ViewModelCollection.Information;
+using TaleWorlds.Library;
+using TaleWorlds.Localization;
+using TaleWorlds.MountAndBlade.ComponentInterfaces;
 
 namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 {
@@ -149,27 +148,50 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			{
 				if (this.m_WeaponName != value)
 				{
-					if (value == null || value == "")
-					{
-						if (this.m_WeaponName == this.m_DefaultWeaponName)
-						{
-							return;
-						}
-
-						this.m_WeaponName = this.m_DefaultWeaponName;
-					}
-					else
-					{
-						this.m_WeaponName = value;
-					}
-
-					base.OnPropertyChanged("WeaponName");
-					this.m_SmithingManager.WeaponDesignVM.ItemName = this.m_WeaponName;
-				}
+                    this.m_WeaponName = value;
+                    this.m_SmithingManager.WeaponDesignVM.ItemName = this.m_WeaponName;
+                    UpdateMainActionState(value);
+                    base.OnPropertyChanged("WeaponName");
+                }
 			}
 		}
 
-		[DataSourceProperty]
+        private void UpdateMainActionState(string weaponName)
+        {
+            Tuple<bool, TextObject> turple = IsStringApplicableForItemName(weaponName);
+			UpdateMainActionState(turple.Item1, turple.Item2);
+        }
+
+        private void UpdateMainActionState(bool enabled, TextObject hint)
+		{
+            if (enabled)
+            {
+                MemberExtractor.CallPrivateMethod(this.m_SmithingManager.CraftingVM, "RefreshEnableMainAction");
+            }
+            else
+            {
+                this.m_SmithingManager.CraftingVM.IsMainActionEnabled = false;
+                if (this.m_SmithingManager.CraftingVM.MainActionHint != null)
+                {
+                    this.m_SmithingManager.CraftingVM.MainActionHint.SetHintCallback(() => hint.ToString());
+                }
+                else
+                {
+                    this.m_SmithingManager.CraftingVM.MainActionHint = new BasicTooltipViewModel(() => hint.ToString());
+                }
+            }
+        }
+
+		private Tuple<bool, TextObject> IsStringApplicableForItemName(string name)
+        {
+			if (name == null)
+			{
+				name = "";
+			}
+            return CampaignUIHelper.IsStringApplicableForItemName(name);
+		}
+
+        [DataSourceProperty]
 		public bool IsWeaponNameInputVisible
 		{
 			get
@@ -181,8 +203,16 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 				if (this.m_IsWeaponNameInputVisible != value)
 				{
 					this.m_IsWeaponNameInputVisible = value;
-					base.OnPropertyChanged("IsWeaponNameInputVisible");
-				}
+
+                    Tuple<bool, TextObject> turple = IsStringApplicableForItemName(this.WeaponName);
+					bool isMainActionEnabled = turple.Item1;
+                    if (!this.m_IsWeaponNameInputVisible && !isMainActionEnabled)
+					{
+						this.WeaponName = this.m_DefaultWeaponName;
+                    }
+
+                    base.OnPropertyChanged("IsWeaponNameInputVisible");
+                }
 			}
 		}
 
@@ -380,12 +410,14 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 				this.IsWeaponNameInputVisible = true;
 				return;
 			}
+
 			WeaponDesignVMMixin weaponDesignVMMixinInstance = this.m_WeaponDesignVMMixinInstance;
 			if (weaponDesignVMMixinInstance != null && weaponDesignVMMixinInstance.IsSavedWeaponsListVisible)
 			{
 				this.IsWeaponNameInputVisible = false;
 				return;
 			}
+
 			this.IsWeaponNameInputVisible = this.m_CraftingSettings.SkipWeaponFinalizationPopup;
 		}
 
@@ -487,55 +519,38 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 
 		private void OnDefaultWeaponNameChanged()
 		{
-			string oldName = this.m_DefaultWeaponName;
-			this.m_DefaultWeaponName = m_CraftingState.CraftingLogic.CraftedWeaponName.ToString();
-			if (this.WeaponName == oldName || this.WeaponName == null)
+			string newDefaultName = m_CraftingState.CraftingLogic.CraftedWeaponName.ToString();
+            Tuple<bool, TextObject> turple = IsStringApplicableForItemName(this.WeaponName);
+            if (!turple.Item1 || this.WeaponName == this.m_DefaultWeaponName)
 			{
-				this.WeaponName = this.m_DefaultWeaponName;
+				this.WeaponName = newDefaultName;
 			}
-			else if (this.WeaponName != null)
-			{
-				// Need to change WeaponDesignVM.ItemName back to this.WeaponName
-				this.m_SmithingManager.WeaponDesignVM.ItemName = this.WeaponName;
-			}
-		}
+            this.m_DefaultWeaponName = newDefaultName;
+
+        }
 
 		private readonly GauntletCraftingScreen m_ParentScreen;
-
 		private CraftingState m_CraftingState;
-
 		private CraftingSettings m_CraftingSettings;
-
 		private ISettingsManager m_SettingsManager;
-
 		private ButtonToggleVM m_ShowNewWeaponPopupToggle;
-
 		private HintViewModel m_SavedWeaponListToggleHint;
 
 		private TextButtonVM m_SaveButton;
-
 		private TextButtonVM m_EditButton;
-
 		private TextButtonVM m_DeleteButton;
-
 		private TextButtonVM m_CancelButton;
 
 		private WeaponSaveData m_WeaponSaveData;
-
 		private WeaponData m_EditTarget;
 
 		private bool m_IsEditing;
-
 		private string m_WeaponName;
-
 		private string m_DefaultWeaponName;
+        private bool m_IsWeaponNameInputVisible;
 
-		private string m_SavedWeaponListToggleText;
-
+        private string m_SavedWeaponListToggleText;
 		private ISmithingManager m_SmithingManager;
-
-		private bool m_IsWeaponNameInputVisible;
-
 		private WeaponDesignVMMixin m_WeaponDesignVMMixinInstance;
 	}
 }

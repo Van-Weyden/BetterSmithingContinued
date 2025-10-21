@@ -276,12 +276,26 @@ namespace BetterSmithingContinued.MainFrame.UI
 			IEnumerable<WeaponData> weapons = this.m_WeaponSaveData.Weapons;
 			Func<WeaponData, bool> predicate = (WeaponData x) => x.Id == weaponClassId;
 			MBBindingList<CraftingItemTemplateVM> mbbindingList = new MBBindingList<CraftingItemTemplateVM>();
+			List<WeaponData> invalidWeapons = new List<WeaponData>();
 			foreach (WeaponData weaponData in weapons.Where(predicate))
 			{
-				CraftingItemTemplateVM item = new CraftingItemTemplateVM(weaponData, new Action<CraftingItemTemplateVM>(this.SetCurrentItem));
-				mbbindingList.Add(item);
+				try
+				{
+					CraftingItemTemplateVM item = new CraftingItemTemplateVM(weaponData, new Action<CraftingItemTemplateVM>(this.SetCurrentItem));
+					mbbindingList.Add(item);
+				}
+				catch
+				{
+					invalidWeapons.Append(weaponData);
+				}
 			}
 			this.SavedItemList = mbbindingList;
+
+			// Probable won't remove invalid ones to save designs from mods
+			//if (invalidWeapons.Count > 0)
+			//{
+			//	this.m_WeaponSaveData.Weapons.RemoveAll((WeaponData x) => invalidWeapons.Contains(x));
+			//}
 		}
 
 		private void SetCurrentItem(CraftingItemTemplateVM _currentSelectedItem)
