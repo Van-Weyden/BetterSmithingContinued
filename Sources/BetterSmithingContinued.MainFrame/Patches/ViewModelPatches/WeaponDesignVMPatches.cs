@@ -1,14 +1,14 @@
-﻿using HarmonyLib;
-using System;
-using System.Diagnostics;
+﻿using System;
+
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.CampaignBehaviors;
-using TaleWorlds.CampaignSystem.CharacterDevelopment;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+
+using HarmonyLib;
 
 using BetterSmithingContinued.Core;
 using BetterSmithingContinued.MainFrame.Persistence;
@@ -23,13 +23,18 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 		[HarmonyPatch("CreateCraftingResultPopup")]
 		[HarmonyPrefix]
 		public static bool CreateCraftingResultPopupPrefix(ref WeaponDesignVM __instance)
-		{
-            bool skipWeaponFinalizationPopup = Instances.SettingsManager.GetSettings<CraftingSettings>().SkipWeaponFinalizationPopup;
-			if (__instance.ActiveCraftingOrder == null && skipWeaponFinalizationPopup)
+        {
+            if (__instance.IsInOrderMode)
+            {
+                return true;
+            }
+
+			if (Instances.SettingsManager.GetSettings<CraftingSettings>().SkipWeaponFinalizationPopup)
 			{
                 __instance.ExecuteFinalizeCrafting();
 				return false;
 			}
+
 			return true;
 		}
 
@@ -37,6 +42,11 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
         [HarmonyPrefix]
         public static bool ExecuteFinalizeCrafting(ref WeaponDesignVM __instance)
         {
+			if (__instance.IsInOrderMode)
+			{
+				return true;
+			}
+
             ICraftingCampaignBehavior craftingBehavior = Campaign.Current.GetCampaignBehavior<ICraftingCampaignBehavior>();
 
             MemberExtractor.GetPrivateFieldValue(__instance, "_crafting", out Crafting crafting);
