@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BetterSmithingContinued.Core;
-using BetterSmithingContinued.Utilities;
+
 using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.Roster;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.Smelting;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+
+using BetterSmithingContinued.Core;
+using BetterSmithingContinued.Utilities;
 
 namespace BetterSmithingContinued.MainFrame
 {
@@ -192,10 +194,10 @@ namespace BetterSmithingContinued.MainFrame
 			this.m_CurrentFilter = _itemIsVisible;
 			foreach (KeyValuePair<string, ViewableSmeltingItem> keyValuePair in this.m_SmeltingItemVMList)
 			{
-				bool flag = this.m_CurrentFilter(keyValuePair.Value.SmeltingItemVM.EquipmentElement);
-				if (flag != keyValuePair.Value.IsVisible)
+				bool visible = this.m_CurrentFilter(keyValuePair.Value.SmeltingItemVM.EquipmentElement);
+				if (visible != keyValuePair.Value.IsVisible)
 				{
-					if (flag)
+					if (visible)
 					{
 						this.DisplayedSmeltableItemList.Add(keyValuePair.Value.SmeltingItemVM);
 					}
@@ -203,7 +205,7 @@ namespace BetterSmithingContinued.MainFrame
 					{
 						this.DisplayedSmeltableItemList.Remove(keyValuePair.Value.SmeltingItemVM);
 					}
-					keyValuePair.Value.IsVisible = flag;
+					keyValuePair.Value.IsVisible = visible;
 				}
 			}
 			this.m_SmeltingVM.RefreshValues();
@@ -293,14 +295,20 @@ namespace BetterSmithingContinued.MainFrame
 
 		private IEnumerable<ItemRosterElement> GetCraftedItemList()
 		{
-			return this.m_PartyItemRoster.Where(delegate (ItemRosterElement x) {
+            m_PartyItemRoster.CompressIdenticalCraftedWeapons();
+            return this.m_PartyItemRoster.Where(delegate (ItemRosterElement x) {
 				return x.EquipmentElement.Item.IsCraftedWeapon;
 			});
 		}
 
 		private void SetItemDisplay(ItemRosterElement itemRosterElement)
 		{
-			SmeltingItemVM smeltingItemVM = SmeltingItemVMUtilities.CreateSmeltingItemVM(itemRosterElement.EquipmentElement, new Action<SmeltingItemVM>(this.SetCurrentItem), itemRosterElement.Amount, new Action<SmeltingItemVM, bool>(this.ProcessLockItem), this.IsItemLocked(itemRosterElement.EquipmentElement));
+			SmeltingItemVM smeltingItemVM = SmeltingItemVMUtilities.CreateSmeltingItemVM(
+				itemRosterElement.EquipmentElement,
+				new Action<SmeltingItemVM>(this.SetCurrentItem), itemRosterElement.Amount,
+				new Action<SmeltingItemVM, bool>(this.ProcessLockItem),
+				this.IsItemLocked(itemRosterElement.EquipmentElement)
+			);
 			bool isNeedDisplayItem = this.IsNeedDisplayItem(itemRosterElement.EquipmentElement);
 			this.m_SmeltingItemVMList.Add(this.GetStringID(itemRosterElement.EquipmentElement), new ViewableSmeltingItem(smeltingItemVM, isNeedDisplayItem));
 			if (isNeedDisplayItem)
@@ -326,19 +334,15 @@ namespace BetterSmithingContinued.MainFrame
 		}
 
 		private ItemRoster m_PartyItemRoster;
-
 		private Dictionary<string, ViewableSmeltingItem> m_SmeltingItemVMList;
-
 		private SmeltingVM m_SmeltingVM;
 
 		private MethodInfo m_ProcessLockItemMethodInfo;
-
 		private MethodInfo m_IsItemLockedMethodInfo;
 
 		private Func<EquipmentElement, bool> m_CurrentFilter;
 
 		private SmeltingItemVM m_CurrentlySelectedItem;
-
 		private int m_StoredCurrentItemIndex;
 
 		private class ViewableSmeltingItem

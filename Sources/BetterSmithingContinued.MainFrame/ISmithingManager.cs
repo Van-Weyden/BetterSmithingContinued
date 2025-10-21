@@ -15,19 +15,13 @@ namespace BetterSmithingContinued.MainFrame
 	public interface ISmithingManager
 	{
 		event EventHandler EnteredSmithingMenu;
-
 		event EventHandler LeavingSmithingMenu;
-
 		event EventHandler<CraftingScreen> CraftingScreenChanged;
-
 		event EventHandler<CraftingAvailableHeroItemVM> CurrentCraftingHeroChanged;
 
 		CraftingVM CraftingVM { get; set; }
-
 		RefinementVM RefinementVM { get; }
-
 		SmeltingVM SmeltingVM { get; }
-
 		WeaponDesignVM WeaponDesignVM { get; }
 
 		CraftingCampaignBehavior CraftingCampaignBehavior { get; }
@@ -35,9 +29,8 @@ namespace BetterSmithingContinued.MainFrame
 		SmeltingItemRosterWrapper SmeltingItemRoster { get; }
 
 		CraftingScreen CurrentCraftingScreen { get; set; }
-
 		CraftingAvailableHeroItemVM CurrentCraftingHero { get; set; }
 
-		bool HeroHasEnoughStaminaForMainAction(Hero _hero);
+        bool HeroHasEnoughStaminaForMainAction(Hero _hero);
 	}
 }

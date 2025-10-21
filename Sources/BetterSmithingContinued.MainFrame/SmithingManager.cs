@@ -1,15 +1,17 @@
-using System;
-using System.Diagnostics;
 using BetterSmithingContinued.Core;
 using BetterSmithingContinued.Core.Modules;
 using BetterSmithingContinued.MainFrame.Patches;
 using BetterSmithingContinued.MainFrame.Utilities;
 using BetterSmithingContinued.Settings;
 using BetterSmithingContinued.Utilities;
+using MCM.Abstractions.Base.Global;
+using System;
+using System.Diagnostics;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.CampaignBehaviors;
 using TaleWorlds.CampaignSystem.CharacterDevelopment;
 using TaleWorlds.CampaignSystem.ComponentInterfaces;
+using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.Refinement;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.Smelting;
@@ -147,7 +149,7 @@ namespace BetterSmithingContinued.MainFrame
 			}
 		}
 
-		public bool HeroHasEnoughStaminaForMainAction(Hero _hero)
+        public bool HeroHasEnoughStaminaForMainAction(Hero _hero)
 		{
 			int num = 0;
 			try
@@ -274,13 +276,9 @@ namespace BetterSmithingContinued.MainFrame
 		}
 
 		private CraftingScreen m_CurrentCraftingScreen;
-
 		private CraftingVM m_CraftingVm;
-
 		private ISettingsManager m_SettingsManager;
-
 		private MainActionTextModifier m_MainActionTextModifier;
-
 		private CraftingAvailableHeroItemVM m_CurrentCraftingHero;
-	}
+    }
 }
