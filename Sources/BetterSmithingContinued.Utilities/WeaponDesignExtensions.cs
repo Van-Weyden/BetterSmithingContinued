@@ -26,6 +26,16 @@ namespace BetterSmithingContinued.Utilities
 			return (Crafting) m_CraftingFieldInfo?.GetValue(_weaponDesignVM);
 		}
 
-		private static FieldInfo m_CraftingFieldInfo;
+        public static void SetWeaponName(this WeaponDesign _this, string name)
+        {
+            PropertyInfo info = MemberExtractor.GetPropertyInfo<WeaponDesign>("WeaponName");
+            if (_this != null && info != null)
+            {
+                info.SetValue(_this, name);
+                MemberExtractor.CallPrivateMethod(_this, "BuildHashedCode");
+            }
+        }
+
+        private static FieldInfo m_CraftingFieldInfo;
 	}
 }

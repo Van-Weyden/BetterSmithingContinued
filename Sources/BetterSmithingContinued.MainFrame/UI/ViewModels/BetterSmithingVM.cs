@@ -357,7 +357,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 
 		private GauntletLayer m_SettingsLayer;
 
-		private IGauntletMovie m_SettingsMovie;
+		private GauntletMovieIdentifier m_SettingsMovie;
 
 		private BetterSmithingSettingsVM m_SettingsVM;
 	}

@@ -7,6 +7,7 @@ using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
 using TaleWorlds.Core;
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
 
 using HarmonyLib;
 
@@ -17,7 +18,7 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 	{
 		[HarmonyPatch(MethodType.Constructor, new Type[] {
 			typeof(ItemObject),
-			typeof(string),
+			typeof(TextObject),
 			typeof(Action),
 			typeof(Crafting),
 			typeof(CraftingOrder),
@@ -27,9 +28,9 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 			typeof(Action<CraftingSecondaryUsageItemVM>)
 		})]
 		[HarmonyPostfix]
-		public static void ConstructorPostfix(ref WeaponDesignResultPopupVM __instance, string itemName)
+		public static void ConstructorPostfix(ref WeaponDesignResultPopupVM __instance, TextObject itemName)
 		{
-			__instance.ItemName = itemName;
+			__instance.ItemName = itemName.ToString();
 		}
 	}
 }

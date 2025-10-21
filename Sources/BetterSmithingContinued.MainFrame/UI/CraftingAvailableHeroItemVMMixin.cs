@@ -1,10 +1,10 @@
-using System;
-using Bannerlord.UIExtenderEx.Attributes;
-using Bannerlord.UIExtenderEx.ViewModels;
-using TaleWorlds.CampaignSystem;
+﻿using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
+
+using Bannerlord.UIExtenderEx.Attributes;
+using Bannerlord.UIExtenderEx.ViewModels;
 
 namespace BetterSmithingContinued.MainFrame.UI
 {
@@ -62,12 +62,17 @@ namespace BetterSmithingContinued.MainFrame.UI
 
 		private bool IsHeroReachedHardCap(Hero hero)
 		{
-			return Campaign.Current.Models.CharacterDevelopmentModel.CalculateLearningRate(hero, DefaultSkills.Crafting) <= 0f;
+            return hero.HeroDeveloper.GetFocusFactor(DefaultSkills.Crafting) < 0.001f;
 		}
 
 		private float HeroSmithSkillSoftCap(Hero hero)
 		{
-			return Campaign.Current.Models.CharacterDevelopmentModel.CalculateLearningLimit(hero.GetAttributeValue(DefaultCharacterAttributes.Endurance), hero.HeroDeveloper.GetFocus(DefaultSkills.Crafting), null, false).ResultNumber;
+			return Campaign.Current.Models.CharacterDevelopmentModel.CalculateLearningLimit(
+                hero.CharacterAttributes,
+				hero.HeroDeveloper.GetFocus(DefaultSkills.Crafting),
+                DefaultSkills.Crafting,
+				false
+			).ResultNumber;
 		}
 
 		private string GetColorType()

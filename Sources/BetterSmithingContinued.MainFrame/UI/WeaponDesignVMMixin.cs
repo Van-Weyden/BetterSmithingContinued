@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -125,7 +125,7 @@ namespace BetterSmithingContinued.MainFrame.UI
 					{
 						if (_widget.Id == "CraftingFilters")
 						{
-							Widget[] array = _widget.ParentWidget.AllChildren.ToArray<Widget>();
+							Widget[] array = _widget.ParentWidget.GetAllChildrenRecursive().ToArray<Widget>();
 							int i = array.IndexOf(_widget);
 							if (i >= 0)
 							{

@@ -1,8 +1,7 @@
 ﻿using System;
 
-using TaleWorlds.Core;
+using TaleWorlds.Core.ViewModelCollection.ImageIdentifiers;
 using TaleWorlds.Library;
-using TaleWorlds.Localization;
 
 using BetterSmithingContinued.MainFrame.Persistence;
 
@@ -11,7 +10,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 	public sealed class CraftingItemTemplateVM : ViewModel
 	{
 		[DataSourceProperty]
-		public ImageIdentifierVM Visual
+		public ItemImageIdentifierVM Visual
 		{
 			get
 			{
@@ -68,7 +67,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			this.WeaponData = _weaponData;
 			this.m_OnSelection = _onSelection;
 			this.Name = this.WeaponData.Name.ToString();
-			this.Visual = new ImageIdentifierVM(this.WeaponData.ItemObject, "");
+			this.Visual = new ItemImageIdentifierVM(this.WeaponData.ItemObject, "");
 			this.RefreshValues();
 		}
 
@@ -79,7 +78,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 
 		private readonly Action<CraftingItemTemplateVM> m_OnSelection;
 
-		private ImageIdentifierVM m_Visual;
+		private ItemImageIdentifierVM m_Visual;
 
 		private string m_Name;
 

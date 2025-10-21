@@ -122,7 +122,7 @@ namespace BetterSmithingContinued.MainFrame
 		private void EnterSmithingScreen()
 		{
 			this.m_CharacterDeveloperSpriteCategory = UIResourceManager.SpriteData.SpriteCategories["ui_characterdeveloper"];
-			this.m_CharacterDeveloperSpriteCategory.Load(UIResourceManager.ResourceContext, UIResourceManager.UIResourceDepot);
+			this.m_CharacterDeveloperSpriteCategory.Load(UIResourceManager.ResourceContext, UIResourceManager.ResourceDepot);
 			this.UpdateCurrentCraftingSubVM(this.m_CurrentCraftingScreen);
 			this.m_BetterSmithingViewModel = new BetterSmithingVM(base.PublicContainer, this.GauntletCraftingScreen);
 			this.m_BetterSmithingViewModel.Load();
@@ -211,11 +211,11 @@ namespace BetterSmithingContinued.MainFrame
 		private readonly Dictionary<CraftingScreen, ConnectedViewModel> m_ViewModels = new Dictionary<CraftingScreen, ConnectedViewModel>();
 		private GauntletLayer m_CurrentScreenLayer;
 		private GauntletCraftingScreen m_GauntletCraftingScreen;
-		private IGauntletMovie m_CurrentMovie;
+		private GauntletMovieIdentifier m_CurrentMovie;
 		private CraftingScreen m_CurrentCraftingScreen;
 		private BetterSmithingVM m_BetterSmithingViewModel;
 		private GauntletLayer m_BetterSmithingScreenLayer;
-		private IGauntletMovie m_BetterSmithingMovie;
+		private GauntletMovieIdentifier m_BetterSmithingMovie;
 		private ISmithingManager m_SmithingManager;
 		private ISubModuleEventNotifier m_SubModuleEventNotifier;
 		private SceneLayer m_WeaponPreviewSceneLayer;

@@ -128,7 +128,6 @@
     <Compile Include="Patches\ViewModelPatches\SmeltingVMPatches.cs" />
     <Compile Include="Patches\ViewModelPatches\WeaponDesignResultPopupVMPatches.cs" />
     <Compile Include="Patches\ViewModelPatches\WeaponDesignVMPatches.cs" />
-    <Compile Include="Patches\WeaponDesignPatches.cs" />
     <Compile Include="Persistence\CraftingSettings.cs" />
     <Compile Include="Persistence\PieceData.cs" />
     <Compile Include="Persistence\RefiningSettings.cs" />
