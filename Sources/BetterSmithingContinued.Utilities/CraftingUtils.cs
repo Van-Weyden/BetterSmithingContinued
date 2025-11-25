@@ -13,33 +13,18 @@ namespace BetterSmithingContinued.Utilities
 			CraftingUtils.m_LazyGenerateItemInvoker.Value(weaponDesign, name, culture, itemModifierGroup, ref itemObject);
 		}
 
-		private static readonly Lazy<CraftingUtils.GenerateItem> m_LazyGenerateItemInvoker = new Lazy<CraftingUtils.GenerateItem>(delegate()
-		{
+		private static readonly Lazy<CraftingUtils.GenerateItem> m_LazyGenerateItemInvoker = new Lazy<CraftingUtils.GenerateItem>(delegate() {
 			MethodInfo generateItemMethodInfo = MemberExtractor.GetStaticMethodInfo<Crafting>("GenerateItem");
-			if (generateItemMethodInfo.GetParameters()[3].ParameterType == typeof(ItemModifierGroup))
-			{
-				return delegate(WeaponDesign _design, TextObject _name, BasicCultureObject _culture, ItemModifierGroup _group, ref ItemObject _itemObject)
-				{
-					generateItemMethodInfo.Invoke(null, new object[]
-					{
-						_design,
-						_name,
-						_culture,
-						_group,
-						_itemObject
-					});
-				};
-			}
-			return delegate(WeaponDesign _design, TextObject _name, BasicCultureObject _culture, ItemModifierGroup _, ref ItemObject _itemObject)
-			{
-				generateItemMethodInfo.Invoke(null, new object[]
-				{
+			return delegate(WeaponDesign _design, TextObject _name, BasicCultureObject _culture, ItemModifierGroup _group, ref ItemObject _itemObject) {
+                generateItemMethodInfo.Invoke(null, new object[] {
 					_design,
 					_name,
 					_culture,
-					_itemObject
+					_group,
+					_itemObject,
+					null
 				});
-			};
+            };
 		});
 
 		private delegate void GenerateItem(WeaponDesign weaponDesign, TextObject name, BasicCultureObject culture, ItemModifierGroup itemModifierGroup, ref ItemObject itemObject);

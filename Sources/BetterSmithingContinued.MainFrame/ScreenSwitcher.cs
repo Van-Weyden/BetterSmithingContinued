@@ -126,7 +126,7 @@ namespace BetterSmithingContinued.MainFrame
 			this.UpdateCurrentCraftingSubVM(this.m_CurrentCraftingScreen);
 			this.m_BetterSmithingViewModel = new BetterSmithingVM(base.PublicContainer, this.GauntletCraftingScreen);
 			this.m_BetterSmithingViewModel.Load();
-			this.m_BetterSmithingScreenLayer = new GauntletLayer(50, "GauntletLayer", false);
+			this.m_BetterSmithingScreenLayer = new GauntletLayer("GauntletLayer", 50, false);
 			this.m_BetterSmithingMovie = this.m_BetterSmithingScreenLayer.LoadMovie("BetterSmithingScreen", this.m_BetterSmithingViewModel);
 			this.m_BetterSmithingScreenLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
 			this.GauntletCraftingScreen.AddLayer(this.m_BetterSmithingScreenLayer);
@@ -196,7 +196,7 @@ namespace BetterSmithingContinued.MainFrame
 				connectedViewModel?.Load();
 				this.m_ViewModels.Add(_currentCraftingScreen, connectedViewModel);
 			}
-			GauntletLayer gauntletLayer = new GauntletLayer(51, "GauntletLayer", false);
+			GauntletLayer gauntletLayer = new GauntletLayer("GauntletLayer", 51, false);
 			this.m_CurrentMovie = gauntletLayer.LoadMovie("Better" + Enum.GetName(typeof(CraftingScreen), _currentCraftingScreen) + "Screen", connectedViewModel);
 			gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
 			return gauntletLayer;

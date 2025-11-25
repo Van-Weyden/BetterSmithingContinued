@@ -40,32 +40,34 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 			{
 				refinementActionItemVM = __instance.AvailableRefinementActions.FirstOrDefault((RefinementActionItemVM x) => x.RefineFormula.Output == RefinementVMPatches.m_PreviousOutputType);
 			}
-			RefinementActionItemVM refinementActionItemVM2 = refinementActionItemVM;
-			if (refinementActionItemVM2 == null)
+
+			if (refinementActionItemVM == null)
 			{
 				if (RefinementVMPatches.m_PreviousActionIndex >= __instance.AvailableRefinementActions.Count)
 				{
 					RefinementVMPatches.m_PreviousActionIndex = __instance.AvailableRefinementActions.Count - 1;
 				}
-				refinementActionItemVM2 = __instance.AvailableRefinementActions[RefinementVMPatches.m_PreviousActionIndex];
+                refinementActionItemVM = __instance.AvailableRefinementActions[RefinementVMPatches.m_PreviousActionIndex];
 			}
-			if (!refinementActionItemVM2.IsEnabled)
+
+			if (!refinementActionItemVM.IsEnabled)
 			{
 				while (RefinementVMPatches.m_PreviousActionIndex >= 0)
 				{
 					if (__instance.AvailableRefinementActions[RefinementVMPatches.m_PreviousActionIndex].IsEnabled)
 					{
-						refinementActionItemVM2 = __instance.AvailableRefinementActions[RefinementVMPatches.m_PreviousActionIndex];
+                        refinementActionItemVM = __instance.AvailableRefinementActions[RefinementVMPatches.m_PreviousActionIndex];
 						break;
 					}
 					RefinementVMPatches.m_PreviousActionIndex--;
 				}
 			}
-			if (!refinementActionItemVM2.IsEnabled)
+
+			if (!refinementActionItemVM.IsEnabled)
 			{
 				return;
 			}
-			__instance.SmartOnSelectAction(refinementActionItemVM2);
+			__instance.SmartOnSelectAction(refinementActionItemVM);
 		}
 
 		private static CraftingMaterials m_PreviousOutputType;

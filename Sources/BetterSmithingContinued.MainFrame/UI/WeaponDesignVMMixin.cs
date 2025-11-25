@@ -286,7 +286,7 @@ namespace BetterSmithingContinued.MainFrame.UI
 				}
 				catch
 				{
-					invalidWeapons.Append(weaponData);
+                    invalidWeapons.Append(weaponData);
 				}
 			}
 			this.SavedItemList = mbbindingList;
