@@ -26,6 +26,6 @@ namespace BetterSmithingContinued.Utilities
 			return (Crafting) m_CraftingFieldInfo?.GetValue(_weaponDesignVM);
 		}
 
-		private static FieldInfo m_CraftingFieldInfo;
+        private static FieldInfo m_CraftingFieldInfo;
 	}
 }

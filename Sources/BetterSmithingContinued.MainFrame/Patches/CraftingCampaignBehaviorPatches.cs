@@ -64,7 +64,7 @@ namespace BetterSmithingContinued.MainFrame.Patches
 		[HarmonyPatch("DoSmelting")]
 		[HarmonyPostfix]
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		private static void DoSmeltingPostfix(ref CraftingCampaignBehavior __instance, Hero hero, EquipmentElement equipmentElement)
+		private static void DoSmeltingPostfix(ref CraftingCampaignBehavior __instance, Hero currentCraftingHero, EquipmentElement equipmentElement)
 		{
 			int num;
 			int itemIndex = Instances.SmithingManager.SmeltingItemRoster.GetItemIndex(equipmentElement, out num);
@@ -76,7 +76,7 @@ namespace BetterSmithingContinued.MainFrame.Patches
 			try
 			{
 				CraftingCampaignBehaviorPatches.m_IsSmelting = true;
-				Instances.SmeltingRepeater.DoSmelting(ref __instance, hero, equipmentElement, itemIndex);
+				Instances.SmeltingRepeater.DoSmelting(ref __instance, currentCraftingHero, equipmentElement, itemIndex);
 			}
 			catch (Exception)
 			{

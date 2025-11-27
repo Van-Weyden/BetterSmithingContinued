@@ -122,11 +122,11 @@ namespace BetterSmithingContinued.MainFrame
 		private void EnterSmithingScreen()
 		{
 			this.m_CharacterDeveloperSpriteCategory = UIResourceManager.SpriteData.SpriteCategories["ui_characterdeveloper"];
-			this.m_CharacterDeveloperSpriteCategory.Load(UIResourceManager.ResourceContext, UIResourceManager.UIResourceDepot);
+			this.m_CharacterDeveloperSpriteCategory.Load(UIResourceManager.ResourceContext, UIResourceManager.ResourceDepot);
 			this.UpdateCurrentCraftingSubVM(this.m_CurrentCraftingScreen);
 			this.m_BetterSmithingViewModel = new BetterSmithingVM(base.PublicContainer, this.GauntletCraftingScreen);
 			this.m_BetterSmithingViewModel.Load();
-			this.m_BetterSmithingScreenLayer = new GauntletLayer(50, "GauntletLayer", false);
+			this.m_BetterSmithingScreenLayer = new GauntletLayer("GauntletLayer", 50, false);
 			this.m_BetterSmithingMovie = this.m_BetterSmithingScreenLayer.LoadMovie("BetterSmithingScreen", this.m_BetterSmithingViewModel);
 			this.m_BetterSmithingScreenLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
 			this.GauntletCraftingScreen.AddLayer(this.m_BetterSmithingScreenLayer);
@@ -196,7 +196,7 @@ namespace BetterSmithingContinued.MainFrame
 				connectedViewModel?.Load();
 				this.m_ViewModels.Add(_currentCraftingScreen, connectedViewModel);
 			}
-			GauntletLayer gauntletLayer = new GauntletLayer(51, "GauntletLayer", false);
+			GauntletLayer gauntletLayer = new GauntletLayer("GauntletLayer", 51, false);
 			this.m_CurrentMovie = gauntletLayer.LoadMovie("Better" + Enum.GetName(typeof(CraftingScreen), _currentCraftingScreen) + "Screen", connectedViewModel);
 			gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
 			return gauntletLayer;
@@ -211,11 +211,11 @@ namespace BetterSmithingContinued.MainFrame
 		private readonly Dictionary<CraftingScreen, ConnectedViewModel> m_ViewModels = new Dictionary<CraftingScreen, ConnectedViewModel>();
 		private GauntletLayer m_CurrentScreenLayer;
 		private GauntletCraftingScreen m_GauntletCraftingScreen;
-		private IGauntletMovie m_CurrentMovie;
+		private GauntletMovieIdentifier m_CurrentMovie;
 		private CraftingScreen m_CurrentCraftingScreen;
 		private BetterSmithingVM m_BetterSmithingViewModel;
 		private GauntletLayer m_BetterSmithingScreenLayer;
-		private IGauntletMovie m_BetterSmithingMovie;
+		private GauntletMovieIdentifier m_BetterSmithingMovie;
 		private ISmithingManager m_SmithingManager;
 		private ISubModuleEventNotifier m_SubModuleEventNotifier;
 		private SceneLayer m_WeaponPreviewSceneLayer;

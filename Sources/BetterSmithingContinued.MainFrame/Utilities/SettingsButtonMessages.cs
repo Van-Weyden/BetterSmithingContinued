@@ -55,7 +55,13 @@ namespace BetterSmithingContinued.MainFrame.Utilities
 				}
 				SettingsButtonMessages.m_ExecutedHeroes.Add(text2);
 				GameTexts.SetVariable("PARTNAME", text2);
-				MBInformationManager.AddQuickInformation(TextObjectUtilities.CreateTextObject<string>("{=p9F90bc0}{PARTNAME} has been Executed.", null), 3, null, "event:/ui/notification/quest_fail");
+				MBInformationManager.AddQuickInformation(
+					TextObjectUtilities.CreateTextObject<string>("{=p9F90bc0}{PARTNAME} has been Executed.", null),
+					3,
+					null,
+                    null,
+                    "event:/ui/notification/quest_fail"
+				);
 			}
 			else
 			{
