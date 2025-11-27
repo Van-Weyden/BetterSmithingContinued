@@ -95,7 +95,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 		{
 			if (this.m_SettingsLayer == null)
 			{
-				this.m_SettingsLayer = new GauntletLayer(52, "GauntletLayer", false);
+				this.m_SettingsLayer = new GauntletLayer("GauntletLayer", 52, false);
 				this.m_SettingsVM = new BetterSmithingSettingsVM(base.PublicContainer, this.m_ParentScreen, new Action(this.CloseSettings));
 				this.m_SettingsMovie = this.m_SettingsLayer.LoadMovie("BetterSmithingContinuedSettingsScreen", this.m_SettingsVM);
 				this.m_SettingsLayer.IsFocusLayer = true;
@@ -357,7 +357,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 
 		private GauntletLayer m_SettingsLayer;
 
-		private IGauntletMovie m_SettingsMovie;
+		private GauntletMovieIdentifier m_SettingsMovie;
 
 		private BetterSmithingSettingsVM m_SettingsVM;
 	}

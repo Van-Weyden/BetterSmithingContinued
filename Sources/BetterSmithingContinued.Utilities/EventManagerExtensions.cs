@@ -34,7 +34,7 @@ namespace BetterSmithingContinued.Utilities
 			{
 				return (EventManager eventManager) => (Vector2)mousePositionProperty.GetMethod.Invoke(eventManager, null);
 			}
-			return (EventManager eventManager) => new Vector2((float)eventManager.InputContext.GetPointerX(), (float)eventManager.InputContext.GetPointerY());
+			return (EventManager eventManager) => eventManager.Context.InputContext.GetMousePosition();
 		});
 
 		private static readonly Lazy<Func<EventManager, List<Widget>>> m_LazyGetCurrentListInvoker = new Lazy<Func<EventManager, List<Widget>>>(delegate()

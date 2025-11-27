@@ -1,7 +1,6 @@
-﻿using TaleWorlds.Core;
+﻿using HarmonyLib;
+using TaleWorlds.Core;
 using TaleWorlds.Localization;
-
-using HarmonyLib;
 
 namespace BetterSmithingContinued.MainFrame.Patches
 {
@@ -13,10 +12,11 @@ namespace BetterSmithingContinued.MainFrame.Patches
 		private static void GetModifiedItemNamePostfix(ref EquipmentElement __instance, ref TextObject __result)
 		{
 			if (__instance.Item.IsCraftedByPlayer && __instance.ItemModifier != null)
-			{
-				__result = __instance.ItemModifier.Name;
-				__result.SetTextVariable("ITEMNAME", __instance.Item.Name);
+            {
+                TextObject name = __instance.ItemModifier.Name.CopyTextObject();
+                name.SetTextVariable("ITEMNAME", __instance.Item.Name);
+                __result = name;
 			}
 		}
-	}
+    }
 }

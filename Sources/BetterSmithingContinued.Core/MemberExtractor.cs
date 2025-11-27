@@ -146,11 +146,31 @@ namespace BetterSmithingContinued.Core
 			return (PropertyType) GetStaticPrivatePropertyInfo<ObjectType>(propertyName)?.GetValue(null);
 		}
 
-		/// Aliases with out parameters:
+        public static void SetPropertyValue<ObjectType, PropertyType>(ObjectType obj, string propertyName, PropertyType propertyValue)
+        {
+            GetPropertyInfo<ObjectType>(propertyName)?.SetMethod.Invoke(obj, new object[]{propertyValue});
+        }
 
-		// FieldInfo
+        public static void SetPrivatePropertyValue<ObjectType, PropertyType>(ObjectType obj, string propertyName, PropertyType propertyValue)
+        {
+            GetPrivatePropertyInfo<ObjectType>(propertyName)?.SetMethod.Invoke(obj, new object[] { propertyValue });
+        }
 
-		public static FieldInfo GetFieldInfo<ObjectType>(string fieldName, out FieldInfo fieldInfo)
+        public static void SetStaticPropertyValue<ObjectType, PropertyType>(string propertyName, PropertyType propertyValue)
+        {
+            GetStaticPropertyInfo<ObjectType>(propertyName)?.SetMethod.Invoke(null, new object[] { propertyValue });
+        }
+
+        public static void SetStaticPrivatePropertyValue<ObjectType, PropertyType>(string propertyName, PropertyType propertyValue)
+        {
+            GetStaticPrivatePropertyInfo<ObjectType>(propertyName)?.SetMethod.Invoke(null, new object[] { propertyValue });
+        }
+
+        /// Aliases with out parameters:
+
+        // FieldInfo
+
+        public static FieldInfo GetFieldInfo<ObjectType>(string fieldName, out FieldInfo fieldInfo)
 		{
 			return fieldInfo = GetFieldInfo<ObjectType>(fieldName);
 		}

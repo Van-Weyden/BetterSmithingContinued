@@ -38,7 +38,7 @@ namespace BetterSmithingContinued.Main
 				harmony.PatchAll(assembly);
 			}
 			this.PerformManualPatches(harmony);
-			this.m_UIExtender = new UIExtender("BetterSmithingContinued");
+			this.m_UIExtender = UIExtender.Create("BetterSmithingContinued");
 			this.m_UIExtender.Register(typeof(MainFrameSubModule).Assembly);
 			this.m_UIExtender.Enable();
 			base.OnSubModuleLoad();
