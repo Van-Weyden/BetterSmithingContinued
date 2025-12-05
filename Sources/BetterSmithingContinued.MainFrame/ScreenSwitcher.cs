@@ -173,30 +173,31 @@ namespace BetterSmithingContinued.MainFrame
 			this.m_CurrentCraftingScreen = CraftingScreen.None;
 		}
 
-		private GauntletLayer UpdateScreen(CraftingScreen _currentCraftingScreen)
+        private GauntletLayer UpdateScreen(CraftingScreen _currentCraftingScreen)
 		{
-			ConnectedViewModel connectedViewModel = this.ConnectedViewModel(_currentCraftingScreen);
+            ConnectedViewModel connectedViewModel = this.ConnectedViewModel(_currentCraftingScreen);
 			if (connectedViewModel == null)
 			{
 				switch (_currentCraftingScreen)
 				{
-				case CraftingScreen.Smelting:
-					connectedViewModel = new BetterSmeltingVM(base.PublicContainer, this.GauntletCraftingScreen);
-					break;
-				case CraftingScreen.Crafting:
-					connectedViewModel = new BetterCraftingVM(base.PublicContainer, this.GauntletCraftingScreen);
-					break;
-				case CraftingScreen.Refining:
-					connectedViewModel = new BetterRefiningVM(base.PublicContainer, this.GauntletCraftingScreen);
-					break;
-				default:
-					connectedViewModel = null;
-					break;
+					case CraftingScreen.Smelting:
+						connectedViewModel = new BetterSmeltingVM(base.PublicContainer, this.GauntletCraftingScreen);
+                        break;
+					case CraftingScreen.Crafting:
+						connectedViewModel = new BetterCraftingVM(base.PublicContainer, this.GauntletCraftingScreen);
+                        break;
+					case CraftingScreen.Refining:
+						connectedViewModel = new BetterRefiningVM(base.PublicContainer, this.GauntletCraftingScreen);
+                        break;
+					default:
+						connectedViewModel = null;
+						break;
 				}
 				connectedViewModel?.Load();
 				this.m_ViewModels.Add(_currentCraftingScreen, connectedViewModel);
-			}
-			GauntletLayer gauntletLayer = new GauntletLayer("GauntletLayer", 51, false);
+            }
+            int layer = _currentCraftingScreen == CraftingScreen.Crafting ? 50 : 0;
+            GauntletLayer gauntletLayer = new GauntletLayer("GauntletLayer", layer, false);
 			this.m_CurrentMovie = gauntletLayer.LoadMovie("Better" + Enum.GetName(typeof(CraftingScreen), _currentCraftingScreen) + "Screen", connectedViewModel);
 			gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
 			return gauntletLayer;
