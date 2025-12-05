@@ -1,8 +1,14 @@
+using BetterSmithingContinued.Core;
+using BetterSmithingContinued.Core.Modules;
+using BetterSmithingContinued.MainFrame.Patches;
+using BetterSmithingContinued.MainFrame.Utilities;
+using BetterSmithingContinued.Settings;
+using BetterSmithingContinued.Utilities;
+using MCM.Abstractions.Base.Global;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.CampaignBehaviors;
 using TaleWorlds.CampaignSystem.GameState;
@@ -13,15 +19,6 @@ using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using TaleWorlds.ScreenSystem;
-
-using MCM.Abstractions.Base.Global;
-
-using BetterSmithingContinued.Core;
-using BetterSmithingContinued.Core.Modules;
-using BetterSmithingContinued.MainFrame.Patches;
-using BetterSmithingContinued.MainFrame.Utilities;
-using BetterSmithingContinued.Settings;
-using BetterSmithingContinued.Utilities;
 
 namespace BetterSmithingContinued.MainFrame
 {
@@ -68,13 +65,14 @@ namespace BetterSmithingContinued.MainFrame
 				ItemObject craftedWeapon = craftingState.CraftingLogic.GetCurrentCraftedItemObject(false);
                 ItemModifier craftedWeaponModifier = craftingBehavior.GetCurrentItemModifier();
 
-                int total = Math.Min(m_desiredOperationCount, this.GetMaxCraftingCount(m_weaponDesign));
-				int crafted = 1; // DoMultiCrafting calls in the ExecuteFinalizeCrafting so we already crafted at least one weapon
+                // DoMultiCrafting calls in the ExecuteFinalizeCrafting so we already crafted at least one weapon
+				int crafted = 1;
+                int total = Math.Min(m_desiredOperationCount, this.GetMaxCraftingCount(m_weaponDesign) + 1); // +1 because we spend material for 1st weapon already
                 OnWeaponCrafted(craftedWeapon, craftedWeaponModifier); // Process that first crafted weapon
 
                 if (ScreenManager.TopScreen != null)
-				{
-					while (crafted < total && HaveEnergy(craftingBehavior, m_hero, craftedWeapon))
+                {
+                    while (crafted < total && HaveEnergy(craftingBehavior, m_hero, craftedWeapon))
 					{
 						craftedWeaponModifier = Campaign.Current.Models.SmithingModel.GetCraftedWeaponModifier(m_weaponDesign, m_hero);
 						craftingBehavior.SetCurrentItemModifier(craftedWeaponModifier);
