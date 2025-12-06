@@ -60,7 +60,7 @@
                                                    MarginTop="3"
                                                    AdditionalArgs="@AdditionalArgs"
                                                    ImageId="@Id"
-                                                   ImageTypeCode="@ImageTypeCode"
+                                                   TextureProviderName="@TextureProviderName"
                                                    LoadingIconWidget="LoadingIconWidget">
                               <Children>
                                 <Standard.CircleLoadingWidget HorizontalAlignment="Center"
