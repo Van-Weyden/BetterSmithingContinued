@@ -1,21 +1,21 @@
-﻿using System;
+﻿using BetterSmithingContinued.Annotations;
+using BetterSmithingContinued.Core;
+using BetterSmithingContinued.MainFrame.Patches;
+using BetterSmithingContinued.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
-
+using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Party;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using TaleWorlds.ObjectSystem;
-
-using BetterSmithingContinued.Annotations;
-using BetterSmithingContinued.Core;
-using BetterSmithingContinued.MainFrame.Patches;
-using BetterSmithingContinued.Utilities;
 
 namespace BetterSmithingContinued.MainFrame.Persistence
 {
@@ -168,33 +168,40 @@ namespace BetterSmithingContinued.MainFrame.Persistence
 		{
 			try
 			{
-				CraftingTemplate template = CraftingTemplateUtilities.GetAll().FirstOrDefault((CraftingTemplate x) => x.StringId == this.Id);
+				CraftingTemplate template = CraftingTemplateUtilities.GetAll().FirstOrDefault(x => x.StringId == this.Id);
                 WeaponDesignElement[] array = new WeaponDesignElement[4];
 				for (int i = 0; i < array.Length; i++)
 				{
 					array[i] = WeaponDesignElement.GetInvalidPieceForType((CraftingPiece.PieceTypes)i);
                 }
-                PieceData[] pieceData2 = this.PieceData;
-				for (int j = 0; j < pieceData2.Length; j++)
+				foreach (PieceData pieceData in this.PieceData)
 				{
-					PieceData pieceData = pieceData2[j];
-					WeaponDesignElement weaponDesignElement = WeaponDesignElement.CreateUsablePiece(CraftingPiece.All.FirstOrDefault((CraftingPiece p) => p.StringId == pieceData.Id), pieceData.ScaleFactor);
+					WeaponDesignElement weaponDesignElement = WeaponDesignElement.CreateUsablePiece(
+						CraftingPiece.All.FirstOrDefault(p => p.StringId == pieceData.Id),
+						pieceData.ScaleFactor
+					);
 					array[(int)pieceData.PieceType] = weaponDesignElement;
                 }
+
+
                 TextObject name = new TextObject("{=!}" + this.Name, null);
                 WeaponDesign weaponDesign = new WeaponDesign(template, name, array);
-                ItemObject itemObject = new ItemObject();
-                CraftingUtils.SmartGenerateItem(weaponDesign, name, Instances.SmithingManager.WeaponDesignVM.GetCraftingComponent().CurrentCulture, new ItemModifierGroup(), ref itemObject);
-                string text = MBRandom.RandomInt(10000000).ToString();
-				while (MBObjectManager.Instance.GetObject<ItemObject>(text) != null)
+				string id = weaponDesign.HashedCode;		
+                this.m_ItemObject = MBObjectManager.Instance.GetObject<ItemObject>(id);
+				if (this.m_ItemObject == null)
 				{
-					text = MBRandom.RandomInt(10000000).ToString();
-				}
-
-                itemObject.StringId = text;
-				MBObjectManager.Instance.RegisterObject(itemObject);
-
-                this.m_ItemObject = itemObject;
+                    ItemObject itemObject = new ItemObject();
+                    Crafting crafting = Instances.SmithingManager.WeaponDesignVM.GetCraftingComponent();
+                    CraftingUtils.SmartGenerateItem(
+                        weaponDesign,
+                        name,
+                        Hero.MainHero.Culture,
+                        weaponDesign.Template.ItemModifierGroup,
+                        ref itemObject,
+                        weaponDesign.HashedCode
+                    );
+                    this.m_ItemObject = MBObjectManager.Instance.RegisterObject(itemObject);
+                }
 			}
 			catch (Exception value)
             {

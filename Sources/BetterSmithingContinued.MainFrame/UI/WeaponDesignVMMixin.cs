@@ -42,7 +42,16 @@ namespace BetterSmithingContinued.MainFrame.UI
 			}
 		}
 
-		[DataSourceProperty]
+
+        public new WeaponDesignVM ViewModel
+		{
+			get
+			{
+				return base.ViewModel;
+			}
+		}
+
+        [DataSourceProperty]
 		public CraftingItemTemplateVM CurrentlySelectedItem
 		{
 			get
@@ -84,12 +93,8 @@ namespace BetterSmithingContinued.MainFrame.UI
 					this.m_IsDefaultCraftingMenuVisible = value;
 					this.m_IsSavedWeaponsListVisible = !value;
 					this.OnPropertyChanged("IsDefaultCraftingMenuVisible");
-					WeaponDesignVM viewModel = base.ViewModel;
-					if (viewModel != null)
-					{
-						viewModel.OnPropertyChanged("IsSavedWeaponsListVisible");
-					}
-					this.OnViewModeChanged();
+                    ViewModel?.OnPropertyChanged("IsSavedWeaponsListVisible");
+                    this.OnViewModeChanged();
 				}
 			}
 		}
@@ -106,16 +111,8 @@ namespace BetterSmithingContinued.MainFrame.UI
 				if (this.m_IsCategorySelectionEnabled != value)
 				{
 					this.m_IsCategorySelectionEnabled = value;
-					WeaponDesignVM viewModel = base.ViewModel;
-					if (viewModel != null)
-					{
-						viewModel.OnPropertyChangedWithValue(this.m_IsCategorySelectionEnabled, "IsCategorySelectionEnabled");
-					}
-					WeaponDesignVM viewModel2 = base.ViewModel;
-					if (viewModel2 != null)
-					{
-						viewModel2.OnPropertyChangedWithValue(this.IsCategorySelectionDisabled, "IsCategorySelectionDisabled");
-					}
+					ViewModel?.OnPropertyChangedWithValue(this.m_IsCategorySelectionEnabled, "IsCategorySelectionEnabled");
+                    ViewModel?.OnPropertyChangedWithValue(this.IsCategorySelectionDisabled, "IsCategorySelectionDisabled");
 					GauntletLayer gauntletLayer = this.m_ScreenSwitcher.GauntletCraftingScreen.GetGauntletLayer();
 					if (gauntletLayer == null)
 					{
@@ -169,11 +166,7 @@ namespace BetterSmithingContinued.MainFrame.UI
 					this.m_IsSavedWeaponsListVisible = value;
 					this.m_IsDefaultCraftingMenuVisible = !value;
 					this.OnPropertyChanged("IsSavedWeaponsListVisible");
-					WeaponDesignVM viewModel = base.ViewModel;
-					if (viewModel != null)
-					{
-						viewModel.OnPropertyChanged("IsDefaultCraftingMenuVisible");
-					}
+                    ViewModel?.OnPropertyChanged("IsDefaultCraftingMenuVisible");
 					this.OnViewModeChanged();
 				}
 			}
@@ -195,12 +188,7 @@ namespace BetterSmithingContinued.MainFrame.UI
 				if (this.m_SavedItemList != value)
 				{
 					this.m_SavedItemList = value;
-					WeaponDesignVM viewModel = base.ViewModel;
-					if (viewModel == null)
-					{
-						return;
-					}
-					viewModel.OnPropertyChanged("SavedItemList");
+                    ViewModel?.OnPropertyChanged("SavedItemList");
 				}
 			}
 		}
@@ -305,12 +293,7 @@ namespace BetterSmithingContinued.MainFrame.UI
 
 		private new void OnPropertyChanged([CallerMemberName] string _callerName = "")
 		{
-			WeaponDesignVM viewModel = base.ViewModel;
-			if (viewModel == null)
-			{
-				return;
-			}
-			viewModel.OnPropertyChanged(_callerName);
+            ViewModel?.OnPropertyChanged(_callerName);
 		}
 
 		private void OnCurrentlySelectedItemChanged(CraftingItemTemplateVM _e)

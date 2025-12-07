@@ -67,7 +67,7 @@ namespace BetterSmithingContinued.Core
 
 		public static PropertyInfo GetPrivatePropertyInfo<ObjectType>(string propertyName)
 		{
-			return typeof(ObjectType).GetProperty(propertyName, PrivateMemberFlags);
+			return typeof(ObjectType).GetProperty(propertyName, PublicMemberFlags | PrivateMemberFlags);
 		}
 
 		public static PropertyInfo GetStaticPropertyInfo<ObjectType>(string propertyName)
@@ -77,7 +77,7 @@ namespace BetterSmithingContinued.Core
 
 		public static PropertyInfo GetStaticPrivatePropertyInfo<ObjectType>(string propertyName)
 		{
-			return typeof(ObjectType).GetProperty(propertyName, StaticPrivateMemberFlags);
+			return typeof(ObjectType).GetProperty(propertyName, StaticPublicMemberFlags | StaticPrivateMemberFlags);
 		}
 
 		// MethodInfo
@@ -124,9 +124,14 @@ namespace BetterSmithingContinued.Core
 			return (FieldType) GetStaticPrivateFieldInfo<ObjectType>(fieldName)?.GetValue(null);
 		}
 
-		// PropertyValue
+        public static void SetPrivateFieldValue<ObjectType, FieldType>(ObjectType obj, string fieldName, FieldType fieldValue)
+        {
+            GetPrivateFieldInfo<ObjectType>(fieldName)?.SetValue(obj, fieldValue);
+        }
 
-		public static PropertyType GetPropertyValue<ObjectType, PropertyType>(ObjectType obj, string propertyName)
+        // PropertyValue
+
+        public static PropertyType GetPropertyValue<ObjectType, PropertyType>(ObjectType obj, string propertyName)
 		{
 			return (PropertyType) GetPropertyInfo<ObjectType>(propertyName)?.GetValue(obj);
 		}

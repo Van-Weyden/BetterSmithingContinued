@@ -7,12 +7,16 @@ using BetterSmithingContinued.Settings;
 using BetterSmithingContinued.Utilities;
 using SandBox.GauntletUI;
 using System;
+using System.Linq;
+using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.CampaignBehaviors;
 using TaleWorlds.CampaignSystem.GameState;
 using TaleWorlds.CampaignSystem.ViewModelCollection;
+using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
+using TaleWorlds.Core;
 using TaleWorlds.Core.ViewModelCollection.Information;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
-using TaleWorlds.MountAndBlade.ComponentInterfaces;
 
 namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 {
@@ -253,8 +257,8 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 		}
 
 		public override void Load()
-		{
-			this.m_SettingsManager = base.PublicContainer.GetModule<ISettingsManager>("");
+        {
+            this.m_SettingsManager = base.PublicContainer.GetModule<ISettingsManager>("");
 			this.m_CraftingSettings = this.m_SettingsManager.GetSettings<CraftingSettings>();
 			this.m_WeaponSaveData = this.m_SettingsManager.GetSettings<WeaponSaveData>();
 			this.m_SettingsManager.SettingsSectionChanged += this.OnSettingsChanged;
@@ -286,7 +290,16 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 			{
 				this.m_ShowNewWeaponPopupToggle.IsVisible = true;
 			}, 4);
-		}
+
+            var history = Campaign.Current.GetCampaignBehavior<ICraftingCampaignBehavior>().CraftingHistory;
+            WeaponDesignVM weaponDesign = this.m_WeaponDesignVMMixinInstance?.ViewModel;
+            if (!history.IsEmpty() && weaponDesign != null)
+            {
+                MemberExtractor.CallPrivateMethod(weaponDesign, "OnSelectItemFromHistory", new object[] {
+                    new WeaponDesignSelectorVM(history.Last(), null)
+                });
+            }
+        }
 
 		public override void Unload()
 		{
@@ -337,14 +350,14 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
 		}
 
 		public void OnCraftingLogicInitialized()
-		{
-			this.m_ParentScreen.OnCraftingLogicInitialized();
+        {
+            this.m_ParentScreen.OnCraftingLogicInitialized();
 			this.OnDefaultWeaponNameChanged();
 		}
 
 		public void OnCraftingLogicRefreshed()
-		{
-			this.m_ParentScreen.OnCraftingLogicRefreshed();
+        {
+            this.m_ParentScreen.OnCraftingLogicRefreshed();
 			this.OnDefaultWeaponNameChanged();
 		}
 
