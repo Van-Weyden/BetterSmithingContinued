@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using BetterSmithingContinued.Core;
+﻿using BetterSmithingContinued.Core;
 using BetterSmithingContinued.Core.Modules;
 using BetterSmithingContinued.Inputs.Code;
 using BetterSmithingContinued.MainFrame.HotKeys;
@@ -8,9 +6,12 @@ using BetterSmithingContinued.MainFrame.Persistence;
 using BetterSmithingContinued.MainFrame.UI;
 using BetterSmithingContinued.MainFrame.Utilities;
 using BetterSmithingContinued.Settings;
+using MCM.Abstractions.Base.Global;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting;
-using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.Refinement;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
@@ -20,10 +21,17 @@ namespace BetterSmithingContinued.MainFrame
 {
 	public class CycleHeroInSmithingScreenLogic : Module, ICycleHeroInSmithingScreenLogic
 	{
+		enum OrderType
+		{
+			Default,
+			SkillAsc,
+			SkillDesc
+		};
+
 		public override void Create(IPublicContainer _publicContainer)
 		{
 			base.Create(_publicContainer);
-			this.RegisterModule<ICycleHeroInSmithingScreenLogic>("");
+            this.RegisterModule<ICycleHeroInSmithingScreenLogic>("");
 		}
 
 		public override void Load()
@@ -35,14 +43,12 @@ namespace BetterSmithingContinued.MainFrame
 			this.m_SettingsManager.SettingsSectionChanged += this.OnSettingsSectionChanged;
 			this.m_SmithingSettings = this.m_SettingsManager.GetSettings<SmithingSettings>();
 			this.m_RefiningSettings = this.m_SettingsManager.GetSettings<RefiningSettings>();
-			CycleHeroForwardKey cycleHeroForwardKey = new CycleHeroForwardKey
-			{
+			CycleHeroForwardKey cycleHeroForwardKey = new CycleHeroForwardKey {
 				IsEnabled = new Func<bool>(this.CanCycleHero)
 			};
 			cycleHeroForwardKey.KeyStateChanged += this.OnCycleHeroForwardKeyStateChanged;
 			this.m_InputManager.AddHotkey(cycleHeroForwardKey);
-			CycleHeroBackwardKey cycleHeroBackwardKey = new CycleHeroBackwardKey
-			{
+			CycleHeroBackwardKey cycleHeroBackwardKey = new CycleHeroBackwardKey {
 				IsEnabled = new Func<bool>(this.CanCycleHero)
 			};
 			cycleHeroBackwardKey.KeyStateChanged += this.OnCycleHeroBackwardKeyStateChanged;
@@ -66,18 +72,15 @@ namespace BetterSmithingContinued.MainFrame
 
 		private void OnSettingsSectionChanged(object _sender, SettingsSection _e)
 		{
-			SmithingSettings smithingSettings = _e as SmithingSettings;
-			if (smithingSettings != null)
-			{
-				this.m_SmithingSettings = smithingSettings;
-				return;
-			}
-			RefiningSettings refiningSettings = _e as RefiningSettings;
-			if (refiningSettings != null)
-			{
-				this.m_RefiningSettings = refiningSettings;
-			}
-		}
+            if (_e is SmithingSettings smithingSettings)
+            {
+                this.m_SmithingSettings = smithingSettings;
+            }
+            else if (_e is RefiningSettings refiningSettings)
+            {
+                this.m_RefiningSettings = refiningSettings;
+            }
+        }
 
 		private void OnCycleHeroForwardKeyStateChanged(object _sender, KeyState _keyState)
 		{
@@ -85,37 +88,26 @@ namespace BetterSmithingContinued.MainFrame
 			{
 				if (_keyState == KeyState.KeyPressed)
 				{
-					int num = this.m_SmithingManager.CraftingVM.AvailableCharactersForSmithing.FindIndex((CraftingAvailableHeroItemVM hero) => hero == this.m_SmithingManager.CraftingVM.CurrentCraftingHero);
-					int count = this.m_SmithingManager.CraftingVM.AvailableCharactersForSmithing.Count;
-					int num2 = num;
-					CraftingAvailableHeroItemVM craftingAvailableHeroItemVM = null;
-					for (int i = 0; i < count - 1; i++)
+                    CraftingAvailableHeroItemVM craftingAvailableHeroItemVM = this.m_SmithingManager.CraftingVM.CurrentCraftingHero;
+                    if (this.NextCycleHero(ref craftingAvailableHeroItemVM))
 					{
-						num2++;
-						if (num2 >= count)
-						{
-							num2 = 0;
-						}
-						CraftingAvailableHeroItemVM craftingAvailableHeroItemVM2 = this.m_SmithingManager.CraftingVM.AvailableCharactersForSmithing[num2];
-						if (this.IsHeroValidCycleTarget(craftingAvailableHeroItemVM2))
-						{
-							craftingAvailableHeroItemVM = craftingAvailableHeroItemVM2;
-							break;
-						}
-					}
-					if (craftingAvailableHeroItemVM == null)
-					{
-						InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=BSC_Msg_NHA}No other valid hero available.", null).ToString()));
-					}
+                        this.m_SmithingManager.CraftingVM.UpdateCraftingHero(craftingAvailableHeroItemVM);
+                    }
 					else
 					{
-						this.m_SmithingManager.CraftingVM.UpdateCraftingHero(craftingAvailableHeroItemVM);
-					}
-				}
+                        InformationManager.DisplayMessage(new InformationMessage(
+                            new TextObject("{=BSC_Msg_NHA}No other valid hero available.", null).ToString()
+                        ));
+                    }
+                }
 			}
 			catch (Exception ex)
 			{
-				InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=BSC_EM_04}Exception thrown while attempting to cycle smithing character. Exception: ", null) + ex.Message, Colors.Red, "Exception"));
+				InformationManager.DisplayMessage(new InformationMessage(
+					new TextObject("{=BSC_Ethis.m_04}Exception thrown while attempting to cycle smithing character. Exception: ", null) + ex.Message,
+					Colors.Red,
+					"Exception"
+				));
 			}
 		}
 
@@ -125,72 +117,130 @@ namespace BetterSmithingContinued.MainFrame
 			{
 				if (_keyState == KeyState.KeyPressed)
 				{
-					int num = this.m_SmithingManager.CraftingVM.AvailableCharactersForSmithing.FindIndex((CraftingAvailableHeroItemVM hero) => hero == this.m_SmithingManager.CraftingVM.CurrentCraftingHero);
-					int count = this.m_SmithingManager.CraftingVM.AvailableCharactersForSmithing.Count;
-					int num2 = num;
-					CraftingAvailableHeroItemVM craftingAvailableHeroItemVM = null;
-					for (int i = 0; i < count - 1; i++)
-					{
-						num2--;
-						if (num2 < 0)
-						{
-							num2 = this.m_SmithingManager.CraftingVM.AvailableCharactersForSmithing.Count - 1;
-						}
-						CraftingAvailableHeroItemVM craftingAvailableHeroItemVM2 = this.m_SmithingManager.CraftingVM.AvailableCharactersForSmithing[num2];
-						if (this.IsHeroValidCycleTarget(craftingAvailableHeroItemVM2))
-						{
-							craftingAvailableHeroItemVM = craftingAvailableHeroItemVM2;
-							break;
-						}
-					}
-					if (craftingAvailableHeroItemVM == null)
-					{
-						InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=BSC_Msg_NHA}No other valid hero available.", null).ToString()));
+                    CraftingAvailableHeroItemVM craftingAvailableHeroItemVM = this.m_SmithingManager.CraftingVM.CurrentCraftingHero;
+                    if (this.PrevCycleHero(ref craftingAvailableHeroItemVM))
+                    {
+                        this.m_SmithingManager.CraftingVM.UpdateCraftingHero(craftingAvailableHeroItemVM);
 					}
 					else
 					{
-						this.m_SmithingManager.CraftingVM.UpdateCraftingHero(craftingAvailableHeroItemVM);
+						InformationManager.DisplayMessage(new InformationMessage(
+							new TextObject("{=BSC_Msg_NHA}No other valid hero available.", null).ToString()
+						));
 					}
 				}
 			}
 			catch (Exception ex)
 			{
-				InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=BSC_EM_04}Exception thrown while attempting to cycle smithing character. Exception: ", null) + ex.Message, Colors.Red, "Exception"));
-			}
+                InformationManager.DisplayMessage(new InformationMessage(
+                    new TextObject("{=BSC_Ethis.m_04}Exception thrown while attempting to cycle smithing character. Exception: ", null) + ex.Message,
+                    Colors.Red,
+                    "Exception"
+				));
+            }
 		}
 
-		private bool IsHeroValidCycleTarget(CraftingAvailableHeroItemVM _hero)
+		private List<CraftingAvailableHeroItemVM> CycleHeroList()
+		{
+			OrderType orderType = (OrderType) GlobalSettings<MCMBetterSmithingSettings>.Instance.CharacterCycleType.SelectedIndex;
+            switch (orderType)
+            {
+                case OrderType.Default:
+                    return this.m_SmithingManager.CraftingVM.AvailableCharactersForSmithing.ToList();
+
+                case OrderType.SkillAsc:
+                    return this.m_SmithingManager.CraftingVM.AvailableCharactersForSmithing.OrderBy(
+                        character => character.SmithySkillLevel
+                    ).ToList();
+
+                case OrderType.SkillDesc:
+                    return this.m_SmithingManager.CraftingVM.AvailableCharactersForSmithing.OrderByDescending(
+                        character => character.SmithySkillLevel
+                    ).ToList();
+            }
+
+			return null;
+
+        }
+
+        private bool NextCycleHero(ref CraftingAvailableHeroItemVM hero)
+        {
+			List<CraftingAvailableHeroItemVM> list = CycleHeroList();
+   			if (list == null)
+			{
+				return false;
+			}
+
+            int index = list.IndexOf(hero);
+            do
+			{
+                index = (index + 1 >= list.Count ? 0 : index + 1);
+                hero = list[index];
+                if (hero == this.m_SmithingManager.CraftingVM.CurrentCraftingHero)
+                {
+                    return false;
+                }
+            } while (!this.IsHeroValidCycleTarget(hero));
+            
+            return true;
+		}
+
+        private bool PrevCycleHero(ref CraftingAvailableHeroItemVM hero)
+        {
+            List<CraftingAvailableHeroItemVM> list = CycleHeroList();
+            if (list == null)
+            {
+                return false;
+            }
+
+            int index = list.IndexOf(hero);
+            do
+            {
+                index = (index - 1 < 0 ? list.Count - 1 : index - 1);
+                hero = list[index];
+                if (hero == this.m_SmithingManager.CraftingVM.CurrentCraftingHero)
+                {
+                    return false;
+                }
+            } while (!this.IsHeroValidCycleTarget(hero));
+
+            return true;
+        }
+
+        private bool IsHeroValidCycleTarget(CraftingAvailableHeroItemVM _hero)
 		{
 			if (this.m_SmithingSettings.OnlyCycleHeroesWithStamina && !this.m_SmithingManager.HeroHasEnoughStaminaForMainAction(_hero.Hero))
 			{
 				return false;
 			}
+
 			if (this.m_RefiningSettings.OnlyCycleHeroesWithCurrentRecipe && this.m_SmithingManager.CurrentCraftingScreen == CraftingScreen.Refining)
 			{
-				RefinementActionItemVM currentSelectedAction = this.m_SmithingManager.RefinementVM.CurrentSelectedAction;
-				Crafting.RefiningFormula currentRefiningFormula = (currentSelectedAction != null) ? currentSelectedAction.RefineFormula : null;
+				Crafting.RefiningFormula currentRefiningFormula = this.m_SmithingManager.RefinementVM.CurrentSelectedAction?.RefineFormula;
+
 				if (currentRefiningFormula == null)
 				{
 					return true;
 				}
-				if (Campaign.Current.Models.SmithingModel.GetRefiningFormulas(_hero.Hero).FirstOrDefault((Crafting.RefiningFormula x) => x.Output == currentRefiningFormula.Output && x.OutputCount == currentRefiningFormula.OutputCount) == null)
+
+				currentRefiningFormula = Campaign.Current.Models.SmithingModel.GetRefiningFormulas(_hero.Hero).FirstOrDefault(
+					x => x.Output == currentRefiningFormula.Output && x.OutputCount == currentRefiningFormula.OutputCount
+				);
+
+                if (currentRefiningFormula == null)
 				{
 					return false;
 				}
 			}
+
 			return true;
 		}
 
-		private SmithingSettings m_SmithingSettings;
-
+        private SmithingSettings m_SmithingSettings;
 		private RefiningSettings m_RefiningSettings;
-
 		private ISmithingManager m_SmithingManager;
-
 		private IInputManager m_InputManager;
-
 		private ISettingsManager m_SettingsManager;
-
 		private IBetterSmithingUIContext m_BetterSmithingUIContext;
 	}
 }

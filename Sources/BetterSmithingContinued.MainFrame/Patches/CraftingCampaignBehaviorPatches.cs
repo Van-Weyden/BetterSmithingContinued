@@ -94,7 +94,7 @@ namespace BetterSmithingContinued.MainFrame.Patches
 		private static void GetHeroCraftingStaminaPatch(ref CraftingCampaignBehavior __instance, ref int __result, Hero hero)
 		{
 			MCMBetterSmithingSettings instance = GlobalSettings<MCMBetterSmithingSettings>.Instance;
-			if (instance != null && !instance.CraftingStaminaEnabled)
+			if (instance != null && instance.InfiniteCraftingStamina)
 			{
 				__result = __instance.GetMaxHeroCraftingStamina(hero);
 			}
@@ -106,35 +106,34 @@ namespace BetterSmithingContinued.MainFrame.Patches
 		{
 			MobileParty partyBelongedTo = Hero.MainHero.PartyBelongedTo;
 			MCMBetterSmithingSettings instance = GlobalSettings<MCMBetterSmithingSettings>.Instance;
-			if (partyBelongedTo == null || instance == null || !instance.CraftingStaminaEnabled)
+			if (partyBelongedTo == null || instance == null || instance.InfiniteCraftingStamina)
 			{
 				return;
 			}
-			float num = (partyBelongedTo.CurrentSettlement != null) ? instance.CraftingStaminaRecoveryRateInsideTowns : instance.CraftingStaminaRecoveryRateOutsideTowns;
-			if (num == 0f)
+			float rate = (partyBelongedTo.CurrentSettlement != null) ? instance.CraftingStaminaRecoveryRateInsideTowns : instance.CraftingStaminaRecoveryRateOutsideTowns;
+			if (rate == 0f)
 			{
 				return;
 			}
-			int num2 = partyBelongedTo.MemberRoster.TotalHeroes;
+			int heroesLeft = partyBelongedTo.MemberRoster.TotalHeroes;
 			foreach (TroopRosterElement troopRosterElement in partyBelongedTo.MemberRoster.GetTroopRoster())
 			{
-				CharacterObject character = troopRosterElement.Character;
-				Hero hero = (character != null) ? character.HeroObject : null;
+				Hero hero = troopRosterElement.Character?.HeroObject;
 				if (hero != null)
 				{
 					int maxHeroCraftingStamina = __instance.GetMaxHeroCraftingStamina(hero);
-					int num3 = __instance.GetHeroCraftingStamina(hero);
-					if (num3 < maxHeroCraftingStamina)
+					int currentStamina = __instance.GetHeroCraftingStamina(hero);
+					if (currentStamina < maxHeroCraftingStamina)
 					{
-						num3 += CraftingCampaignBehaviorPatches.GetStaminaHourlyRecoveryRate(hero, num);
-						if (num3 > maxHeroCraftingStamina)
+						currentStamina += CraftingCampaignBehaviorPatches.GetStaminaHourlyRecoveryRate(hero, rate);
+						if (currentStamina > maxHeroCraftingStamina)
 						{
-							num3 = maxHeroCraftingStamina;
+							currentStamina = maxHeroCraftingStamina;
 						}
-						__instance.SetHeroCraftingStamina(hero, num3);
+						__instance.SetHeroCraftingStamina(hero, currentStamina);
 					}
-					num2--;
-					if (num2 == 0)
+					heroesLeft--;
+					if (heroesLeft == 0)
 					{
 						break;
 					}

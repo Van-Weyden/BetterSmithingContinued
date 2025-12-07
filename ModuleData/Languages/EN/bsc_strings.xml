@@ -63,6 +63,7 @@
     <string id="BSC_SPG_02" text="Smelting" />
     <string id="BSC_SPG_03" text="Crafting" />
     <string id="BSC_SPG_04" text="Crafting stamina" />
+    <string id="BSC_SPG_05" text="Character cycle" />
     
     <!-- Settings properties -->
     <string id="BSC_SPN_11" text="Ctrl Refine" />
@@ -89,12 +90,17 @@
     <string id="BSC_SPH_34" text="If Enabled, toggle button &quot;Show only unlocked pieces&quot; will be enabled by default." />
     <string id="BSC_SPN_35" text="Group Identical Crafted Weapons" />
     <string id="BSC_SPH_35" text="If Enabled, will group all identical crafted weapons (Weapons with the same name, same type, same stats, etc) together." />
-    <string id="BSC_SPN_41" text="Use Crafting Stamina" />
-    <string id="BSC_SPH_41" text="Disable this option for unlimited crafting stamina." />
+    <string id="BSC_SPN_41" text="Unlimited Crafting Stamina" />
+    <string id="BSC_SPH_41" text="Enable this option for unlimited crafting stamina." />
     <string id="BSC_SPN_42" text="Recovery rate inside towns" />
     <string id="BSC_SPH_42" text="Crafting stamina recovery rate multipler when party rest inside towns. 100% means the same as vanilla recovery rate in towns; 0% means that recovery inside towns is disabled." />
     <string id="BSC_SPN_43" text="Recovery rate outside towns" />
     <string id="BSC_SPH_43" text="Crafting stamina recovery rate multipler when party is outside towns. 100% means the same as vanilla recovery rate in towns; 0% means that recovery outside towns is disabled." />
+    <string id="BSC_SPN_51" text="Character cycle order" />
+    <string id="BSC_SPH_51" text="The order of cycling through characters using A / D hotkeys." />
+    <string id="BSC_SPI_511" text="As on the party screen (vanilla)" />
+    <string id="BSC_SPI_512" text="Sorted by skill level (ascending)" />
+    <string id="BSC_SPI_513" text="Sorted by skill level (descending)" />
     
     <!-- Error messages -->
     <string id="BSC_EM_01" text="Error occurred while trying to do smelting operation. Exception: " />

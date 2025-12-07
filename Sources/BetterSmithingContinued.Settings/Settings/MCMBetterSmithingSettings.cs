@@ -1,4 +1,4 @@
-﻿using TaleWorlds.InputSystem;
+using TaleWorlds.InputSystem;
 
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
@@ -57,9 +57,9 @@ namespace BetterSmithingContinued.Settings
 		[SettingPropertyGroup("{=BSC_SPG_03}Crafting")]
 		public bool GroupIdenticalCraftedWeapons { get; set; } = true;
 
-		[SettingPropertyBool("{=BSC_SPN_41}Use Crafting Stamina", IsToggle = true, RequireRestart = false, Order = 1, HintText = "{=BSC_SPH_41}Disable this option for unlimited crafting stamina.")]
+		[SettingPropertyBool("{=BSC_SPN_41}Unlimited Crafting Stamina", RequireRestart = false, Order = 1, HintText = "{=BSC_SPH_41}Enable this option for unlimited crafting stamina.")]
 		[SettingPropertyGroup("{=BSC_SPG_04}Crafting stamina", GroupOrder = 5)]
-		public bool CraftingStaminaEnabled { get; set; } = true;
+		public bool InfiniteCraftingStamina { get; set; } = false;
 
 		[SettingPropertyFloatingInteger("{=BSC_SPN_42}Recovery rate inside towns", 0f, 10f, "#0%", Order = 2, RequireRestart = false, HintText = "{=BSC_SPH_42}Crafting stamina recovery rate multipler when party rest inside towns. 100% means the same as vanilla recovery rate in towns; 0% means that recovery inside towns is disabled.")]
 		[SettingPropertyGroup("{=BSC_SPG_04}Crafting stamina")]
@@ -68,6 +68,14 @@ namespace BetterSmithingContinued.Settings
 		[SettingPropertyFloatingInteger("{=BSC_SPN_43}Recovery rate outside towns", 0f, 10f, "#0%", Order = 3, RequireRestart = false, HintText = "{=BSC_SPH_43}Crafting stamina recovery rate multipler when party is outside towns. 100% means the same as vanilla recovery rate in towns; 0% means that recovery outside towns is disabled.")]
 		[SettingPropertyGroup("{=BSC_SPG_04}Crafting stamina")]
 		public float CraftingStaminaRecoveryRateOutsideTowns { get; set; }
+
+        [SettingPropertyDropdown("{=BSC_SPN_51}Character cycle order", Order = 1, RequireRestart = false, HintText = "{=BSC_SPH_51}The order of cycling through characters using A / D hotkeys.")]
+        [SettingPropertyGroup("{=BSC_SPG_05}Character cycle", GroupOrder = 6)]
+        public Dropdown<string> CharacterCycleType { get; set; } = new Dropdown<string>(new string[] {
+            "{=BSC_SPI_511}As on the party screen (vanilla)",
+            "{=BSC_SPI_512}Sorted by skill level (ascending)",
+            "{=BSC_SPI_513}Sorted by skill level (descending)"
+        }, selectedIndex: 0);
 
 		public override string Id
 		{
