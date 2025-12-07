@@ -96,11 +96,10 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 			ItemObject currentCraftedItemObject = crafting.GetCurrentCraftedItemObject(false);
 			EquipmentElement itemRosterElement = new EquipmentElement(currentCraftedItemObject, null, null, false);
 			int price = Campaign.Current.Models.TradeItemPriceFactorModel.GetPrice(itemRosterElement, Campaign.Current.MainParty, null, true, 0f, 0f, 0f);
-			CraftingListPropertyItem craftingListPropertyItem = new CraftingListPropertyItem(new TextObject("Value: ", null), 50000f, (float)price, 0f, CraftingTemplate.CraftingStatTypes.NumStatTypes, false);
+			CraftingListPropertyItem craftingListPropertyItem = new CraftingListPropertyItem(new TextObject("{=BSC_UI_Value}Value: ", null), 50000f, (float)price, 0f, CraftingTemplate.CraftingStatTypes.NumStatTypes, false);
 			craftingListPropertyItem.IsValidForUsage = true;
-			MBBindingList<CraftingListPropertyItem> mbbindingList;
-			MemberExtractor.GetPrivateFieldValue(__instance, "_primaryPropertyList", out mbbindingList);
-			mbbindingList.Add(craftingListPropertyItem);
+            MemberExtractor.GetPrivateFieldValue(__instance, "_primaryPropertyList", out MBBindingList<CraftingListPropertyItem> mbbindingList);
+            mbbindingList.Add(craftingListPropertyItem);
 		}
 
 		[HarmonyPatch(typeof(WeaponDesignVM))]

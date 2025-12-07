@@ -47,6 +47,9 @@
     <string id="BSC_BH_RLEH" text="Schalte ein, um Helden mit zu wenig Energie aus den Zyklen zu entfernen." />
     <string id="BSC_BH_RHWR" text="Schalte ein, um Helden, die nicht das aktuell ausgewählte Rezept haben, aus Zyklen zu entfernen." />
     <string id="BSC_BH_IWGM" text="Einschalten, um Waffen einzuschließen, die mindestens einen " />
+	
+    <!-- Other UI -->
+    <string id="BSC_UI_Value" text="Wert: " />
 
     <!-- Hotkeys -->
     <string id="BSC_HKN_01" text="Cycle Hero Forwards" />
@@ -63,6 +66,7 @@
     <string id="BSC_SPG_02" text="Schmelzen" />
     <string id="BSC_SPG_03" text="Crafting" />
     <string id="BSC_SPG_04" text="Handwerkliche Ausdauer" />
+    <string id="BSC_SPG_05" text="Charakterwechsel" />
     
     <!-- Settings properties -->
     <string id="BSC_SPN_11" text="Strg Verfeinern" />
@@ -76,7 +80,7 @@
     <string id="BSC_SPN_22" text="Smelt Multiple Count" />
     <string id="BSC_SPH_22" text="Die Anzahl der Schmelzvorgänge, die durchgeführt werden, wenn du die Taste &quot;Schmelzen&quot; drückst, während du die Taste hältst, die in der Einstellung &quot;Mehrfachschmelzen&quot; angegeben ist. Für Maximum auf 0 setzen." />
     <string id="BSC_SPN_23" text="Alle Tasten riechen" />
-    <string id="BSC_SPH_23" text="Die Taste, die du gedrückt halten musst, wenn du den &quot;Smelt&quot; Button drückst, um eine Smelt All Operation durchzuführen. Mit Alles schmelzen werden alle freigeschalteten Ausrüstungen geschmolzen, beginnend mit dem Anfang der Ausrüstungsliste. />
+    <string id="BSC_SPH_23" text="Die Taste, die du gedrückt halten musst, wenn du den &quot;Smelt&quot; Button drückst, um eine Smelt All Operation durchzuführen. Mit Alles schmelzen werden alle freigeschalteten Ausrüstungen geschmolzen, beginnend mit dem Anfang der Ausrüstungsliste."/>
     <string id="BSC_SPN_24" text="Smart Smelting aktivieren" />
     <string id="BSC_SPH_24" text="Wenn diese Option auf WAHR gesetzt ist, werden beim Schmelzen aller Waffen entweder nur von Spielern hergestellte Waffen oder nur von Nicht-Spielern hergestellte Waffen geschmolzen, je nachdem, welche Ausrüstung beim Drücken der Taste ausgewählt wurde." />
     <string id="BSC_SPN_31" text="Ctrl Craft" />
@@ -89,12 +93,17 @@
     <string id="BSC_SPH_34" text="Wenn aktiviert, wird die Schaltfläche &quot;Nur nicht gesperrte Teile anzeigen&quot; standardmäßig aktiviert." />
     <string id="BSC_SPN_35" text="Identische gefertigte Waffen gruppieren" />
     <string id="BSC_SPH_35" text="Wenn diese Option aktiviert ist, werden alle identischen Waffen (Waffen mit demselben Namen, demselben Typ, denselben Werten usw.) zusammengefasst." />
-    <string id="BSC_SPN_41" text="Handwerksausdauer verwenden" />
-    <string id="BSC_SPH_41" text="Deaktiviere diese Option für unbegrenzte Handwerksausdauer." />
+    <string id="BSC_SPN_41" text="Unbegrenzte Handwerksausdauer" />
+    <string id="BSC_SPH_41" text="Aktiviere diese Option für unbegrenzte Handwerksausdauer." />
     <string id="BSC_SPN_42" text="Erholungsrate innerhalb von Städten" />
     <string id="BSC_SPH_42" text="Die Wiederherstellungsrate der Ausdauer für das Crafting vervielfacht sich, wenn die Gruppe in Städten rastet. 100% bedeutet, dass die Erholungsrate in den Städten die gleiche ist wie bei Vanilla; 0% bedeutet, dass die Erholungsrate in den Städten deaktiviert ist." />
     <string id="BSC_SPN_43" text="Erholungsrate außerhalb von Städten" />
     <string id="BSC_SPH_43" text="Die Erholungsrate der Ausdauer wird vervielfacht, wenn sich die Gruppe außerhalb von Städten befindet. 100% bedeutet, dass die Erholungsrate in der Stadt die gleiche ist wie bei Vanilla; 0% bedeutet, dass die Erholungsrate außerhalb der Stadt deaktiviert ist." />
+    <string id="BSC_SPN_51" text="Reihenfolge des Charakterwechsels" />
+    <string id="BSC_SPH_51" text="Die Reihenfolge beim Durchschalten der Charaktere mit den Hotkeys A / D." />
+    <string id="BSC_SPI_511" text="Wie im Truppenbildschirm (Basisversion)" />
+    <string id="BSC_SPI_512" text="Sortiert nach Fertigkeitsstufe (aufsteigend)" />
+    <string id="BSC_SPI_513" text="Sortiert nach Fertigkeitsstufe (absteigend)" />
     
     <!-- Error messages -->
     <string id="BSC_EM_01" text="Beim Versuch, einen Schmelzvorgang durchzuführen, ist ein Fehler aufgetreten. Exception: " />
