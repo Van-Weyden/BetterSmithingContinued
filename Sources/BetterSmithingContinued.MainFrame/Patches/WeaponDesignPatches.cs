@@ -1,20 +1,35 @@
-﻿using TaleWorlds.Core;
-using TaleWorlds.Localization;
-
+﻿using BetterSmithingContinued.Core;
 using HarmonyLib;
-
-using BetterSmithingContinued.Core;
+using System;
+using TaleWorlds.Core;
+using TaleWorlds.Localization;
 
 namespace BetterSmithingContinued.MainFrame.Patches
 {
     [HarmonyPatch(typeof(WeaponDesign))]
     public class WeaponDesignPatches
     {
+        [HarmonyPatch(MethodType.Constructor, new Type[]
+        {
+            typeof(CraftingTemplate),
+            typeof(TextObject),
+            typeof(WeaponDesignElement[]),
+            typeof(string)
+        })]
+        [HarmonyPostfix]
+        public static void ConstructorPostfix(ref WeaponDesign __instance)
+        {
+            if (string.IsNullOrEmpty(__instance.HashedCode) || __instance.HashedCode.StartsWith("crafted_item_"))
+            {
+                MemberExtractor.SetPrivatePropertyValue(__instance, "HashedCode", WeaponDesignHash(__instance));
+            }
+        }
+
         [HarmonyPatch("HashedCode", MethodType.Setter)]
         [HarmonyPrefix]
         public static bool HashedCodeSetterPrefix(ref WeaponDesign __instance, ref string __0)
         {
-            if (__0.StartsWith("crafted_item_"))
+            if (string.IsNullOrEmpty(__0) || __0.StartsWith("crafted_item_"))
             {
                 __0 = WeaponDesignHash(__instance);
             }
@@ -23,13 +38,10 @@ namespace BetterSmithingContinued.MainFrame.Patches
         }
 
         [HarmonyPatch("SetWeaponName")]
-        [HarmonyPrefix]
-        public static void SetWeaponNamePrefix(ref WeaponDesign __instance, TextObject name)
+        [HarmonyPostfix]
+        public static void SetWeaponNamePostfix(ref WeaponDesign __instance)
         {
-            if (!__instance.WeaponName.Equals(name))
-            {
-                MemberExtractor.SetPrivatePropertyValue(__instance, "HashedCode", WeaponDesignHash(__instance));
-            }
+            MemberExtractor.SetPrivatePropertyValue(__instance, "HashedCode", WeaponDesignHash(__instance));
         }
 
         private static string WeaponDesignHash(WeaponDesign weaponDesign)
