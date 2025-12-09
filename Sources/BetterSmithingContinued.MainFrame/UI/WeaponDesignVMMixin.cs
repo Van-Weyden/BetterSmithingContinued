@@ -293,17 +293,12 @@ namespace BetterSmithingContinued.MainFrame.UI
 
 		private new void OnPropertyChanged([CallerMemberName] string _callerName = "")
 		{
-            ViewModel?.OnPropertyChanged(_callerName);
+            this.ViewModel?.OnPropertyChanged(_callerName);
 		}
 
 		private void OnCurrentlySelectedItemChanged(CraftingItemTemplateVM _e)
 		{
-			EventHandler<CraftingItemTemplateVM> currentlySelectedItemChanged = this.CurrentlySelectedItemChanged;
-			if (currentlySelectedItemChanged == null)
-			{
-				return;
-			}
-			currentlySelectedItemChanged(this, _e);
+			this.CurrentlySelectedItemChanged?.Invoke(this, _e);
 		}
 
 		private void OnViewModeChanged()

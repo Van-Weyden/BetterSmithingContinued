@@ -32,5 +32,5 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 		{
 			__instance.ItemName = itemName.ToString();
 		}
-	}
+    }
 }
