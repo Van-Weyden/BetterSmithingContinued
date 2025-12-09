@@ -187,21 +187,23 @@ namespace BetterSmithingContinued.MainFrame.Persistence
                 TextObject name = new TextObject("{=!}" + this.Name, null);
                 WeaponDesign weaponDesign = new WeaponDesign(template, name, array);
 				string id = weaponDesign.HashedCode;		
-                this.m_ItemObject = MBObjectManager.Instance.GetObject<ItemObject>(id);
-				if (this.m_ItemObject == null)
+				int copyNumber = 1;
+				while (MBObjectManager.Instance.GetObject<ItemObject>(id) != null)
 				{
-                    ItemObject itemObject = new ItemObject();
-                    Crafting crafting = Instances.SmithingManager.WeaponDesignVM.GetCraftingComponent();
-                    CraftingUtils.SmartGenerateItem(
-                        weaponDesign,
-                        name,
-                        Hero.MainHero.Culture,
-                        weaponDesign.Template.ItemModifierGroup,
-                        ref itemObject,
-                        weaponDesign.HashedCode
-                    );
-                    this.m_ItemObject = MBObjectManager.Instance.RegisterObject(itemObject);
-                }
+					id = weaponDesign.HashedCode + copyNumber++;
+				}
+
+                ItemObject itemObject = new ItemObject();
+                Crafting crafting = Instances.SmithingManager.WeaponDesignVM.GetCraftingComponent();
+                CraftingUtils.SmartGenerateItem(
+                    weaponDesign,
+                    name,
+                    Hero.MainHero.Culture,
+                    weaponDesign.Template.ItemModifierGroup,
+                    ref itemObject,
+                    id
+                );
+                this.m_ItemObject = MBObjectManager.Instance.RegisterObject(itemObject);
 			}
 			catch (Exception value)
             {
