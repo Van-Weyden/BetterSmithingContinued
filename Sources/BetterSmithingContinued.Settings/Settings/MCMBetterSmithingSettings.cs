@@ -71,13 +71,17 @@ namespace BetterSmithingContinued.Settings
 
         [SettingPropertyDropdown("{=BSC_SPN_51}Character cycle order", Order = 1, RequireRestart = false, HintText = "{=BSC_SPH_51}The order of cycling through characters using A / D hotkeys.")]
         [SettingPropertyGroup("{=BSC_SPG_05}Character cycle", GroupOrder = 6)]
-        public Dropdown<string> CharacterCycleType { get; set; } = new Dropdown<string>(new string[] {
-            "{=BSC_SPI_511}As on the party screen (vanilla)",
-            "{=BSC_SPI_512}Sorted by skill level (ascending)",
-            "{=BSC_SPI_513}Sorted by skill level (descending)"
+        public Dropdown<CharacterCycleDropdownOption> CharacterCycleType { get; set; } = new Dropdown<CharacterCycleDropdownOption>(new CharacterCycleDropdownOption[] {
+            new CharacterCycleDropdownOption (CharacterCycleDropdownOption.OrderType.Default, "{=BSC_SPI_511}As on the party screen (vanilla)"),
+            new CharacterCycleDropdownOption (CharacterCycleDropdownOption.OrderType.SkillAsc, "{=BSC_SPI_512}Sorted by skill level (ascending)"),
+            new CharacterCycleDropdownOption (CharacterCycleDropdownOption.OrderType.SkillDesc, "{=BSC_SPI_513}Sorted by skill level (descending)")
         }, selectedIndex: 0);
 
-		public override string Id
+        [SettingPropertyBool("{=BSC_SPN_52}Reorder characters in the menu", RequireRestart = false, Order = 2, HintText = "{=BSC_SPH_52}Reorder characters in the forge's selection menu according to the cycle order.")]
+        [SettingPropertyGroup("{=BSC_SPG_05}Character cycle")]
+        public bool ReorderCharactersInMenu { get; set; } = true;
+
+        public override string Id
 		{
 			get
 			{

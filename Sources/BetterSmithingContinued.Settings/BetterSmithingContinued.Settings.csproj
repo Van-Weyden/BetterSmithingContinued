@@ -60,6 +60,7 @@
     <Compile Include="Annotations\NotifyPropertyChangedInvocatorAttribute.cs" />
     <Compile Include="Annotations\NotNullAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\CharacterCycleDropdownOption.cs" />
     <Compile Include="Settings\DisplayedMaterialSetting.cs" />
     <Compile Include="Settings\ISettingsManager.cs" />
     <Compile Include="Settings\KeybindingDropdown.cs" />

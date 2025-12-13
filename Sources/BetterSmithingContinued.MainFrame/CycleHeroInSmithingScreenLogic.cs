@@ -16,18 +16,12 @@ using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+using static BetterSmithingContinued.Settings.CharacterCycleDropdownOption;
 
 namespace BetterSmithingContinued.MainFrame
 {
 	public class CycleHeroInSmithingScreenLogic : Module, ICycleHeroInSmithingScreenLogic
 	{
-		enum OrderType
-		{
-			Default,
-			SkillAsc,
-			SkillDesc
-		};
-
 		public override void Create(IPublicContainer _publicContainer)
 		{
 			base.Create(_publicContainer);
@@ -142,7 +136,12 @@ namespace BetterSmithingContinued.MainFrame
 
 		private List<CraftingAvailableHeroItemVM> CycleHeroList()
 		{
-			OrderType orderType = (OrderType) GlobalSettings<MCMBetterSmithingSettings>.Instance.CharacterCycleType.SelectedIndex;
+			if (GlobalSettings<MCMBetterSmithingSettings>.Instance.ReorderCharactersInMenu)
+			{
+                return this.m_SmithingManager.CraftingVM.AvailableCharactersForSmithing.ToList();
+            }
+
+            OrderType orderType = GlobalSettings<MCMBetterSmithingSettings>.Instance.CharacterCycleType.SelectedValue.Type;
             switch (orderType)
             {
                 case OrderType.Default:
@@ -160,7 +159,6 @@ namespace BetterSmithingContinued.MainFrame
             }
 
 			return null;
-
         }
 
         private bool NextCycleHero(ref CraftingAvailableHeroItemVM hero)

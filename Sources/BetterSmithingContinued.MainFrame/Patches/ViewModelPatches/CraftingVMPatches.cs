@@ -1,15 +1,19 @@
-﻿using System;
-using BetterSmithingContinued.MainFrame.Utilities;
+﻿using BetterSmithingContinued.MainFrame.Utilities;
+using BetterSmithingContinued.Settings;
 using HarmonyLib;
+using MCM.Abstractions.Base.Global;
+using System;
+using System.Collections.Generic;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting;
 using TaleWorlds.Core;
+using static BetterSmithingContinued.Settings.CharacterCycleDropdownOption;
 
 namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 {
 	[HarmonyPatch(typeof(CraftingVM))]
 	public class CraftingVMPatches
 	{
-		[HarmonyPatch(MethodType.Constructor, new Type[]
+        [HarmonyPatch(MethodType.Constructor, new Type[]
 		{
 			typeof(Crafting),
 			typeof(Action),
@@ -21,9 +25,29 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 		public static void ConstructorPostfix(ref CraftingVM __instance)
 		{
 			Instances.SmithingManager.CraftingVM = __instance;
-		}
+			if (GlobalSettings<MCMBetterSmithingSettings>.Instance.ReorderCharactersInMenu)
+			{
+                switch (GlobalSettings<MCMBetterSmithingSettings>.Instance.CharacterCycleType.SelectedValue.Type)
+                {
+                    case OrderType.SkillAsc:
+                        __instance?.AvailableCharactersForSmithing?.Sort(Comparer<CraftingAvailableHeroItemVM>.Create(
+							(hero1, hero2) => hero1.SmithySkillLevel.CompareTo(hero2.SmithySkillLevel)
+						));
+                        break;
 
-		[HarmonyPatch("ExecuteSwitchToCrafting")]
+                    case OrderType.SkillDesc:
+                        __instance?.AvailableCharactersForSmithing?.Sort(Comparer<CraftingAvailableHeroItemVM>.Create(
+							(hero1, hero2) => hero2.SmithySkillLevel.CompareTo(hero1.SmithySkillLevel)
+						));
+                        break;
+
+                    default:
+                        break;
+                }
+            }   
+        }
+
+        [HarmonyPatch("ExecuteSwitchToCrafting")]
 		[HarmonyPostfix]
 		public static void ExecuteSwitchToCraftingPostfix()
 		{
