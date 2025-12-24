@@ -298,6 +298,7 @@ namespace BetterSmithingContinued.MainFrame.UI.ViewModels
                 MemberExtractor.CallPrivateMethod(weaponDesign, "OnSelectItemFromHistory", new object[] {
                     new WeaponDesignSelectorVM(history.Last(), null)
                 });
+				WeaponName = history.Last().WeaponName.ToString();
             }
         }
 

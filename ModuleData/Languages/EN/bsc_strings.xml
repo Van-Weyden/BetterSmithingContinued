@@ -104,6 +104,8 @@
     <string id="BSC_SPI_511" text="As on the party screen (vanilla)" />
     <string id="BSC_SPI_512" text="Sorted by skill level (ascending)" />
     <string id="BSC_SPI_513" text="Sorted by skill level (descending)" />
+	<string id="BSC_SPN_52" text="Reorder characters in the menu" />
+    <string id="BSC_SPH_52" text="Reorder characters in the forge's selection menu according to the cycle order." />
     
     <!-- Error messages -->
     <string id="BSC_EM_01" text="Error occurred while trying to do smelting operation. Exception: " />

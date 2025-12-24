@@ -1,11 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using BetterSmithingContinued.Core;
 using TaleWorlds.GauntletUI;
 using TaleWorlds.GauntletUI.BaseTypes;
+using TaleWorlds.Library;
 
 namespace BetterSmithingContinued.Utilities
 {
@@ -37,13 +37,16 @@ namespace BetterSmithingContinued.Utilities
 			return (EventManager eventManager) => eventManager.Context.InputContext.GetMousePosition();
 		});
 
-		private static readonly Lazy<Func<EventManager, List<Widget>>> m_LazyGetCurrentListInvoker = new Lazy<Func<EventManager, List<Widget>>>(delegate()
+		private static readonly Lazy<Func<EventManager, MBReadOnlyList<Widget>>>
+			m_LazyGetCurrentListInvoker = new Lazy<Func<EventManager, MBReadOnlyList<Widget>>>(delegate()
 		{
-			FieldInfo widgetContainer = MemberExtractor.GetPrivateFieldInfo<EventManager>("_widgetsWithUpdateContainer");
-			MethodInfo methodInfo = widgetContainer?.FieldType.GetMethod("GetCurrentList", MemberExtractor.PrivateMemberFlags);
+			FieldInfo widgetContainersInfo = MemberExtractor.GetPrivateFieldInfo<EventManager>("_widgetContainers");
+            Type widgetContainerType = widgetContainersInfo.FieldType.GetElementType();
+            MethodInfo methodInfo = widgetContainerType.GetMethod("GetActiveList", MemberExtractor.PublicMemberFlags);
+
 			return delegate(EventManager eventManager) {
-				object obj = methodInfo?.Invoke(widgetContainer?.GetValue(eventManager), null);
-				return obj as List<Widget>;
+				Array widgetContainers = widgetContainersInfo.GetValue(eventManager) as Array;
+				return methodInfo.Invoke(widgetContainers.GetValue(0), null) as MBReadOnlyList<Widget>;
 			};
 		});
 	}

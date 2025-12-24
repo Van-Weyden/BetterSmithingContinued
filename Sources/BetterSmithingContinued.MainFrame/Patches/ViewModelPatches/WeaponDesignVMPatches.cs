@@ -1,5 +1,9 @@
-﻿using System;
-
+﻿using BetterSmithingContinued.Core;
+using BetterSmithingContinued.MainFrame.Persistence;
+using BetterSmithingContinued.MainFrame.UI.ViewModels;
+using BetterSmithingContinued.Utilities;
+using HarmonyLib;
+using System;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.CampaignBehaviors;
 using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting;
@@ -7,13 +11,6 @@ using TaleWorlds.CampaignSystem.ViewModelCollection.WeaponCrafting.WeaponDesign;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
-
-using HarmonyLib;
-
-using BetterSmithingContinued.Core;
-using BetterSmithingContinued.MainFrame.Persistence;
-using BetterSmithingContinued.Utilities;
-using BetterSmithingContinued.MainFrame.UI.ViewModels;
 
 namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 {
@@ -84,7 +81,17 @@ namespace BetterSmithingContinued.MainFrame.Patches.ViewModelPatches
 			}
 
             return true;
-		}
+        }
+
+        [HarmonyPatch("OnSelectItemFromHistory")]
+        [HarmonyPostfix]
+        public static void OnSelectItemFromHistoryPostfix(ref WeaponDesignVM __instance, WeaponDesignSelectorVM selector)
+        {
+            if (Instances.ScreenSwitcher.ConnectedViewModel(Utilities.CraftingScreen.Crafting) is BetterCraftingVM craftingVM)
+            {
+                craftingVM.WeaponName = selector.Name.ToString();
+            }
+        }
 
         [HarmonyPatch(typeof(WeaponDesignVM))]
 		[HarmonyPatch("RefreshStats")]
