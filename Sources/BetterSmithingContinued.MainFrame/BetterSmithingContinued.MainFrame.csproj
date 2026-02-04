@@ -112,7 +112,6 @@
     <Compile Include="ISmithingManager.cs" />
     <Compile Include="MainActionTextModifier.cs" />
     <Compile Include="MainFrameSubModule.cs" />
-    <Compile Include="Patches\CampaignUiHelperPatches.cs" />
     <Compile Include="Patches\CraftingCampaignBehaviorPatches.cs" />
     <Compile Include="Patches\CraftingPatches.cs" />
     <Compile Include="Patches\CustomPatchManager.cs" />
