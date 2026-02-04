@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
@@ -41,12 +42,18 @@ namespace BetterSmithingContinued.Utilities
 			m_LazyGetCurrentListInvoker = new Lazy<Func<EventManager, MBReadOnlyList<Widget>>>(delegate()
 		{
 			FieldInfo widgetContainersInfo = MemberExtractor.GetPrivateFieldInfo<EventManager>("_widgetContainers");
-            Type widgetContainerType = widgetContainersInfo.FieldType.GetElementType();
+            Type[] dictionaryArgs = widgetContainersInfo.FieldType.GetGenericArguments();
+            Type containerKeyType = dictionaryArgs[0]; // WidgetContainer.ContainerType
+            Type widgetContainerType = dictionaryArgs[1]; // WidgetContainer
+
+            FieldInfo updateField = containerKeyType.GetField("Update", MemberExtractor.StaticPublicMemberFlags);
+            object updateKey = updateField.GetValue(null);
+
             MethodInfo methodInfo = widgetContainerType.GetMethod("GetActiveList", MemberExtractor.PublicMemberFlags);
 
-			return delegate(EventManager eventManager) {
-				Array widgetContainers = widgetContainersInfo.GetValue(eventManager) as Array;
-				return methodInfo.Invoke(widgetContainers.GetValue(0), null) as MBReadOnlyList<Widget>;
+            return delegate(EventManager eventManager) {
+                IDictionary widgetContainers = widgetContainersInfo.GetValue(eventManager) as IDictionary;
+                return methodInfo.Invoke(widgetContainers[updateKey], null) as MBReadOnlyList<Widget>;
 			};
 		});
 	}
