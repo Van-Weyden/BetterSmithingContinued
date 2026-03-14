@@ -57,7 +57,15 @@ namespace BetterSmithingContinued.Settings
 		[SettingPropertyGroup("{=BSC_SPG_03}Crafting")]
 		public bool GroupIdenticalCraftedWeapons { get; set; } = true;
 
-		[SettingPropertyBool("{=BSC_SPN_41}Unlimited Crafting Stamina", RequireRestart = false, Order = 1, HintText = "{=BSC_SPH_41}Enable this option for unlimited crafting stamina.")]
+        [SettingPropertyBool("{=BSC_SPN_36}Add Weapon Tier Prefixes", RequireRestart = false, Order = 6, HintText = "{=BSC_SPH_36}If Enabled, crafted weapons will be prefixed with their appropriate tiers (Legendary(3), Masterwork(2), Balanced(1), Dull(-1), Rusty(-2)) just like the non-crafted weapons.")]
+        [SettingPropertyGroup("{=BSC_SPG_03}Crafting")]
+        public bool AddWeaponTierPrefixes { get; set; } = true;
+
+        [SettingPropertyBool("{=BSC_SPN_37}Use Own Prefixes Only", RequireRestart = false, Order = 7, HintText = "{=BSC_SPH_37}If Enabled, crafted weapon tier names will be taken from this mod instead of the Native. Note that these names can still be used if the native names cannot be displayed correctly for some reason.")]
+        [SettingPropertyGroup("{=BSC_SPG_03}Crafting")]
+        public bool UseOwnPrefixesOnly { get; set; } = false;
+
+        [SettingPropertyBool("{=BSC_SPN_41}Unlimited Crafting Stamina", RequireRestart = false, Order = 1, HintText = "{=BSC_SPH_41}Enable this option for unlimited crafting stamina.")]
 		[SettingPropertyGroup("{=BSC_SPG_04}Crafting stamina", GroupOrder = 5)]
 		public bool InfiniteCraftingStamina { get; set; } = false;
 

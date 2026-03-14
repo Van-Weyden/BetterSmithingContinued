@@ -23,6 +23,14 @@
     <string id="BSC_WT_5" text="Ausgeglichen" /> 
     <string id="BSC_WT_6" text="Meisterwerk" /> 
     <string id="BSC_WT_7" text="Legendär" /> 
+	
+    <string id="BSC_WTO_1" text="Kaputt {ITEMNAME}" /> 
+    <string id="BSC_WTO_2" text="Verrostet {ITEMNAME}" /> 
+    <string id="BSC_WTO_3" text="Stumpf {ITEMNAME}" /> 
+    <string id="BSC_WTO_4" text="Normal {ITEMNAME}" /> 
+    <string id="BSC_WTO_5" text="Ausgeglichen {ITEMNAME}" /> 
+    <string id="BSC_WTO_6" text="Meisterwerk {ITEMNAME}" /> 
+    <string id="BSC_WTO_7" text="Legendär {ITEMNAME}" /> 
 
     <!-- Buttons -->
     <string id="BSC_BT_Designs" text="Gespeicherte Designs" />
@@ -93,7 +101,10 @@
     <string id="BSC_SPH_34" text="Wenn aktiviert, wird die Schaltfläche &quot;Nur nicht gesperrte Teile anzeigen&quot; standardmäßig aktiviert." />
     <string id="BSC_SPN_35" text="Identische gefertigte Waffen gruppieren" />
     <string id="BSC_SPH_35" text="Wenn diese Option aktiviert ist, werden alle identischen Waffen (Waffen mit demselben Namen, demselben Typ, denselben Werten usw.) zusammengefasst." />
-    <string id="BSC_SPN_41" text="Unbegrenzte Handwerksausdauer" />
+    <string id="BSC_SPN_36" text="Tier-Präfixe für Waffen hinzufügen" />
+    <string id="BSC_SPH_36" text="Wenn aktiviert, erhalten gefertigte Waffen die entsprechenden Tier-Präfixe (Legendär(3), Meisterlich(2), Ausgewogen(1), Stumpf(-1), Rostig(-2)), genau wie nicht gefertigte Waffen." />
+    <string id="BSC_SPN_37" text="Nur eigene Präfixe verwenden" />
+    <string id="BSC_SPH_37" text="Wenn aktiviert, werden die Tier-Namen für gefertigte Waffen aus dieser Mod übernommen anstatt aus dem Originalspiel. Beachte, dass diese Namen dennoch verwendet werden können, wenn die Originalnamen aus irgendeinem Grund nicht korrekt angezeigt werden können." />
     <string id="BSC_SPH_41" text="Aktiviere diese Option für unbegrenzte Handwerksausdauer." />
     <string id="BSC_SPN_42" text="Erholungsrate innerhalb von Städten" />
     <string id="BSC_SPH_42" text="Die Wiederherstellungsrate der Ausdauer für das Crafting vervielfacht sich, wenn die Gruppe in Städten rastet. 100% bedeutet, dass die Erholungsrate in den Städten die gleiche ist wie bei Vanilla; 0% bedeutet, dass die Erholungsrate in den Städten deaktiviert ist." />
