@@ -23,6 +23,14 @@
     <string id="BSC_WT_5" text="Balanced" /> 
     <string id="BSC_WT_6" text="Masterwork" /> 
     <string id="BSC_WT_7" text="Legendary" /> 
+	
+	<string id="BSC_WTO_1" text="Broken {ITEMNAME}" /> 
+    <string id="BSC_WTO_2" text="Rusty {ITEMNAME}" /> 
+    <string id="BSC_WTO_3" text="Dull {ITEMNAME}" /> 
+    <string id="BSC_WTO_4" text="Normal {ITEMNAME}" /> 
+    <string id="BSC_WTO_5" text="Balanced {ITEMNAME}" /> 
+    <string id="BSC_WTO_6" text="Masterwork {ITEMNAME}" /> 
+    <string id="BSC_WTO_7" text="Legendary {ITEMNAME}" /> 
 
     <!-- Buttons -->
     <string id="BSC_BT_Designs" text="Saved Designs" />
@@ -93,6 +101,10 @@
     <string id="BSC_SPH_34" text="If Enabled, toggle button &quot;Show only unlocked pieces&quot; will be enabled by default." />
     <string id="BSC_SPN_35" text="Group Identical Crafted Weapons" />
     <string id="BSC_SPH_35" text="If Enabled, will group all identical crafted weapons (Weapons with the same name, same type, same stats, etc) together." />
+    <string id="BSC_SPN_36" text="Add Weapon Tier Prefixes" />
+    <string id="BSC_SPH_36" text="If Enabled, crafted weapons will be prefixed with their appropriate tiers (Legendary(3), Masterwork(2), Balanced(1), Dull(-1), Rusty(-2)) just like the non-crafted weapons." />
+    <string id="BSC_SPN_37" text="Use Own Prefixes Only" />
+    <string id="BSC_SPH_37" text="If Enabled, crafted weapon tier names will be taken from this mod instead of the Native. Note that these names can still be used if the native names cannot be displayed correctly for some reason." />
     <string id="BSC_SPN_41" text="Unlimited Crafting Stamina" />
     <string id="BSC_SPH_41" text="Enable this option for unlimited crafting stamina." />
     <string id="BSC_SPN_42" text="Recovery rate inside towns" />
