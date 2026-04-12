@@ -23,11 +23,6 @@ namespace BetterSmithingContinued.MainFrame.UI.Widgets
 			base.HandleInput(lastKeysPressed);
 		}
 
-		protected override void OnMouseReleased()
-		{
-			base.OnMouseReleased();
-		}
-
 		protected override void OnGainFocus()
 		{
 			base.OnGainFocus();

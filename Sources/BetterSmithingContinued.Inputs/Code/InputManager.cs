@@ -67,7 +67,7 @@ namespace BetterSmithingContinued.Inputs.Code
 				GameKeyContext context = new HotKeyCategory(id, gameKeysCount, keyValuePair.Value);
 				return context;
 			}).ToList());
-			HotKeyManager.RegisterInitialContexts(contexts, true);
+			HotKeyManager.RegisterInitialContexts(contexts);
 		}
 
 		private void OnGameTick(object _sender, float _e)
