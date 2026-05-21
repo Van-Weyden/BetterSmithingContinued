@@ -19,50 +19,6 @@
                    VerticalAlignment="Top"
                    DoNotUseCustomScale="true">
           <Children>
-            <!-- Reset Filters Button -->
-            <ButtonWidget Id="ResetAll"
-                          DoNotPassEventsToChildren="true"
-                          WidthSizePolicy="Fixed"
-                          HeightSizePolicy="Fixed"
-                          SuggestedWidth="60"
-                          SuggestedHeight="60"
-                          MarginBottom="20"
-                          Brush="BetterSmithingContinued.ResetAll"
-                          Command.Click="OnResetAllClicked">
-              <Children>
-                <HintWidget DataSource="{ResetAllHint}"
-                            WidthSizePolicy="StretchToParent"
-                            HeightSizePolicy="StretchToParent"
-                            Command.HoverBegin="ExecuteBeginHint"
-                            Command.HoverEnd="ExecuteEndHint" />
-              </Children>
-            </ButtonWidget>
-
-            <!-- Locked Items Toggle -->
-            <BetterSmithingContinuedToggleWidget DataSource="{LockedItemsToggle}"
-                                        Id="LockedItemsToggle"
-                                        WidthSizePolicy="Fixed"
-                                        HeightSizePolicy="Fixed"
-                                        SuggestedWidth="60"
-                                        SuggestedHeight="60" />
-
-            <!-- Player Crafted Items Toggle -->
-            <BetterSmithingContinuedToggleWidget DataSource="{PlayerCraftedItemsToggle}"
-                                        Id="ToggleDisplayPlayerCraftedWeapons"
-                                        WidthSizePolicy="Fixed"
-                                        HeightSizePolicy="Fixed"
-                                        SuggestedWidth="60"
-                                        SuggestedHeight="60" />
-
-            <!-- Non-Player Crafted Items Toggle -->
-            <BetterSmithingContinuedToggleWidget DataSource="{NonPlayerCraftedItemsToggle}"
-                                        Id="ToggleDisplayNonPlayerCraftedWeapons"
-                                        WidthSizePolicy="Fixed"
-                                        HeightSizePolicy="Fixed"
-                                        SuggestedWidth="60"
-                                        SuggestedHeight="60"
-                                        MarginBottom="20" />
-
             <!-- Resource Material Types Toggle List -->
             <ListPanel DataSource="{CraftingResourceToggles}"
                        WidthSizePolicy="CoverChildren"
@@ -89,6 +45,50 @@
                 </Widget>
               </ItemTemplate>
             </ListPanel>
+			
+            <!-- Non-Player Crafted Items Toggle -->
+            <BetterSmithingContinuedToggleWidget DataSource="{NonPlayerCraftedItemsToggle}"
+                                        Id="ToggleDisplayNonPlayerCraftedWeapons"
+                                        WidthSizePolicy="Fixed"
+                                        HeightSizePolicy="Fixed"
+                                        SuggestedWidth="60"
+                                        SuggestedHeight="60"
+                                        MarginBottom="20" />
+			
+            <!-- Player Crafted Items Toggle -->
+            <BetterSmithingContinuedToggleWidget DataSource="{PlayerCraftedItemsToggle}"
+                                        Id="ToggleDisplayPlayerCraftedWeapons"
+                                        WidthSizePolicy="Fixed"
+                                        HeightSizePolicy="Fixed"
+                                        SuggestedWidth="60"
+                                        SuggestedHeight="60" />
+			
+            <!-- Locked Items Toggle -->
+            <BetterSmithingContinuedToggleWidget DataSource="{LockedItemsToggle}"
+                                        Id="LockedItemsToggle"
+                                        WidthSizePolicy="Fixed"
+                                        HeightSizePolicy="Fixed"
+                                        SuggestedWidth="60"
+                                        SuggestedHeight="60" />
+			
+            <!-- Reset Filters Button -->
+            <ButtonWidget Id="ResetAll"
+                          DoNotPassEventsToChildren="true"
+                          WidthSizePolicy="Fixed"
+                          HeightSizePolicy="Fixed"
+                          SuggestedWidth="60"
+                          SuggestedHeight="60"
+                          MarginBottom="20"
+                          Brush="BetterSmithingContinued.ResetAll"
+                          Command.Click="OnResetAllClicked">
+              <Children>
+                <HintWidget DataSource="{ResetAllHint}"
+                            WidthSizePolicy="StretchToParent"
+                            HeightSizePolicy="StretchToParent"
+                            Command.HoverBegin="ExecuteBeginHint"
+                            Command.HoverEnd="ExecuteEndHint" />
+              </Children>
+            </ButtonWidget>
           </Children>
         </ListPanel>
       </Children>
